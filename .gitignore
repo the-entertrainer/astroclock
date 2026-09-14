@@ -1,0 +1,5 @@
+.vercel/
+deploy-*.json
+mcp-deploy*.json
+_html.json
+*.tgz
