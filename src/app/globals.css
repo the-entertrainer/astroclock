@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-ink: #0B0C10;
+  --color-mist: #E0E2EC;
+  --color-gold: #D4AF37;
+  --color-sky: #64B5F6;
+  --color-jade: #81C784;
+  --color-rose: #E57373;
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background: #0B0C10;
+  overscroll-behavior: none;
+}
+
+body {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  color: #E0E2EC;
+}
+
+.glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chip {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.chip.active {
+  border-color: #D4AF37;
+  background: rgba(212, 175, 55, 0.15);
+}
+
+.chip.retro {
+  color: #E57373;
+}
+
+.drawer {
+  transform: translateY(110%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.drawer.open {
+  transform: translateY(0);
+}
+
+.config-drawer {
+  transform: translateX(110%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.config-drawer.open {
+  transform: translateX(0);
+}
+
+.scrub::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #D4AF37;
+  cursor: pointer;
+  border: 2px solid #0B0C10;
+}
+
+.scrub::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #D4AF37;
+  cursor: pointer;
+  border: 2px solid #0B0C10;
+}
+
+#clockCanvas {
+  touch-action: none;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.score-bar {
+  transition: width 0.4s ease-out;
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+input,
+select {
+  font-size: 16px;
+}

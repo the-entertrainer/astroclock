@@ -1,0 +1,43 @@
+import {
+  DEMO_BIRTH,
+  STORAGE_KEY,
+  type BirthConfig,
+} from '@/lib/astro/constants';
+
+export function loadConfig(): BirthConfig {
+  if (typeof window === 'undefined') return { ...DEMO_BIRTH };
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return { ...DEMO_BIRTH };
+    const data = JSON.parse(raw) as Partial<BirthConfig>;
+    if (data && data.date) {
+      return { ...DEMO_BIRTH, ...data, isDemo: false };
+    }
+  } catch {
+    /* ignore */
+  }
+  return { ...DEMO_BIRTH };
+}
+
+export function saveConfig(birth: BirthConfig): void {
+  const payload = {
+    name: birth.name || '',
+    date: birth.date,
+    h: +birth.h,
+    m: +birth.m,
+    s: +birth.s,
+    preset: birth.preset,
+    lat: +birth.lat,
+    lon: +birth.lon,
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+}
+
+export function clearConfig(): void {
+  localStorage.removeItem(STORAGE_KEY);
+}
+
+export function birthDateObj(b: BirthConfig): Date {
+  const [Y, Mo, D] = b.date.split('-').map(Number);
+  return new Date(Date.UTC(Y, Mo - 1, D, +b.h, +b.m, +b.s));
+}
