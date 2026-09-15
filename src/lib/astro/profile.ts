@@ -21,6 +21,17 @@ import {
   signEn,
   type AdviceBlock,
 } from './influence';
+import {
+  adviceFromFrags,
+  collectProfileAdviceFrags,
+  collectProfileFrags,
+  stitchParagraphs,
+  grahaRashiRule,
+  nakshatraRule,
+  grahaBhavaRule,
+  dashaPairRule,
+  lagnaMoonBlend,
+} from './rules';
 
 const RASHI_LORDS: GrahaId[] = [
   'Mars',
@@ -217,92 +228,38 @@ function buildSummary(args: {
   sun: ProfilePlacement;
   lagLord: GrahaId;
   lagLordP: ProfilePlacement;
+  dasha: { maha: string; antar: string };
 }): string {
+  const frags = collectProfileFrags({
+    lagna: args.lagRashi,
+    moonRashi: args.moon.rashi,
+    moonHouse: args.moon.house,
+    moonNak: args.moon.nakshatra,
+    moonPada: args.moon.pada,
+    sunRashi: args.sun.rashi,
+    sunHouse: args.sun.house,
+    lagLord: args.lagLord,
+    lagLordRashi: args.lagLordP.rashi,
+    lagLordHouse: args.lagLordP.house,
+    lagLordRetro: args.lagLordP.retrograde,
+    dashaMaha: args.dasha.maha,
+    dashaAntar: args.dasha.antar,
+  });
+  // Prefer opener + moon nak/pada + sun + house + lag lord (4–10 frags)
+  const stitched = stitchParagraphs(frags, { perPara: 2, maxFrags: 8 });
+  if (stitched) return stitched;
+
+  // Fallback (should rarely hit)
   const lagEn = signEn(args.lagRashi);
-  const moonEn = signEn(args.moon.rashi);
-  const sunEn = signEn(args.sun.rashi);
-  const lagBit =
-    LAGNA_ESSENCE[args.lagRashi] ||
-    `With ${lagEn} rising, you have a distinct outer style people notice quickly.`;
-  const moonBit =
-    MOON_SIGN[args.moon.rashi] ||
-    `Inside, a ${moonEn} Moon sets the emotional weather.`;
-  const lordLife =
-    HOUSE_LIFE[args.lagLordP.house] || 'a central life arena';
-  const sunBit =
-    SUN_DRIVE[args.sun.rashi] ||
-    `Solar drive through ${sunEn} wants expression.`;
-
-  const p1 = `${lagBit} (Rising ${lagEn}.)`;
-  const p2 = `${moonBit} Your Moon also sits in the area of life about ${HOUSE_LIFE[args.moon.house] || 'daily experience'}, so feelings often show up there first.`;
-  const p3 = `${sunBit} The planet that rules your rising sign (${args.lagLord}) lives in the house of ${lordLife} — that is a practical stage where your style becomes biography. Together, rising + Moon + Sun sketch how you tend to think, feel, act, and relate when nobody is performing for an audience.`;
-
-  return `${p1}\n\n${p2}\n\n${p3}`;
+  const blend = lagnaMoonBlend(args.lagRashi, args.moon.rashi);
+  return (
+    blend ||
+    `With ${lagEn} rising and a ${signEn(args.moon.rashi)} Moon, outer style and inner weather sketch how you meet life.`
+  );
 }
 
 
-const LAGNA_ADVICE: Record<string, string> = {
-  Mesha:
-    'Useful to start before the committee finishes — then course-correct in motion rather than waiting for perfect clarity.',
-  Vrishabha:
-    'Build trust and routines slowly; once you commit, protect that steadiness from fashion-chasing pivots.',
-  Mithuna:
-    'Schedule curiosity on purpose — conversation and learning are fuel, but pick one channel to finish.',
-  Karka:
-    'Protect belonging and private harbour time; when the base feels safe, your generosity leads naturally.',
-  Simha:
-    'Give your work a clear signature and ask for recognition without apology — then share the spotlight.',
-  Kanya:
-    'Let competence be care, and soften critique with one kind sentence before the fix list.',
-  Tula:
-    'Practice naming your own preference before you negotiate; fairness includes you.',
-  Vrischika:
-    'Choose depth over half-open doors — trust and honesty wake you up more than surface charm.',
-  Dhanu:
-    'Keep a horizon (learning, travel, meaning) so petty loops do not shrink your kindness.',
-  Makara:
-    'Climb with structure, then schedule softness so the long game does not become a cage.',
-  Kumbha:
-    'Invest in odd, systems-minded friendships; belonging still matters, just on your terms.',
-  Meena:
-    'Choose company like climate, and keep one daily vessel (walk, craft, list) so empathy does not dissolve you.',
-};
 
-const MOON_ADVICE: Record<string, string> = {
-  Mesha: 'When mood ignites, aim the heat into one clean act instead of sitting on hot iron.',
-  Vrishabha: 'Secure comfort and sensory proof before big emotional pivots — slow attachment is a feature.',
-  Mithuna: 'Talk it through, then check whether you are flirting with ideas or with people.',
-  Karka: 'Caregiving cuts both ways — ask for harbour as often as you offer it.',
-  Simha: 'Warmth thrives with a witness; ask for appreciation without making it a test.',
-  Kanya: 'Usefulness is love — also leave room for messy feelings that will not fit a checklist.',
-  Tula: 'Notice when relational weather becomes your weather; step outside to reset.',
-  Vrischika: 'All-or-nothing feelings need clear trust gates; half-measures starve this Moon.',
-  Dhanu: 'Widen the emotional frame with humour, belief, or a literal change of scenery.',
-  Makara: 'Endurance is devotion — also let one feeling land out loud before it calcifies.',
-  Kumbha: 'Friendship-toned care is valid; name quirky needs early so intimacy does not feel odd.',
-  Meena: 'Beautiful empathy needs boundaries — choose sanctuary before you absorb the room.',
-};
-
-const SUN_ADVICE: Record<string, string> = {
-  Mesha: 'Vitality peaks in clean contests — pioneer something small each week.',
-  Vrishabha: 'Shine by building and keeping; body and craft steady the will.',
-  Mithuna: 'Dialogue fuels you — prune extra channels so the signal stays clear.',
-  Karka: 'Protect home base first, then lead; emotional weather powers the will.',
-  Simha: 'Creative centre-stage is fuel when it lifts others, not only ego.',
-  Kanya: 'Craft mastery keeps you lit — keep a personal signature even in humble service.',
-  Tula: 'Fair exchange feeds vitality; strengthen your own preferences alongside partnership.',
-  Vrischika: 'Renew through honest intimacy and motive integrity, not power theatre.',
-  Dhanu: 'Belief quests wake the will — keep dogma from freezing the quest.',
-  Makara: 'Achievement architecture sustains you; soften so the climb stays human.',
-  Kumbha: 'Innovators and future tribes light you up — still belong somewhere specific.',
-  Meena: 'Imagination immerses you; keep a daily vessel so you do not dissolve.',
-};
-
-const STRESS_HOUSE_ADVICE: Record<number, string> = {
-  6: 'With heat in the work/health house, go easy on rivals and keep routines small and doable.',
-  8: 'With charge in the reset/intimacy house, pace shared money and big life changes — honesty over secrecy.',
-  12: 'With emphasis on solitude and endings, schedule real recharge; withdrawal can be strategy, not failure.',
-};
 
 function buildProfileAdvice(args: {
   lagRashi: string;
@@ -313,69 +270,40 @@ function buildProfileAdvice(args: {
   grahas: ProfilePlacement[];
   topHouses: number[];
 }): AdviceBlock {
-  const items: string[] = [];
-  const cites: string[] = [
-    `Rising ${signEn(args.lagRashi)}`,
-    `Moon in ${signEn(args.moon.rashi)}, house ${args.moon.house}`,
-    `Sun in ${signEn(args.sun.rashi)}, house ${args.sun.house}`,
-  ];
-
-  items.push(
-    LAGNA_ADVICE[args.lagRashi] ||
-      `Work with your rising style in ${signEn(args.lagRashi)} as a habit, not a costume.`,
-  );
-  items.push(
-    MOON_ADVICE[args.moon.rashi] ||
-      `Tend emotional weather through the house of ${HOUSE_LIFE[args.moon.house] || 'daily life'}.`,
-  );
-  items.push(
-    SUN_ADVICE[args.sun.rashi] ||
-      `Aim vitality toward what renews a sense of self in the house of ${HOUSE_LIFE[args.sun.house] || 'focus'}.`,
-  );
-
-  // Stressed / dusthana emphasis
   const stressOcc = args.grahas.filter((g) => [6, 8, 12].includes(g.house));
   const stressHouses = [...new Set(stressOcc.map((g) => g.house))].sort();
-  if (stressHouses.length > 0) {
-    const h = stressHouses[0];
-    items.push(
-      STRESS_HOUSE_ADVICE[h] ||
-        `Notice pressure in house ${h} and meet it with pacing, not panic.`,
-    );
-    const who = stressOcc
-      .filter((g) => g.house === h)
-      .map((g) => g.id)
-      .slice(0, 3)
-      .join(', ');
-    cites.push(`House ${h}: ${who}`);
-  } else if (args.topHouses[0]) {
+  const frags = collectProfileAdviceFrags({
+    lagna: args.lagRashi,
+    moonRashi: args.moon.rashi,
+    moonHouse: args.moon.house,
+    moonNak: args.moon.nakshatra,
+    moonPada: args.moon.pada,
+    sunRashi: args.sun.rashi,
+    sunHouse: args.sun.house,
+    lagLord: args.lagLord,
+    lagLordRashi: args.lagLordP.rashi,
+    lagLordHouse: args.lagLordP.house,
+    lagLordRetro: args.lagLordP.retrograde,
+    stressHouse: stressHouses[0],
+  });
+  if (args.topHouses[0] && !stressHouses.length) {
     const h = args.topHouses[0];
-    items.push(
-      `Your loudest life area is house ${h} (${HOUSE_LIFE[h] || 'focus'}) — put habits and care there first.`,
-    );
-    cites.push(`Loud house ${h}`);
+    const gb = grahaBhavaRule(args.lagLord, h);
+    if (gb) {
+      frags.push({
+        text: `Your loudest life area is house ${h} — ${gb.advice}`,
+        specificity: 48,
+        cite: `Loud house ${h}`,
+      });
+    }
   }
-
-  if (args.lagLordP.retrograde) {
-    items.push(
-      `Your rising ruler (${args.lagLord}) is retrograde — useful to revisit style privately before showing the polished version.`,
-    );
-    cites.push(`${args.lagLord} R in house ${args.lagLordP.house}`);
-  } else if (items.length < 5) {
-    items.push(
-      `Let ${args.lagLord} in the house of ${HOUSE_LIFE[args.lagLordP.house] || 'life focus'} be a weekly practice stage — small reps beat grand resolutions.`,
-    );
-    cites.push(
-      `${args.lagLord} in ${signEn(args.lagLordP.rashi)}, house ${args.lagLordP.house}`,
-    );
-  }
-
-  return {
-    title: 'Advice for how to work with your nature',
-    items: items.slice(0, 5),
-    cites: [...new Set(cites)].slice(0, 6),
-  };
+  return adviceFromFrags(
+    'Advice for how to work with your nature',
+    frags,
+    5,
+  );
 }
+
 
 export function computeNatalProfile(
   birth: BirthConfig,
@@ -458,6 +386,7 @@ export function computeNatalProfile(
     sun,
     lagLord,
     lagLordP,
+    dasha,
   });
 
   const advice = buildProfileAdvice({
@@ -473,14 +402,16 @@ export function computeNatalProfile(
   const sections: ProfileSection[] = [];
 
   const blendNote =
-    lagRashi === moon.rashi
+    lagnaMoonBlend(lagRashi, moon.rashi) ||
+    (lagRashi === moon.rashi
       ? `Rising and Moon share ${signEn(lagRashi)}, so outer style and inner weather often agree — you may feel “of a piece,” and life asks you to refine one strong tone rather than juggle two.`
-      : `Rising in ${signEn(lagRashi)} with a ${signEn(moon.rashi)} Moon means appearance and feeling negotiate daily. Neither mask nor mood should win every argument; skill is learning when each leads.`;
+      : `Rising in ${signEn(lagRashi)} with a ${signEn(moon.rashi)} Moon means appearance and feeling negotiate daily. Neither mask nor mood should win every argument; skill is learning when each leads.`);
 
+  const lagLordHouse = grahaBhavaRule(lagLord, lagLordP.house);
   sections.push({
     id: 'essence',
     title: 'How you come across',
-    body: `${LAGNA_ESSENCE[lagRashi] || ''} ${blendNote} Your rising ruler (${lagLord}) sits in the area of ${HOUSE_LIFE[lagLordP.house] || 'life focus'}${lagLordP.retrograde ? ' — and because it is retrograde, that theme often turns inward first: revisit, revise, then show.' : '.'}`,
+    body: `${LAGNA_ESSENCE[lagRashi] || ''} ${blendNote} Your rising ruler (${lagLord}) sits in the area of ${HOUSE_LIFE[lagLordP.house] || 'life focus'}${lagLordP.retrograde ? ' — and because it is retrograde, that theme often turns inward first: revisit, revise, then show.' : '.'}${lagLordHouse ? ' ' + lagLordHouse.lifeArea : ''}`,
     cites: [
       `Rising ${signEn(lagRashi)} ${lagDeg.toFixed(1)}°`,
       `Moon in ${signEn(moon.rashi)}, house ${moon.house}`,
@@ -488,19 +419,23 @@ export function computeNatalProfile(
     ],
   });
 
+  const moonNakRule = nakshatraRule(moon.nakshatra, moon.pada);
+  const moonSignRule = grahaRashiRule('Moon', moon.rashi);
+  const moonHouseRule = grahaBhavaRule('Moon', moon.house);
   const padaNote =
-    moon.pada === 1
+    moonNakRule?.padaNote ||
+    (moon.pada === 1
       ? 'This quarter of the star leans initiatory — first-foot energy.'
       : moon.pada === 2
         ? 'This quarter of the star seeks stability and something keepable.'
         : moon.pada === 3
           ? 'This quarter of the star sharpens effort and skillful hustle.'
-          : 'This quarter of the star ripens toward completion and counsel.';
+          : 'This quarter of the star ripens toward completion and counsel.');
 
   sections.push({
     id: 'mind',
     title: 'Mind & emotions',
-    body: `${MOON_SIGN[moon.rashi] || ''} In the house of ${HOUSE_LIFE[moon.house] || 'daily life'}, feelings show up first. Star-texture ${moon.nakshatra}: ${NAK_MIND[moon.nakshatra] || 'a distinctive lunar habit.'} ${padaNote} Emotionally, themes linked to ${moonNakLord} often colour the stories your heart rehearses.`,
+    body: `${moonSignRule?.temperament || MOON_SIGN[moon.rashi] || ''} ${moonHouseRule?.lifeArea || `In the house of ${HOUSE_LIFE[moon.house] || 'daily life'}, feelings show up first.`} ${moonNakRule?.temperament || `Star-texture ${moon.nakshatra}: ${NAK_MIND[moon.nakshatra] || 'a distinctive lunar habit.'}`} ${padaNote} Emotionally, themes linked to ${moonNakLord} often colour the stories your heart rehearses.`,
     cites: [
       `Moon in ${signEn(moon.rashi)}, house ${moon.house}`,
       `${moon.nakshatra} (part ${moon.pada})`,
@@ -508,10 +443,13 @@ export function computeNatalProfile(
     ],
   });
 
+  const sunSignRule = grahaRashiRule('Sun', sun.rashi);
+  const sunHouseRule = grahaBhavaRule('Sun', sun.house);
+  const sunNakRule = nakshatraRule(sun.nakshatra, sun.pada);
   sections.push({
     id: 'drive',
     title: 'Drive & vitality',
-    body: `${SUN_DRIVE[sun.rashi] || ''} The Sun in the house of ${HOUSE_LIFE[sun.house] || 'focus'} marks where identity heat concentrates. ${sun.nakshatra} adds a method to how you prefer to shine and renew a sense of self.`,
+    body: `${sunSignRule?.temperament || SUN_DRIVE[sun.rashi] || ''} ${sunHouseRule?.lifeArea || `The Sun in the house of ${HOUSE_LIFE[sun.house] || 'focus'} marks where identity heat concentrates.`} ${sunNakRule?.temperament || `${sun.nakshatra} adds a method to how you prefer to shine and renew a sense of self.`}`,
     cites: [
       `Sun in ${signEn(sun.rashi)}, house ${sun.house} · ${sun.nakshatra}`,
     ],
@@ -521,12 +459,15 @@ export function computeNatalProfile(
   const ven = byId.Venus;
   const mars = byId.Mars;
   const mercLine =
+    grahaRashiRule('Mercury', merc.rashi)?.temperament ||
     PLANET_SIGN_PLAIN.Mercury?.[merc.rashi] ||
     `Mercury in ${signEn(merc.rashi)} colours how you think`;
   const venLine =
+    grahaRashiRule('Venus', ven.rashi)?.temperament ||
     PLANET_SIGN_PLAIN.Venus?.[ven.rashi] ||
     `Venus in ${signEn(ven.rashi)} colours desire`;
   const marsLine =
+    grahaRashiRule('Mars', mars.rashi)?.temperament ||
     PLANET_SIGN_PLAIN.Mars?.[mars.rashi] ||
     `Mars in ${signEn(mars.rashi)} colours assertion`;
 
@@ -584,22 +525,13 @@ export function computeNatalProfile(
     cites: [citeGraha(sat), citeGraha(rahu), citeGraha(ketu), citeGraha(mars)],
   });
 
-  const mahaTone: Record<string, string> = {
-    Sun: 'visibility, authority tests, and identity heat are louder',
-    Moon: 'moods, care loops, and private-public tides lead',
-    Mars: 'decisive force and initiative spike',
-    Mercury: 'ideas, skills, and nervous agility trade faster',
-    Jupiter: 'growth, teaching, and ethical opportunity widen',
-    Venus: 'bond, art, and desire-harmony colour choices',
-    Saturn: 'long grind, structure, and sober accountability',
-    Rahu: 'unconventional hunger and novel vectors',
-    Ketu: 'release, distill, and sideways insight',
-  };
-
+  const pair = dashaPairRule(dasha.maha, dasha.antar);
   sections.push({
     id: 'dasha',
     title: 'This chapter of life',
-    body: `You are in a ${dasha.maha} period with a ${dasha.antar} subplot: ${mahaTone[dasha.maha] || 'period themes are active'}, while ${dasha.antar} ${mahaTone[dasha.antar] || 'modulates the tone'}. Think of it as a chapter heading across your chart — not a rewrite of who you are. Practice the period’s better habits rather than fearing its stereotype.`,
+    body: pair
+      ? `${pair.tone} ${pair.advice} Think of it as a chapter heading across your chart — not a rewrite of who you are.`
+      : `You are in a ${dasha.maha} period with a ${dasha.antar} subplot. Think of it as a chapter heading across your chart — not a rewrite of who you are. Practice the period’s better habits rather than fearing its stereotype.`,
     cites: [`Period ${dasha.maha}`, `Sub-period ${dasha.antar}`],
   });
 
@@ -649,4 +581,3 @@ export function natalLonMap(birth: BirthConfig): LonMap {
   return out;
 }
 
-// silence unused if tree-shaken oddly

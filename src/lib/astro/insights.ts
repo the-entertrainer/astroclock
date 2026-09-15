@@ -19,6 +19,15 @@ import {
 } from './planets';
 import { vimshottari } from './dasha';
 import { signEn, type AdviceBlock } from './influence';
+import {
+  adviceFromFrags,
+  collectDayAdviceFrags,
+  collectDayFrags,
+  stitchParagraphs,
+  dashaPairRule,
+  nakshatraRule,
+  grahaRashiRule,
+} from './rules';
 
 const PERSONAL: GrahaId[] = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'];
 
@@ -278,7 +287,10 @@ function climateFrom(
 function buildDaySummary(args: {
   moonNak: string;
   moonRashi: string;
+  moonPada: number;
   waxing: boolean;
+  tithiName: string;
+  paksha: 'Shukla' | 'Krishna';
   lagRashi: string;
   changedVs2h: boolean;
   prevRashi: string;
@@ -293,123 +305,82 @@ function buildDaySummary(args: {
   transitAspects: AspectHit[];
   isDemo: boolean;
 }): string {
-  const moonEn = signEn(args.moonRashi);
-  const nakTheme =
-    NAK_THEMES[args.moonNak] || 'a distinct emotional texture';
-  const mood = RASHI_MOOD[args.moonRashi] || 'coloured by its sign';
-  const paksha = args.waxing
-    ? 'The Moon is waxing, so appetite and visibility tend to grow rather than shrink.'
-    : 'The Moon is waning, so editing, releasing, and finishing often feel smarter than launching.';
-
-  const p1 = `Emotional weather today sits in ${moonEn} (${args.moonNak}): ${nakTheme}. The tone is ${mood}. ${paksha}`;
+  const topAsp = args.transitAspects[0];
+  const natalHit = args.natalHits[0];
+  const frags = collectDayFrags({
+    moonRashi: args.moonRashi,
+    moonNak: args.moonNak,
+    moonPada: args.moonPada,
+    waxing: args.waxing,
+    tithiName: args.tithiName,
+    paksha: args.paksha,
+    lagna: args.lagRashi,
+    climate: args.climate,
+    climateNote: args.climateNote,
+    soft: args.soft,
+    hard: args.hard,
+    retrogrades: args.retrogrades,
+    dashaMaha: args.dasha.maha,
+    dashaAntar: args.dasha.antar,
+    aspectLabel: topAsp?.label,
+    aspectGraha: topAsp?.a,
+    natalAspectLabel: natalHit?.label,
+  });
 
   const lagEn = signEn(args.lagRashi);
   const lagBit = args.changedVs2h
     ? `The rising sign recently shifted from ${signEn(args.prevRashi)} into ${lagEn}, so the “how you meet the next few hours” mask just changed costume.`
     : `The rising sign is ${lagEn}, colouring how the next stretch of hours wants to be approached.`;
+  frags.push({ text: lagBit, specificity: 38, cite: `Rising ${lagEn}` });
 
   let texture: string;
   if (args.climate === 'volatile') {
-    texture = `The day reads volatile: ${args.hard} hard links versus ${args.soft} soft ones, with harmonic resonance around ${args.hrs}. ${args.climateNote} Friction is a tutor if you refuse to panic.`;
+    texture = `The day reads volatile: ${args.hard} hard links versus ${args.soft} soft ones, with harmonic resonance around ${args.hrs}. Friction is a tutor if you refuse to panic.`;
   } else if (args.climate === 'quiet') {
-    texture = `The day reads quiet — few exact aspects and harmonic resonance near ${args.hrs}. ${args.climateNote}`;
+    texture = `The day reads quiet — few exact aspects and harmonic resonance near ${args.hrs}.`;
   } else if (args.climate === 'peak') {
-    texture = `The day has a peak-fluid feel (${args.soft} soft / ${args.hard} hard, HRS ${args.hrs}). ${args.climateNote}`;
+    texture = `The day has a peak-fluid feel (${args.soft} soft / ${args.hard} hard, HRS ${args.hrs}).`;
   } else if (args.climate === 'tense') {
-    texture = `The day carries contested edges (${args.hard} hard / ${args.soft} soft, HRS ${args.hrs}). ${args.climateNote}`;
+    texture = `The day carries contested edges (${args.hard} hard / ${args.soft} soft, HRS ${args.hrs}).`;
   } else {
-    texture = `The day is relatively fluid (${args.soft} soft / ${args.hard} hard, HRS ${args.hrs}). ${args.climateNote}`;
+    texture = `The day is relatively fluid (${args.soft} soft / ${args.hard} hard, HRS ${args.hrs}).`;
   }
+  frags.push({ text: texture, specificity: 36, cite: `HRS ${args.hrs}` });
 
-  const p2 = `${lagBit} ${texture}`;
-
-  const retro =
-    args.retrogrades.length > 0
-      ? `${args.retrogrades.join(', ')} ${args.retrogrades.length === 1 ? 'is' : 'are'} retrograde — expect more review, redo, and inward loops on those themes.`
-      : 'No major retrogrades yelling for attention in the personal set right now.';
-
-  const topAsp = args.transitAspects[0];
-  const aspBit = topAsp
-    ? `Closest sky-link: ${topAsp.a} ${topAsp.label} ${topAsp.b} (${topAsp.orb.toFixed(1)}°, ${topAsp.motion}).`
-    : 'No single aspect is dominating the foreground.';
-
-  const dashaBit =
-    args.dasha.maha !== '—'
-      ? `Background chapter: ${args.dasha.maha} period with ${args.dasha.antar} subplot (${DASHA_TONE[args.dasha.maha] || 'period tone'} / ${DASHA_TONE[args.dasha.antar] || 'subplot'}).`
-      : '';
-
-  let personal = '';
-  if (!args.isDemo && args.natalHits.length > 0) {
-    const h = args.natalHits[0];
-    personal = ` Personal spotlight: transit ${h.a} is ${h.label} your natal ${h.b} (${h.orb.toFixed(1)}°, ${h.motion}) — that natal theme is temporarily lit.`;
+  if (!args.isDemo && natalHit) {
+    frags.push({
+      text: `Personal spotlight: transit ${natalHit.a} is ${natalHit.label} your natal ${natalHit.b} (${natalHit.orb.toFixed(1)}°, ${natalHit.motion}) — that natal theme is temporarily lit.`,
+      specificity: 67,
+      cite: `t${natalHit.a}→n${natalHit.b}`,
+    });
   } else if (args.isDemo) {
-    personal =
-      ' Save birth data if you want these sky notes to name which of your natal themes are lit.';
+    frags.push({
+      text: 'Save birth data if you want these sky notes to name which of your natal themes are lit.',
+      specificity: 20,
+      cite: 'demo',
+    });
   }
 
-  const p3 = `${retro} ${aspBit} ${dashaBit}${personal} None of this is a verdict — it is weather with a map. Use it to choose scope, not to outsource judgment.`;
+  frags.push({
+    text: 'None of this is a verdict — it is weather with a map. Use it to choose scope, not to outsource judgment.',
+    specificity: 15,
+    cite: 'agency',
+  });
 
-  return `${p1}\n\n${p2}\n\n${p3}`;
+  const stitched = stitchParagraphs(frags, { perPara: 2, maxFrags: 10 });
+  return stitched || `Emotional weather today sits in ${signEn(args.moonRashi)} (${args.moonNak}).`;
 }
 
 
-const NAK_ADVICE: Record<string, string> = {
-  Ashwini: 'Good day to start something small and fix-it on the move.',
-  Bharani: 'Hold creative pressure until one real deliverable can land.',
-  Krittika: 'Cut fog with one sharp decision — aim the heat, do not scorch.',
-  Rohini: 'Grow and attract around one chosen target; skip scatter.',
-  Mrigashira: 'Seek and scan, then pick a trail before nightfall.',
-  Ardra: 'Tear-down before rebuild is allowed — clear one mess honestly.',
-  Punarvasu: 'Useful to take a second chance; renew without shame.',
-  Pushya: 'Steady care and right timing beat heroic last-minute pushes.',
-  Ashlesha: 'Read undercurrents carefully; keep ethics tight in intimacy.',
-  Magha: 'Stand in rightful presence; legacy mood wants dignity, not theatre.',
-  'Purva Phalguni': 'Lean into play and creative ease — finish one delight.',
-  'Uttara Phalguni': 'Ally and help in ways that stick; contracts over vibes.',
-  Hasta: 'Hands-on craft wins — fix something tangible today.',
-  Chitra: 'Design beauty into form; close one unfinished ugly loop.',
-  Swati: 'Keep room to move; freedom keeps the mind kind.',
-  Vishakha: 'Pick which summit gets the heat — dual goals dilute you.',
-  Anuradha: 'Loyal orbit around people and causes regulates the day.',
-  Jyeshtha: 'Protect earned skill; quiet rank beats loud proving.',
-  Mula: 'Dig to the root; honesty before polish.',
-  'Purva Ashadha': 'Bold early push — declare, then prove with one step.',
-  'Uttara Ashadha': 'Build a win that lasts through structure and allies.',
-  Shravana: 'Listen deeply before speaking; information first.',
-  Dhanishta: 'Sync with rhythm and teams; timed bursts land better alone.',
-  Shatabhisha: 'Try an odd, systems-level fix others would skip.',
-  'Purva Bhadrapada': 'Aim fierce idealism; do not burn the room.',
-  'Uttara Bhadrapada': 'Patient depth — bring one insight to the surface.',
-  Revati: 'Shepherd the last stretch gently; finish with care.',
-};
 
-const CLIMATE_ADVICE: Record<ClimateLabel, string[]> = {
-  volatile: [
-    'Keep scope small and technique high — skip theatre and overcommitment.',
-    'Useful to name one hard edge out loud, then choose a precise response.',
-  ],
-  tense: [
-    'Precision under pressure beats drama; tighten one deadline, not five.',
-    'Go easy on sharp turns in conversation until the friction softens.',
-  ],
-  peak: [
-    'Ship what is ready and collaborate — soft links want company.',
-    'Good day for alliance, polish, and asking for a favour.',
-  ],
-  quiet: [
-    'Deep work yes, forced pivots no — protect a sparse-sky focus block.',
-    'Useful to rest the nervous system rather than invent urgency.',
-  ],
-  fluid: [
-    'Prefer alliance and polish over confrontation.',
-    'Good day to glide through errands and relational repair.',
-  ],
-};
 
 function buildDayAdvice(args: {
   moonNak: string;
   moonRashi: string;
+  moonPada: number;
   waxing: boolean;
+  tithiName: string;
+  paksha: 'Shukla' | 'Krishna';
   climate: ClimateLabel;
   retrogrades: GrahaId[];
   dasha: { maha: string; antar: string };
@@ -420,69 +391,26 @@ function buildDayAdvice(args: {
   transitAspects: AspectHit[];
   isDemo: boolean;
 }): AdviceBlock {
-  const items: string[] = [];
-  const cites: string[] = [
-    `Moon ${signEn(args.moonRashi)} · ${args.moonNak}`,
-    `Climate ${args.climate}`,
-    `HRS ${args.hrs}`,
-  ];
-
-  const climateBits = CLIMATE_ADVICE[args.climate] || CLIMATE_ADVICE.fluid;
-  items.push(climateBits[0]);
-
-  items.push(
-    NAK_ADVICE[args.moonNak] ||
-      `Work with today’s lunar texture (${args.moonNak}) in small, specific ways.`,
-  );
-
-  if (args.waxing) {
-    items.push(
-      'Moon is waxing — lean into visibility, appetite, and starts more than hard cuts.',
-    );
-    cites.push('Waxing');
-  } else {
-    items.push(
-      'Moon is waning — editing, releasing, and finishing often feel smarter than launching.',
-    );
-    cites.push('Waning');
-  }
-
-  if (args.retrogrades.length > 0) {
-    const r = args.retrogrades.slice(0, 3).join(', ');
-    items.push(
-      `${r} ${args.retrogrades.length === 1 ? 'is' : 'are'} retrograde — useful to review and redo those themes before pushing outward.`,
-    );
-    cites.push(`R: ${r}`);
-  } else if (climateBits[1] && items.length < 5) {
-    items.push(climateBits[1]);
-  }
-
-  if (args.dasha.maha !== '—' && items.length < 5) {
-    const tone = DASHA_TONE[args.dasha.maha] || 'period themes';
-    items.push(
-      `Background chapter is ${args.dasha.maha} (${tone}) — practice that period’s better habits in one concrete way today.`,
-    );
-    cites.push(`Period ${args.dasha.maha}/${args.dasha.antar}`);
-  }
-
-  if (!args.isDemo && args.natalHits[0] && items.length < 5) {
-    const h = args.natalHits[0];
-    items.push(
-      `Transit ${h.a} is lighting natal ${h.b} — tend that personal theme with care, not fatalism.`,
-    );
-    cites.push(`t${h.a} ${h.label} n${h.b}`);
-  } else if (args.hard > args.soft && items.length < 5) {
-    items.push(
-      'Hard links outnumber soft ones — postpone fragile conversations if you can; keep technical work precise.',
-    );
-  }
-
-  return {
-    title: 'Advice for today',
-    items: items.slice(0, 5),
-    cites: [...new Set(cites)].slice(0, 6),
-  };
+  const topAsp = args.transitAspects[0];
+  const frags = collectDayAdviceFrags({
+    moonRashi: args.moonRashi,
+    moonNak: args.moonNak,
+    moonPada: args.moonPada,
+    waxing: args.waxing,
+    tithiName: args.tithiName,
+    paksha: args.paksha,
+    climate: args.climate,
+    soft: args.soft,
+    hard: args.hard,
+    retrogrades: args.retrogrades,
+    dashaMaha: args.dasha.maha,
+    dashaAntar: args.dasha.antar,
+    aspectLabel: topAsp?.label,
+    natalHit: !args.isDemo && args.natalHits.length > 0,
+  });
+  return adviceFromFrags('Advice for today', frags, 5);
 }
+
 
 function buildCards(args: {
   moonNak: string;
@@ -498,11 +426,13 @@ function buildCards(args: {
 }): InsightCard[] {
   const cards: InsightCard[] = [];
 
+  const nkRule = nakshatraRule(args.moonNak);
+  const moonRule = grahaRashiRule('Moon', args.moonRashi);
   cards.push({
     id: 'moon-nak',
     tone: 'sky',
     title: `Moon · ${args.moonNak}`,
-    body: `${NAK_THEMES[args.moonNak] || 'lunar weather'}. In ${signEn(args.moonRashi)}: ${RASHI_MOOD[args.moonRashi] || 'sign tone'}.`,
+    body: `${nkRule?.temperament || NAK_THEMES[args.moonNak] || 'lunar weather'} ${moonRule?.temperament || `In ${signEn(args.moonRashi)}: ${RASHI_MOOD[args.moonRashi] || 'sign tone'}.`}`,
     graha: 'Moon',
   });
 
@@ -648,10 +578,13 @@ export function computeTodayInsights(
       ),
     );
     const d = vimshottari(birthDt, simDate);
+    const pair = dashaPairRule(d.maha, d.antar);
     dasha = {
       maha: d.maha,
       antar: d.antar,
-      tone: `${DASHA_TONE[d.maha] || 'period'} · ${d.antar}: ${DASHA_TONE[d.antar] || '—'}`,
+      tone: pair
+        ? pair.tone
+        : `${DASHA_TONE[d.maha] || 'period'} · ${d.antar}: ${DASHA_TONE[d.antar] || '—'}`,
     };
   } catch {
     /* keep defaults */
@@ -684,7 +617,10 @@ export function computeTodayInsights(
   const daySummary = buildDaySummary({
     moonNak: nak.name,
     moonRashi,
+    moonPada: nak.pada,
     waxing,
+    tithiName: tithi.name,
+    paksha: (tithi.paksha === 'Shukla' ? 'Shukla' : 'Krishna'),
     lagRashi,
     changedVs2h,
     prevRashi,
@@ -703,7 +639,10 @@ export function computeTodayInsights(
   const dayAdvice = buildDayAdvice({
     moonNak: nak.name,
     moonRashi,
+    moonPada: nak.pada,
     waxing,
+    tithiName: tithi.name,
+    paksha: (tithi.paksha === 'Shukla' ? 'Shukla' : 'Krishna'),
     climate,
     retrogrades,
     dasha,
