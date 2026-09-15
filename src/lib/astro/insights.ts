@@ -19,7 +19,7 @@ import {
   wholeSignHouse,
 } from './planets';
 import { vimshottari } from './dasha';
-import { signEn, type AdviceBlock } from './influence';
+import { signEn, HOUSE_LIFE, type AdviceBlock } from './influence';
 import {
   adviceFromFrags,
   collectDayAdviceFrags,
@@ -710,8 +710,9 @@ export function computeTodayInsights(
       gocharaList.push({ graha: g, house: wholeSignHouse(planets[g].sidereal, natalAsc.sidereal) });
     }
     for (const g of gocharaList.slice(0, 2)) {
+      const life = HOUSE_LIFE[g.house] || 'a live area of day-to-day life';
       extraFrags.push({
-        text: `${g.graha} is lighting house-${g.house} themes for a while — treat it as weather, not a verdict, and keep the next step small.`,
+        text: `${g.graha} is highlighting ${life} for a while — treat it as weather, not a verdict, and keep the next step small.`,
         specificity: 71,
         cite: `gochara ${g.graha}`,
       });

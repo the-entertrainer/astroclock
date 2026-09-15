@@ -8,12 +8,18 @@ const BANNED_BODY =
 const ASPECT_SLANG =
   /\b(oppose|conjunct|sextile|square|trine)\b/i;
 
+/** Profile / summary slogans that produce nonsense when stitched */
+const BANNED_PROFILE_SLANG =
+  /\b(rising ruler|lights? up|long road|negotiate daily|neither should win|appearance and feeling|\bmask\b|road show|mood should\s*[—–-])/i;
+
 /** Banned patterns that must not appear in user-visible body copy */
 export const BANNED_PROSE_PATTERNS: RegExp[] = [
   BANNED_BODY,
+  BANNED_PROFILE_SLANG,
   /\d+(\.\d+)?°/, // raw degrees in body
   /\b(applying|separating)\b/i,
   /\b(HRS|harmonic resonance)\b/i,
+  /\bhouse-\d+\b/i, // prefer life labels over house-N
 ];
 
 export function hasBannedProse(text: string): boolean {

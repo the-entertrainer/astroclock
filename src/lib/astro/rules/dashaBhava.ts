@@ -308,51 +308,51 @@ export const DASHA_BHAVA: Record<GrahaId, Record<number, DashaBhavaRule>> = {
   },
   Saturn: {
     1: {
-      tone: 'This Saturn chapter puts the spotlight on how you show up and your body-energy. You take the long road and notice what’s unfinished through that area of life.',
+      tone: 'This Saturn chapter puts the spotlight on how you show up and your body-energy. You build patiently and finish what others abandon through that area of life.',
       advice: 'Check your energy before you overcommit. In this chapter: take one sober step instead of a grand promise. Prefer stay disciplined but leave room to breathe.',
     },
     2: {
-      tone: 'This Saturn chapter puts the spotlight on money talk and what you treat as valuable. You take the long road and notice what’s unfinished through that area of life.',
+      tone: 'This Saturn chapter puts the spotlight on money talk and what you treat as valuable. You build patiently and finish what others abandon through that area of life.',
       advice: 'Slow the impulse spend; speak a beat slower. In this chapter: take one sober step instead of a grand promise. Prefer stay disciplined but leave room to breathe.',
     },
     3: {
-      tone: 'This Saturn chapter puts the spotlight on courage, short trips, and everyday hustle. You take the long road and notice what’s unfinished through that area of life.',
+      tone: 'This Saturn chapter puts the spotlight on courage, short trips, and everyday hustle. You build patiently and finish what others abandon through that area of life.',
       advice: 'Send the message or take the short bold step. In this chapter: take one sober step instead of a grand promise. Prefer stay disciplined but leave room to breathe.',
     },
     4: {
-      tone: 'This Saturn chapter puts the spotlight on home, family base, and private mood. You take the long road and notice what’s unfinished through that area of life.',
+      tone: 'This Saturn chapter puts the spotlight on home, family base, and private mood. You build patiently and finish what others abandon through that area of life.',
       advice: 'Tidy the base; protect private mood. In this chapter: take one sober step instead of a grand promise. Prefer stay disciplined but leave room to breathe.',
     },
     5: {
-      tone: 'This Saturn chapter puts the spotlight on creativity, romance, play, and mentees. You take the long road and notice what’s unfinished through that area of life.',
+      tone: 'This Saturn chapter puts the spotlight on creativity, romance, play, and mentees. You build patiently and finish what others abandon through that area of life.',
       advice: 'Make something fun or warm toward someone younger. In this chapter: take one sober step instead of a grand promise. Prefer stay disciplined but leave room to breathe.',
     },
     6: {
-      tone: 'This Saturn chapter puts the spotlight on routines, health habits, and daily problems. You take the long road and notice what’s unfinished through that area of life.',
+      tone: 'This Saturn chapter puts the spotlight on routines, health habits, and daily problems. You build patiently and finish what others abandon through that area of life.',
       advice: 'Keep routines tiny; solve one practical problem. In this chapter: take one sober step instead of a grand promise. Prefer stay disciplined but leave room to breathe.',
     },
     7: {
-      tone: 'This Saturn chapter puts the spotlight on one-to-one bonds and fair contracts. You take the long road and notice what’s unfinished through that area of life.',
+      tone: 'This Saturn chapter puts the spotlight on one-to-one bonds and fair contracts. You build patiently and finish what others abandon through that area of life.',
       advice: 'Have the honest one-to-one talk instead of guessing. In this chapter: take one sober step instead of a grand promise. Prefer stay disciplined but leave room to breathe.',
     },
     8: {
-      tone: 'This Saturn chapter puts the spotlight on shared money, intimacy, and big resets. You take the long road and notice what’s unfinished through that area of life.',
+      tone: 'This Saturn chapter puts the spotlight on shared money, intimacy, and big resets. You build patiently and finish what others abandon through that area of life.',
       advice: 'Go gently with shared resources and vulnerability. In this chapter: take one sober step instead of a grand promise. Prefer stay disciplined but leave room to breathe.',
     },
     9: {
-      tone: 'This Saturn chapter puts the spotlight on beliefs, teachers, and the bigger why. You take the long road and notice what’s unfinished through that area of life.',
+      tone: 'This Saturn chapter puts the spotlight on beliefs, teachers, and the bigger why. You build patiently and finish what others abandon through that area of life.',
       advice: 'Make room for a walk, a teacher, or a belief check. In this chapter: take one sober step instead of a grand promise. Prefer stay disciplined but leave room to breathe.',
     },
     10: {
-      tone: 'This Saturn chapter puts the spotlight on career and what you’re known for. You take the long road and notice what’s unfinished through that area of life.',
+      tone: 'This Saturn chapter puts the spotlight on career and what you’re known for. You build patiently and finish what others abandon through that area of life.',
       advice: 'Finish something visible at work. In this chapter: take one sober step instead of a grand promise. Prefer stay disciplined but leave room to breathe.',
     },
     11: {
-      tone: 'This Saturn chapter puts the spotlight on friends, networks, and future goals. You take the long road and notice what’s unfinished through that area of life.',
+      tone: 'This Saturn chapter puts the spotlight on friends, networks, and future goals. You build patiently and finish what others abandon through that area of life.',
       advice: 'Reach a friend or ask for a network favour cleanly. In this chapter: take one sober step instead of a grand promise. Prefer stay disciplined but leave room to breathe.',
     },
     12: {
-      tone: 'This Saturn chapter puts the spotlight on rest, solitude, and quiet endings. You take the long road and notice what’s unfinished through that area of life.',
+      tone: 'This Saturn chapter puts the spotlight on rest, solitude, and quiet endings. You build patiently and finish what others abandon through that area of life.',
       advice: 'Schedule real rest — endings count as work. In this chapter: take one sober step instead of a grand promise. Prefer stay disciplined but leave room to breathe.',
     },
   },
@@ -761,51 +761,51 @@ export const DASHA_RASHI: Record<GrahaId, Record<string, DashaBhavaRule>> = {
   },
   Saturn: {
     Mesha: {
-      tone: 'Your Saturn chapter wears a Aries style — you take the long road and notice what’s unfinished, with that sign’s tempo.',
+      tone: 'Your Saturn chapter wears a Aries style — you build patiently and finish what others abandon, with that sign’s tempo.',
       advice: 'Take one sober step instead of a grand promise. Let a Aries mood colour how you do it; prefer stay disciplined but leave room to breathe.',
     },
     Vrishabha: {
-      tone: 'Your Saturn chapter wears a Taurus style — you take the long road and notice what’s unfinished, with that sign’s tempo.',
+      tone: 'Your Saturn chapter wears a Taurus style — you build patiently and finish what others abandon, with that sign’s tempo.',
       advice: 'Take one sober step instead of a grand promise. Let a Taurus mood colour how you do it; prefer stay disciplined but leave room to breathe.',
     },
     Mithuna: {
-      tone: 'Your Saturn chapter wears a Gemini style — you take the long road and notice what’s unfinished, with that sign’s tempo.',
+      tone: 'Your Saturn chapter wears a Gemini style — you build patiently and finish what others abandon, with that sign’s tempo.',
       advice: 'Take one sober step instead of a grand promise. Let a Gemini mood colour how you do it; prefer stay disciplined but leave room to breathe.',
     },
     Karka: {
-      tone: 'Your Saturn chapter wears a Cancer style — you take the long road and notice what’s unfinished, with that sign’s tempo.',
+      tone: 'Your Saturn chapter wears a Cancer style — you build patiently and finish what others abandon, with that sign’s tempo.',
       advice: 'Take one sober step instead of a grand promise. Let a Cancer mood colour how you do it; prefer stay disciplined but leave room to breathe.',
     },
     Simha: {
-      tone: 'Your Saturn chapter wears a Leo style — you take the long road and notice what’s unfinished, with that sign’s tempo.',
+      tone: 'Your Saturn chapter wears a Leo style — you build patiently and finish what others abandon, with that sign’s tempo.',
       advice: 'Take one sober step instead of a grand promise. Let a Leo mood colour how you do it; prefer stay disciplined but leave room to breathe.',
     },
     Kanya: {
-      tone: 'Your Saturn chapter wears a Virgo style — you take the long road and notice what’s unfinished, with that sign’s tempo.',
+      tone: 'Your Saturn chapter wears a Virgo style — you build patiently and finish what others abandon, with that sign’s tempo.',
       advice: 'Take one sober step instead of a grand promise. Let a Virgo mood colour how you do it; prefer stay disciplined but leave room to breathe.',
     },
     Tula: {
-      tone: 'Your Saturn chapter wears a Libra style — you take the long road and notice what’s unfinished, with that sign’s tempo.',
+      tone: 'Your Saturn chapter wears a Libra style — you build patiently and finish what others abandon, with that sign’s tempo.',
       advice: 'Take one sober step instead of a grand promise. Let a Libra mood colour how you do it; prefer stay disciplined but leave room to breathe.',
     },
     Vrischika: {
-      tone: 'Your Saturn chapter wears a Scorpio style — you take the long road and notice what’s unfinished, with that sign’s tempo.',
+      tone: 'Your Saturn chapter wears a Scorpio style — you build patiently and finish what others abandon, with that sign’s tempo.',
       advice: 'Take one sober step instead of a grand promise. Let a Scorpio mood colour how you do it; prefer stay disciplined but leave room to breathe.',
     },
     Dhanu: {
-      tone: 'Your Saturn chapter wears a Sagittarius style — you take the long road and notice what’s unfinished, with that sign’s tempo.',
+      tone: 'Your Saturn chapter wears a Sagittarius style — you build patiently and finish what others abandon, with that sign’s tempo.',
       advice: 'Take one sober step instead of a grand promise. Let a Sagittarius mood colour how you do it; prefer stay disciplined but leave room to breathe.',
     },
     Makara: {
-      tone: 'Your Saturn chapter wears a Capricorn style — you take the long road and notice what’s unfinished, with that sign’s tempo.',
+      tone: 'Your Saturn chapter wears a Capricorn style — you build patiently and finish what others abandon, with that sign’s tempo.',
       advice: 'Take one sober step instead of a grand promise. Let a Capricorn mood colour how you do it; prefer stay disciplined but leave room to breathe.',
     },
     Kumbha: {
-      tone: 'Your Saturn chapter wears a Aquarius style — you take the long road and notice what’s unfinished, with that sign’s tempo.',
+      tone: 'Your Saturn chapter wears a Aquarius style — you build patiently and finish what others abandon, with that sign’s tempo.',
       advice: 'Take one sober step instead of a grand promise. Let a Aquarius mood colour how you do it; prefer stay disciplined but leave room to breathe.',
     },
     Meena: {
-      tone: 'Your Saturn chapter wears a Pisces style — you take the long road and notice what’s unfinished, with that sign’s tempo.',
+      tone: 'Your Saturn chapter wears a Pisces style — you build patiently and finish what others abandon, with that sign’s tempo.',
       advice: 'Take one sober step instead of a grand promise. Let a Pisces mood colour how you do it; prefer stay disciplined but leave room to breathe.',
     },
   },

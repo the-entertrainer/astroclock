@@ -9,23 +9,23 @@ export interface AspectPairRule {
 export const ASPECT_PAIRS: Record<string, Record<AspectLabel, AspectPairRule>> = {
   'Moon_Saturn': {
     conjunct: {
-      lifeMeaning: 'Moon and Saturn are when these two mix, their themes blend and get louder. That mixes “your moods and needs set the weather” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Moon and Saturn are when these two mix, their themes blend and get louder. That mixes “your moods and needs set the weather” with “you build patiently and finish what others abandon.”',
       advice: 'Name whose voice is whose before you act. For you: eat, drink water, and find a soft landing before hard talks — and also take one sober step instead of a grand promise.',
     },
     sextile: {
-      lifeMeaning: 'Moon and Saturn are they’re offering easier cooperation if you make a small move. That mixes “your moods and needs set the weather” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Moon and Saturn are they’re offering easier cooperation if you make a small move. That mixes “your moods and needs set the weather” with “you build patiently and finish what others abandon.”',
       advice: 'Reach out or polish something already warm. For you: eat, drink water, and find a soft landing before hard talks — and also take one sober step instead of a grand promise.',
     },
     square: {
-      lifeMeaning: 'Moon and Saturn are they’re creating useful friction that wants precision. That mixes “your moods and needs set the weather” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Moon and Saturn are they’re creating useful friction that wants precision. That mixes “your moods and needs set the weather” with “you build patiently and finish what others abandon.”',
       advice: 'Pause before reacting; choose a precise response. For you: eat, drink water, and find a soft landing before hard talks — and also take one sober step instead of a grand promise.',
     },
     trine: {
-      lifeMeaning: 'Moon and Saturn are they’re flowing easily — support you might underuse. That mixes “your moods and needs set the weather” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Moon and Saturn are they’re flowing easily — support you might underuse. That mixes “your moods and needs set the weather” with “you build patiently and finish what others abandon.”',
       advice: 'Ship what’s ready while the glide lasts. For you: eat, drink water, and find a soft landing before hard talks — and also take one sober step instead of a grand promise.',
     },
     oppose: {
-      lifeMeaning: 'Moon and Saturn are they’re sitting across from each other like a debate. That mixes “your moods and needs set the weather” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Moon and Saturn are they’re sitting across from each other like a debate. That mixes “your moods and needs set the weather” with “you build patiently and finish what others abandon.”',
       advice: 'Hear the other side before you dig in. For you: eat, drink water, and find a soft landing before hard talks — and also take one sober step instead of a grand promise.',
     },
   },
@@ -53,23 +53,23 @@ export const ASPECT_PAIRS: Record<string, Record<AspectLabel, AspectPairRule>> =
   },
   'Sun_Saturn': {
     conjunct: {
-      lifeMeaning: 'Sun and Saturn are when these two mix, their themes blend and get louder. That mixes “you want to be seen and lead” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Sun and Saturn are when these two mix, their themes blend and get louder. That mixes “you want to be seen and lead” with “you build patiently and finish what others abandon.”',
       advice: 'Name whose voice is whose before you act. For you: own one clear act of presence, then share the spotlight — and also take one sober step instead of a grand promise.',
     },
     sextile: {
-      lifeMeaning: 'Sun and Saturn are they’re offering easier cooperation if you make a small move. That mixes “you want to be seen and lead” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Sun and Saturn are they’re offering easier cooperation if you make a small move. That mixes “you want to be seen and lead” with “you build patiently and finish what others abandon.”',
       advice: 'Reach out or polish something already warm. For you: own one clear act of presence, then share the spotlight — and also take one sober step instead of a grand promise.',
     },
     square: {
-      lifeMeaning: 'Sun and Saturn are they’re creating useful friction that wants precision. That mixes “you want to be seen and lead” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Sun and Saturn are they’re creating useful friction that wants precision. That mixes “you want to be seen and lead” with “you build patiently and finish what others abandon.”',
       advice: 'Pause before reacting; choose a precise response. For you: own one clear act of presence, then share the spotlight — and also take one sober step instead of a grand promise.',
     },
     trine: {
-      lifeMeaning: 'Sun and Saturn are they’re flowing easily — support you might underuse. That mixes “you want to be seen and lead” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Sun and Saturn are they’re flowing easily — support you might underuse. That mixes “you want to be seen and lead” with “you build patiently and finish what others abandon.”',
       advice: 'Ship what’s ready while the glide lasts. For you: own one clear act of presence, then share the spotlight — and also take one sober step instead of a grand promise.',
     },
     oppose: {
-      lifeMeaning: 'Sun and Saturn are they’re sitting across from each other like a debate. That mixes “you want to be seen and lead” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Sun and Saturn are they’re sitting across from each other like a debate. That mixes “you want to be seen and lead” with “you build patiently and finish what others abandon.”',
       advice: 'Hear the other side before you dig in. For you: own one clear act of presence, then share the spotlight — and also take one sober step instead of a grand promise.',
     },
   },
@@ -185,89 +185,89 @@ export const ASPECT_PAIRS: Record<string, Record<AspectLabel, AspectPairRule>> =
   },
   'Mercury_Saturn': {
     conjunct: {
-      lifeMeaning: 'Mercury and Saturn are when these two mix, their themes blend and get louder. That mixes “your mind wants to talk, learn, and sort details” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Mercury and Saturn are when these two mix, their themes blend and get louder. That mixes “your mind wants to talk, learn, and sort details” with “you build patiently and finish what others abandon.”',
       advice: 'Name whose voice is whose before you act. For you: write it down, then send the short clear version — and also take one sober step instead of a grand promise.',
     },
     sextile: {
-      lifeMeaning: 'Mercury and Saturn are they’re offering easier cooperation if you make a small move. That mixes “your mind wants to talk, learn, and sort details” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Mercury and Saturn are they’re offering easier cooperation if you make a small move. That mixes “your mind wants to talk, learn, and sort details” with “you build patiently and finish what others abandon.”',
       advice: 'Reach out or polish something already warm. For you: write it down, then send the short clear version — and also take one sober step instead of a grand promise.',
     },
     square: {
-      lifeMeaning: 'Mercury and Saturn are they’re creating useful friction that wants precision. That mixes “your mind wants to talk, learn, and sort details” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Mercury and Saturn are they’re creating useful friction that wants precision. That mixes “your mind wants to talk, learn, and sort details” with “you build patiently and finish what others abandon.”',
       advice: 'Pause before reacting; choose a precise response. For you: write it down, then send the short clear version — and also take one sober step instead of a grand promise.',
     },
     trine: {
-      lifeMeaning: 'Mercury and Saturn are they’re flowing easily — support you might underuse. That mixes “your mind wants to talk, learn, and sort details” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Mercury and Saturn are they’re flowing easily — support you might underuse. That mixes “your mind wants to talk, learn, and sort details” with “you build patiently and finish what others abandon.”',
       advice: 'Ship what’s ready while the glide lasts. For you: write it down, then send the short clear version — and also take one sober step instead of a grand promise.',
     },
     oppose: {
-      lifeMeaning: 'Mercury and Saturn are they’re sitting across from each other like a debate. That mixes “your mind wants to talk, learn, and sort details” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Mercury and Saturn are they’re sitting across from each other like a debate. That mixes “your mind wants to talk, learn, and sort details” with “you build patiently and finish what others abandon.”',
       advice: 'Hear the other side before you dig in. For you: write it down, then send the short clear version — and also take one sober step instead of a grand promise.',
     },
   },
   'Jupiter_Saturn': {
     conjunct: {
-      lifeMeaning: 'Jupiter and Saturn are when these two mix, their themes blend and get louder. That mixes “you look for meaning, growth, and a wider frame” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Jupiter and Saturn are when these two mix, their themes blend and get louder. That mixes “you look for meaning, growth, and a wider frame” with “you build patiently and finish what others abandon.”',
       advice: 'Name whose voice is whose before you act. For you: learn something or help someone — skip the lecture — and also take one sober step instead of a grand promise.',
     },
     sextile: {
-      lifeMeaning: 'Jupiter and Saturn are they’re offering easier cooperation if you make a small move. That mixes “you look for meaning, growth, and a wider frame” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Jupiter and Saturn are they’re offering easier cooperation if you make a small move. That mixes “you look for meaning, growth, and a wider frame” with “you build patiently and finish what others abandon.”',
       advice: 'Reach out or polish something already warm. For you: learn something or help someone — skip the lecture — and also take one sober step instead of a grand promise.',
     },
     square: {
-      lifeMeaning: 'Jupiter and Saturn are they’re creating useful friction that wants precision. That mixes “you look for meaning, growth, and a wider frame” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Jupiter and Saturn are they’re creating useful friction that wants precision. That mixes “you look for meaning, growth, and a wider frame” with “you build patiently and finish what others abandon.”',
       advice: 'Pause before reacting; choose a precise response. For you: learn something or help someone — skip the lecture — and also take one sober step instead of a grand promise.',
     },
     trine: {
-      lifeMeaning: 'Jupiter and Saturn are they’re flowing easily — support you might underuse. That mixes “you look for meaning, growth, and a wider frame” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Jupiter and Saturn are they’re flowing easily — support you might underuse. That mixes “you look for meaning, growth, and a wider frame” with “you build patiently and finish what others abandon.”',
       advice: 'Ship what’s ready while the glide lasts. For you: learn something or help someone — skip the lecture — and also take one sober step instead of a grand promise.',
     },
     oppose: {
-      lifeMeaning: 'Jupiter and Saturn are they’re sitting across from each other like a debate. That mixes “you look for meaning, growth, and a wider frame” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Jupiter and Saturn are they’re sitting across from each other like a debate. That mixes “you look for meaning, growth, and a wider frame” with “you build patiently and finish what others abandon.”',
       advice: 'Hear the other side before you dig in. For you: learn something or help someone — skip the lecture — and also take one sober step instead of a grand promise.',
     },
   },
   'Venus_Saturn': {
     conjunct: {
-      lifeMeaning: 'Venus and Saturn are when these two mix, their themes blend and get louder. That mixes “you care about comfort, beauty, and how you bond” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Venus and Saturn are when these two mix, their themes blend and get louder. That mixes “you care about comfort, beauty, and how you bond” with “you build patiently and finish what others abandon.”',
       advice: 'Name whose voice is whose before you act. For you: choose kindness and one beautiful detail on purpose — and also take one sober step instead of a grand promise.',
     },
     sextile: {
-      lifeMeaning: 'Venus and Saturn are they’re offering easier cooperation if you make a small move. That mixes “you care about comfort, beauty, and how you bond” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Venus and Saturn are they’re offering easier cooperation if you make a small move. That mixes “you care about comfort, beauty, and how you bond” with “you build patiently and finish what others abandon.”',
       advice: 'Reach out or polish something already warm. For you: choose kindness and one beautiful detail on purpose — and also take one sober step instead of a grand promise.',
     },
     square: {
-      lifeMeaning: 'Venus and Saturn are they’re creating useful friction that wants precision. That mixes “you care about comfort, beauty, and how you bond” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Venus and Saturn are they’re creating useful friction that wants precision. That mixes “you care about comfort, beauty, and how you bond” with “you build patiently and finish what others abandon.”',
       advice: 'Pause before reacting; choose a precise response. For you: choose kindness and one beautiful detail on purpose — and also take one sober step instead of a grand promise.',
     },
     trine: {
-      lifeMeaning: 'Venus and Saturn are they’re flowing easily — support you might underuse. That mixes “you care about comfort, beauty, and how you bond” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Venus and Saturn are they’re flowing easily — support you might underuse. That mixes “you care about comfort, beauty, and how you bond” with “you build patiently and finish what others abandon.”',
       advice: 'Ship what’s ready while the glide lasts. For you: choose kindness and one beautiful detail on purpose — and also take one sober step instead of a grand promise.',
     },
     oppose: {
-      lifeMeaning: 'Venus and Saturn are they’re sitting across from each other like a debate. That mixes “you care about comfort, beauty, and how you bond” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Venus and Saturn are they’re sitting across from each other like a debate. That mixes “you care about comfort, beauty, and how you bond” with “you build patiently and finish what others abandon.”',
       advice: 'Hear the other side before you dig in. For you: choose kindness and one beautiful detail on purpose — and also take one sober step instead of a grand promise.',
     },
   },
   'Mars_Saturn': {
     conjunct: {
-      lifeMeaning: 'Mars and Saturn are when these two mix, their themes blend and get louder. That mixes “you push hard for what you want” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Mars and Saturn are when these two mix, their themes blend and get louder. That mixes “you push hard for what you want” with “you build patiently and finish what others abandon.”',
       advice: 'Name whose voice is whose before you act. For you: put the heat into one clean effort, not a public fight — and also take one sober step instead of a grand promise.',
     },
     sextile: {
-      lifeMeaning: 'Mars and Saturn are they’re offering easier cooperation if you make a small move. That mixes “you push hard for what you want” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Mars and Saturn are they’re offering easier cooperation if you make a small move. That mixes “you push hard for what you want” with “you build patiently and finish what others abandon.”',
       advice: 'Reach out or polish something already warm. For you: put the heat into one clean effort, not a public fight — and also take one sober step instead of a grand promise.',
     },
     square: {
-      lifeMeaning: 'Mars and Saturn are they’re creating useful friction that wants precision. That mixes “you push hard for what you want” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Mars and Saturn are they’re creating useful friction that wants precision. That mixes “you push hard for what you want” with “you build patiently and finish what others abandon.”',
       advice: 'Pause before reacting; choose a precise response. For you: put the heat into one clean effort, not a public fight — and also take one sober step instead of a grand promise.',
     },
     trine: {
-      lifeMeaning: 'Mars and Saturn are they’re flowing easily — support you might underuse. That mixes “you push hard for what you want” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Mars and Saturn are they’re flowing easily — support you might underuse. That mixes “you push hard for what you want” with “you build patiently and finish what others abandon.”',
       advice: 'Ship what’s ready while the glide lasts. For you: put the heat into one clean effort, not a public fight — and also take one sober step instead of a grand promise.',
     },
     oppose: {
-      lifeMeaning: 'Mars and Saturn are they’re sitting across from each other like a debate. That mixes “you push hard for what you want” with “you take the long road and notice what’s unfinished.”',
+      lifeMeaning: 'Mars and Saturn are they’re sitting across from each other like a debate. That mixes “you push hard for what you want” with “you build patiently and finish what others abandon.”',
       advice: 'Hear the other side before you dig in. For you: put the heat into one clean effort, not a public fight — and also take one sober step instead of a grand promise.',
     },
   },

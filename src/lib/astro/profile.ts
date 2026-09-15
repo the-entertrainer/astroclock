@@ -24,8 +24,6 @@ import {
 import {
   adviceFromFrags,
   collectProfileAdviceFrags,
-  collectProfileFrags,
-  stitchParagraphs,
   grahaRashiRule,
   nakshatraRule,
   grahaBhavaRule,
@@ -34,10 +32,7 @@ import {
   detectYogas,
   atmakarakaLite,
   atmakarakaWording,
-  lagneshaInHouseText,
-  moonLordInHouseText,
   lordOfRashi,
-  type Frag,
 } from './rules';
 import { lonMapFromPlanets } from './planets';
 
@@ -56,32 +51,32 @@ const RASHI_LORDS: GrahaId[] = [
   'Jupiter',
 ];
 
-/** Rising-sign character sketches — plain English */
-const LAGNA_ESSENCE: Record<string, string> = {
+/** Rising-sign outer style — how they meet the world (plain English) */
+const LAGNA_OUTER_STYLE: Record<string, string> = {
   Mesha:
-    'You tend to meet life head-on. People often read you as someone who starts before the committee finishes talking — warm under pressure, impatient with fog, and more honest in motion than in waiting rooms. Initiative is your comfort zone; restlessness shows when nothing needs doing.',
+    'You meet the world head-on. People often read you as someone who starts before the committee finishes talking — warm under pressure, impatient with fog, and more honest in motion than in waiting rooms. Initiative is your comfort zone; restlessness shows when nothing needs doing.',
   Vrishabha:
-    'You build trust slowly and keep what you value. Others may notice a calm body-sense, a good ear for comfort, and loyalty that outlasts fashion. You are not quick to pivot, and that steadiness is a feature — once you commit, you mean it.',
+    'You meet the world by building trust slowly and keeping what you value. Others notice a calm body-sense, a good ear for comfort, and loyalty that outlasts fashion. You are not quick to pivot, and that steadiness is a feature — once you commit, you mean it.',
   Mithuna:
-    'Curiosity is how you orient. You collect people, routes, and ideas the way others collect trophies, and boredom hits harder than hard work. Conversation is oxygen; you feel most yourself when something interesting is being exchanged.',
+    'You meet the world through curiosity. You collect people, routes, and ideas the way others collect trophies, and boredom hits harder than hard work. Conversation is oxygen; you feel most yourself when something interesting is being exchanged.',
   Karka:
-    'You lead from feeling and protectiveness. Belonging matters more than applause, and memory colours how you read a room. When the harbour feels safe, you are generous; when it does not, you shell up until trust returns.',
+    'You meet the world from feeling and protectiveness. Belonging matters more than applause, and memory colours how you read a room. When the harbour feels safe, you are generous; when it does not, you shell up until trust returns.',
   Simha:
-    'You carry a centre. Being invisible feels like a kind of exile, and creative warmth is how you lead — not only ego, but a need to put a signature on things. Recognition soothes; being taken for granted stings.',
+    'You meet the world with a centre. Being invisible feels like a kind of exile, and creative warmth is how you lead — not only ego, but a need to put a signature on things. Recognition soothes; being taken for granted stings.',
   Kanya:
-    'You refine and help through competence. Mess and vagueness bother you; usefulness feels like care. People may lean on your quiet precision more than they notice, and critique is often your love language in disguise.',
+    'You meet the world by refining and helping through competence. Mess and vagueness bother you; usefulness feels like care. People may lean on your quiet precision more than they notice, and critique is often your love language in disguise.',
   Tula:
-    'You weigh and relate. Fairness is not abstract — discord in a room becomes discord in your chest. Partnership and aesthetics are how you think, and you prefer negotiated grace to blunt force.',
+    'You meet the world by weighing and relating. Fairness is not abstract — discord in a room becomes discord in your chest. Partnership and aesthetics are how you think, and you prefer negotiated grace to blunt force.',
   Vrischika:
-    'You go deep or you go nowhere. Trust is a gate, not a greeting, and intensity sits under a still surface. Half-measures starve you; real loyalty and real honesty wake you up.',
+    'You meet the world deep or not at all. Trust is a gate, not a greeting, and intensity sits under a still surface. Half-measures starve you; real loyalty and real honesty wake you up.',
   Dhanu:
-    'You aim past the near field. Meaning, humour, and horizon keep you kind; petty loops make you irritable. You bond over shared quests more than shared furniture, and you need room to roam — literally or through learning.',
+    'You meet the world aiming past the near field. Meaning, humour, and horizon keep you kind; petty loops make you irritable. You bond over shared quests more than shared furniture, and you need room to roam — literally or through learning.',
   Makara:
-    'You climb with structure. Reliability outranks charm, and time is a collaborator. Status, for you, is sediment of work kept — not costume. Softness arrives after respect is earned.',
+    'You meet the world by climbing with structure. Reliability outranks charm, and time is a collaborator. Status, for you, is sediment of work kept — not costume. Softness arrives after respect is earned.',
   Kumbha:
-    'You network the future. Friendship-toned bonds often outlast romantic theatre, and you feel at home among odd, systems-minded people. Detachment is a shield; belonging still matters, just not on traditional terms.',
+    'You meet the world by networking the future. Friendship-toned bonds often outlast romantic theatre, and you feel at home among odd, systems-minded people. Detachment is a shield; belonging still matters, just not on traditional terms.',
   Meena:
-    'You feel through porous edges. Empathy and imagination are gifts and costs — you absorb atmospheres, so company is climate. Art, sanctuary, and quiet service suit you when feet stay on enough ground to deliver.',
+    'You meet the world through porous edges. Empathy and imagination are gifts and costs — you absorb atmospheres, so company is climate. Art, sanctuary, and quiet service suit you when feet stay on enough ground to deliver.',
 };
 
 const MOON_SIGN: Record<string, string> = {
@@ -141,6 +136,75 @@ const NAK_MIND: Record<string, string> = {
   Revati: 'You shepherd people across finish lines gently.',
 };
 
+
+/** Life-area labels for summary (no "house N" in body) */
+const SUMMARY_LIFE: Record<number, string> = {
+  1: 'how you show up, body-energy, and first impressions',
+  2: 'money habits, speech, and what you treat as valuable',
+  3: 'courage, siblings and peers, short trips, and everyday hustle',
+  4: 'home, family base, private mood, and feeling settled',
+  5: 'creative work, romance, play, and mentoring',
+  6: 'work routines, health habits, rivals, and daily problem-solving',
+  7: 'one-to-one relationships, contracts, and fair exchange',
+  8: 'shared resources, intimacy, research, and big life resets',
+  9: 'beliefs, teachers, long journeys, and the bigger why',
+  10: 'career, public reputation, and what you are known for',
+  11: 'friends, networks, gains, and future-facing goals',
+  12: 'rest, solitude, endings, travel abroad, and quiet recharge',
+};
+
+const PLANET_ROLE: Record<string, string> = {
+  Sun: 'brings identity-heat and a need to lead',
+  Moon: 'sets emotional weather and care needs',
+  Mars: 'pushes with courage and competitive heat',
+  Mercury: 'wants talk, learning, and sorting details',
+  Jupiter: 'expands meaning, grace, and generosity',
+  Venus: 'seeks comfort, beauty, and bonding',
+  Saturn: 'builds patiently and finishes what others abandon',
+  Rahu: 'hungers for the unfamiliar',
+  Ketu: 'simplifies, releases, and knows some things sideways',
+};
+
+function softPadaNuance(pada: number): string {
+  if (pada === 1) return 'Early under this Moon, you often prefer to begin before you polish.';
+  if (pada === 2) return 'Under this Moon, you often prefer to consolidate what already works.';
+  if (pada === 3) return 'Under this Moon, you often prefer to refine under a little pressure.';
+  return 'Under this Moon, you often prefer to close loops and advise rather than restart.';
+}
+
+/**
+ * Structured Profile summary essay — 2–3 short paragraphs:
+ * 1 outer style (Lagna), 2 inner weather (Moon + nak), 3 where life leans (rising-lord life area).
+ * Exported for design tests with forced rashis.
+ */
+export function buildProfileSummaryEssay(args: {
+  lagRashi: string;
+  moonRashi: string;
+  moonNak: string;
+  moonPada: number;
+  lagLord: GrahaId;
+  lagLordHouse: number;
+  lagLordRetro?: boolean;
+}): string {
+  const outer =
+    LAGNA_OUTER_STYLE[args.lagRashi] ||
+    `You meet the world with a ${signEn(args.lagRashi)} tone — distinctive, readable, and hard to fake.`;
+
+  const moonBase = MOON_SIGN[args.moonRashi] || `Emotionally you carry a ${signEn(args.moonRashi)} climate.`;
+  const nakBit = NAK_MIND[args.moonNak] || '';
+  const padaBit = softPadaNuance(args.moonPada);
+  const inner = [moonBase, nakBit, padaBit].filter(Boolean).join(' ');
+
+  const life = SUMMARY_LIFE[args.lagLordHouse] || 'a core life theme';
+  const role = PLANET_ROLE[args.lagLord] || 'shapes how effort lands';
+  let lean = `${args.lagLord} leans into ${life}. There, ${role} — that is where your outer style invests most consistently.`;
+  if (args.lagLordRetro) {
+    lean += ' Because that planet turns inward first, the theme often ripens through revisit and revise before it shows.';
+  }
+
+  return [outer, inner, lean].join('\n\n');
+}
+
 const SUN_DRIVE: Record<string, string> = {
   Mesha: 'Vitality peaks when you pioneer. Identity forges in clean contests, not waiting rooms.',
   Vrishabha: 'You shine by building and keeping — body, craft, and valued things steady the will.',
@@ -152,7 +216,7 @@ const SUN_DRIVE: Record<string, string> = {
   Vrischika: 'Crisis alchemy and intimate power renew you. Motive integrity is the real test.',
   Dhanu: 'Belief quests and far aims wake the will. Avoid dogma that freezes the quest.',
   Makara: 'Achievement architecture and earned status sustain you. Soften so the climb is not a cage.',
-  Kumbha: 'Innovators and future tribes light you up. Still belong somewhere specific.',
+  Kumbha: 'Innovators and future tribes wake your will. Still belong somewhere specific.',
   Meena: 'Imagination and compassionate cause immerse you. Keep a daily vessel so you do not dissolve.',
 };
 
@@ -233,46 +297,19 @@ function houseWeight(grahas: ProfilePlacement[]): Map<number, number> {
 function buildSummary(args: {
   lagRashi: string;
   moon: ProfilePlacement;
-  sun: ProfilePlacement;
   lagLord: GrahaId;
   lagLordP: ProfilePlacement;
-  dasha: { maha: string; antar: string };
-  dashaLordHouse?: number;
-  dashaLordRashi?: string;
-  extra?: Frag[];
 }): string {
-  const frags = collectProfileFrags({
-    lagna: args.lagRashi,
+  return buildProfileSummaryEssay({
+    lagRashi: args.lagRashi,
     moonRashi: args.moon.rashi,
-    moonHouse: args.moon.house,
     moonNak: args.moon.nakshatra,
     moonPada: args.moon.pada,
-    sunRashi: args.sun.rashi,
-    sunHouse: args.sun.house,
     lagLord: args.lagLord,
-    lagLordRashi: args.lagLordP.rashi,
     lagLordHouse: args.lagLordP.house,
     lagLordRetro: args.lagLordP.retrograde,
-    dashaMaha: args.dasha.maha,
-    dashaAntar: args.dasha.antar,
-    dashaLordHouse: args.dashaLordHouse,
-    dashaLordRashi: args.dashaLordRashi,
-    extra: args.extra,
   });
-  const stitched = stitchParagraphs(frags, { perPara: 3, maxFrags: 9, maxChars: 1200 });
-  if (stitched) return stitched;
-
-  // Fallback (should rarely hit)
-  const lagEn = signEn(args.lagRashi);
-  const blend = lagnaMoonBlend(args.lagRashi, args.moon.rashi);
-  return (
-    blend ||
-    `With ${lagEn} rising and a ${signEn(args.moon.rashi)} Moon, outer style and inner weather sketch how you meet life.`
-  );
 }
-
-
-
 
 function buildProfileAdvice(args: {
   lagRashi: string;
@@ -304,9 +341,9 @@ function buildProfileAdvice(args: {
     const gb = grahaBhavaRule(args.lagLord, h);
     if (gb) {
       frags.push({
-        text: `Your loudest life area is house ${h} — ${gb.advice}`,
+        text: `Your loudest life area leans toward ${SUMMARY_LIFE[h] || HOUSE_LIFE[h] || 'daily focus'} — ${gb.advice}`,
         specificity: 48,
-        cite: `Loud house ${h}`,
+        cite: `Loud area ${h}`,
       });
     }
   }
@@ -396,34 +433,14 @@ export function computeNatalProfile(
   const lonMap = lonMapFromPlanets(planets);
   const yogaHits = detectYogas(lonMap);
   const ak = atmakarakaLite(grahas.map((g) => ({ id: g.id, degree: g.degree })));
-  const extraFrags: Frag[] = [];
-  for (const y of yogaHits) {
-    extraFrags.push({ text: y.body, specificity: 82, cite: y.id });
-  }
-  if (ak) {
-    const aw = atmakarakaWording(ak.id, ak.degree);
-    extraFrags.push({ text: aw.body, specificity: 81, cite: `AK ${ak.id}` });
-  }
-  const lagChain = lagneshaInHouseText(lagLord, lagLordP.house);
-  extraFrags.push({ text: lagChain.body, specificity: 79, cite: 'rising ruler' });
   const mLord = lordOfRashi(moon.rashi);
   const mLordP = byId[mLord];
-  if (mLordP) {
-    const ml = moonLordInHouseText(moon.rashi, mLordP.house, mLord);
-    extraFrags.push({ text: ml.body, specificity: 78, cite: 'moon lord' });
-  }
-  const dashaLordP = byId[dasha.maha as GrahaId];
 
   const summary = buildSummary({
     lagRashi,
     moon,
-    sun,
     lagLord,
     lagLordP,
-    dasha,
-    dashaLordHouse: dashaLordP?.house,
-    dashaLordRashi: dashaLordP?.rashi,
-    extra: extraFrags,
   });
 
   const advice = buildProfileAdvice({
@@ -438,17 +455,13 @@ export function computeNatalProfile(
 
   const sections: ProfileSection[] = [];
 
-  const blendNote =
-    lagnaMoonBlend(lagRashi, moon.rashi) ||
-    (lagRashi === moon.rashi
-      ? `Rising and Moon share ${signEn(lagRashi)}, so outer style and inner weather often agree — you may feel “of a piece,” and life asks you to refine one strong tone rather than juggle two.`
-      : `Rising in ${signEn(lagRashi)} with a ${signEn(moon.rashi)} Moon means appearance and feeling negotiate daily. Neither mask nor mood should win every argument; skill is learning when each leads.`);
-
+  const blendNote = lagnaMoonBlend(lagRashi, moon.rashi) || '';
   const lagLordHouse = grahaBhavaRule(lagLord, lagLordP.house);
+  const lifeLean = SUMMARY_LIFE[lagLordP.house] || HOUSE_LIFE[lagLordP.house] || 'a core life theme';
   sections.push({
     id: 'essence',
     title: 'How you come across',
-    body: `${LAGNA_ESSENCE[lagRashi] || ''} ${blendNote} Your rising ruler (${lagLord}) sits in the area of ${HOUSE_LIFE[lagLordP.house] || 'life focus'}${lagLordP.retrograde ? ' — and because it is retrograde, that theme often turns inward first: revisit, revise, then show.' : '.'}${lagLordHouse ? ' ' + lagLordHouse.lifeArea : ''}`,
+    body: `${LAGNA_OUTER_STYLE[lagRashi] || ''} ${blendNote} ${lagLord} leans into ${lifeLean}${lagLordP.retrograde ? ' — and because it turns inward first, that theme often ripens through revisit and revise before it shows.' : '.'}${lagLordHouse ? ' ' + lagLordHouse.lifeArea : ''}`,
     cites: [
       `Rising ${signEn(lagRashi)} ${lagDeg.toFixed(1)}°`,
       `Moon in ${signEn(moon.rashi)}, house ${moon.house}`,
@@ -511,7 +524,7 @@ export function computeNatalProfile(
   sections.push({
     id: 'behaviour',
     title: 'Behavioural style',
-    body: `Your rising ruler ${lagLord} in ${signEn(lagLordP.rashi)} (house of ${HOUSE_LIFE[lagLordP.house] || 'focus'}) is a primary behavioural engine${lagLordP.retrograde ? ' — retrograde means you may rehearse the same lesson until style ripens' : ''}. Mercury: ${mercLine}; that shows in ${HOUSE_LIFE[merc.house] || 'daily life'}. Venus: ${venLine}; routed through ${HOUSE_LIFE[ven.house] || 'relating'}. Mars: ${marsLine}; spent on ${HOUSE_LIFE[mars.house] || 'effort'}. Together they describe how you move, argue, desire, and decide on ordinary days.`,
+    body: `${lagLord} in ${signEn(lagLordP.rashi)} (area of ${HOUSE_LIFE[lagLordP.house] || 'focus'}) is a primary behavioural engine${lagLordP.retrograde ? ' — retrograde means you may rehearse the same lesson until style ripens' : ''}. Mercury: ${mercLine}; that shows in ${HOUSE_LIFE[merc.house] || 'daily life'}. Venus: ${venLine}; routed through ${HOUSE_LIFE[ven.house] || 'relating'}. Mars: ${marsLine}; spent on ${HOUSE_LIFE[mars.house] || 'effort'}. Together they describe how you move, argue, desire, and decide on ordinary days.`,
     cites: [
       citeGraha(lagLordP),
       citeGraha(merc),
@@ -561,6 +574,26 @@ export function computeNatalProfile(
     body: growth,
     cites: [citeGraha(sat), citeGraha(rahu), citeGraha(ketu), citeGraha(mars)],
   });
+
+  if (ak) {
+    const aw = atmakarakaWording(ak.id, ak.degree);
+    sections.push({
+      id: 'atmakaraka',
+      title: 'A quiet signature',
+      body: `${aw.body} ${aw.advice}`,
+      cites: [`AK ${ak.id}`],
+    });
+  }
+
+  if (mLordP) {
+    const mlLife = SUMMARY_LIFE[mLordP.house] || HOUSE_LIFE[mLordP.house] || 'daily life';
+    sections.push({
+      id: 'moon-lord',
+      title: 'What steadies the heart',
+      body: `${mLord} steers your ${signEn(moon.rashi)} Moon and leans into ${mlLife}. Tend those themes when emotional weather gets loud.`,
+      cites: [citeGraha(mLordP)],
+    });
+  }
 
   const pair = dashaPairRule(dasha.maha, dasha.antar);
   if (yogaHits.length) {

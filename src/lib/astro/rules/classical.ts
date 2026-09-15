@@ -41,6 +41,22 @@ export function lordOfRashi(rashi: string): GrahaId {
 export const DUSTHANA = new Set([6, 8, 12]);
 export const UPACHAYA = new Set([3, 6, 10, 11]);
 
+const LIFE_LABEL: Record<number, string> = {
+  1: 'how you show up and first impressions',
+  2: 'money, speech, and values',
+  3: 'courage, peers, and everyday hustle',
+  4: 'home, family base, and private mood',
+  5: 'creative work, romance, play, and mentoring',
+  6: 'routines, health habits, and daily problems',
+  7: 'one-to-one relationships and contracts',
+  8: 'shared resources, intimacy, and big resets',
+  9: 'beliefs, teachers, and the bigger why',
+  10: 'career and public reputation',
+  11: 'friends, networks, and future goals',
+  12: 'rest, solitude, and quiet recharge',
+};
+
+
 export function houseToneFlag(house: number): {
   flag: 'dusthana' | 'upachaya' | 'neutral';
   note: string;
@@ -49,19 +65,21 @@ export function houseToneFlag(house: number): {
     // house 6 is both
     return {
       flag: 'dusthana',
-      note: 'House 6 mixes challenge and growth — skill under friction, not doom.',
+      note: 'Routines and rivals mix challenge and growth — skill under friction, not doom.',
     };
   }
   if (DUSTHANA.has(house)) {
+    const life = LIFE_LABEL[house] || 'that life area';
     return {
       flag: 'dusthana',
-      note: `House ${house} is a classic pressure zone — meet it as training, not as a verdict.`,
+      note: `${life.charAt(0).toUpperCase() + life.slice(1)} can be a pressure zone — meet it as training, not as a verdict.`,
     };
   }
   if (UPACHAYA.has(house)) {
+    const life = LIFE_LABEL[house] || 'that life area';
     return {
       flag: 'upachaya',
-      note: `House ${house} tends to improve with effort — gains grow when you show up repeatedly.`,
+      note: `${life.charAt(0).toUpperCase() + life.slice(1)} tends to improve with effort — gains grow when you show up repeatedly.`,
     };
   }
   return {
@@ -76,10 +94,11 @@ export function lagneshaInHouseText(
 ): { body: string; advice: string } {
   const gb = grahaBhavaRule(lagLord, house);
   const tone = houseToneFlag(house);
-  const body = `The planet that rules how you rise (${lagLord}) lives in house ${house}${gb ? `. ${gb.lifeArea}` : '.'}${tone.note ? ' ' + tone.note : ''}`;
+  const life = LIFE_LABEL[house] || 'a core life theme';
+  const body = `${lagLord} steers your outer style and leans into ${life}${gb ? `. ${gb.lifeArea}` : '.'}${tone.note ? ' ' + tone.note : ''}`;
   const advice =
     gb?.advice ||
-    `Follow where ${lagLord} invests energy in house ${house}; that is a primary behavioural engine.`;
+    `Follow where ${lagLord} invests energy in ${life}; that is a primary behavioural engine.`;
   return { body, advice };
 }
 
@@ -90,10 +109,11 @@ export function moonLordInHouseText(
 ): { body: string; advice: string } {
   const gb = grahaBhavaRule(moonLord, moonLordHouse);
   const tone = houseToneFlag(moonLordHouse);
-  const body = `The planet that steers your Moon sign (${moonLord}) lives in house ${moonLordHouse}${gb ? `. ${gb.lifeArea}` : '.'}${tone.note ? ' ' + tone.note : ''}`;
+  const life = LIFE_LABEL[moonLordHouse] || 'daily life';
+  const body = `${moonLord} steers your Moon sign and leans into ${life}${gb ? `. ${gb.lifeArea}` : '.'}${tone.note ? ' ' + tone.note : ''}`;
   const advice =
     gb?.advice ||
-    `Tend the house-${moonLordHouse} themes to steady your emotional weather.`;
+    `Tend ${life} to steady your emotional weather.`;
   return { body, advice };
 }
 

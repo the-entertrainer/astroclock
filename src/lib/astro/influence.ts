@@ -311,7 +311,7 @@ export function computeInfluence(input: InfluenceInput): InfluenceReading {
   const influencingNow = stitchParagraphs(
     [
       {
-        text: gb?.lifeArea || `In the current sky, ${graha} is lighting up house ${house} topics: ${life}.`,
+        text: gb?.lifeArea || `In the current sky, ${graha} is highlighting ${life}.`,
         specificity: 70,
       },
       {

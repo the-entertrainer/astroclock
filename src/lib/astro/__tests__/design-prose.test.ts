@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { FIXTURE_CHARTS } from '../__fixtures__/charts';
-import { computeNatalProfile, natalLonMap } from '../profile';
+import { computeNatalProfile, natalLonMap, buildProfileSummaryEssay } from '../profile';
 import { computeTodayInsights } from '../insights';
 import { computeInfluence } from '../influence';
 import { findBannedHits, hasBannedProse } from '../rules/prose';
@@ -120,6 +120,56 @@ describe('Design lane — welcome + tour contracts', () => {
       'profile',
     ]);
     expect(ONBOARD_KEY).toBe('astroclock-onboarded-v1');
+  });
+});
+
+
+describe('Design lane — Capricorn rising / Leo Moon summary essay', () => {
+  it('forced Capricorn rising + Leo Moon is grammatical and ban-free', () => {
+    const summary = buildProfileSummaryEssay({
+      lagRashi: 'Makara',
+      moonRashi: 'Simha',
+      moonNak: 'Magha',
+      moonPada: 2,
+      lagLord: 'Saturn',
+      lagLordHouse: 5,
+    });
+
+    // Structure: 2–3 paragraphs
+    const paras = summary.split(/\n\n+/).filter(Boolean);
+    expect(paras.length).toBeGreaterThanOrEqual(2);
+    expect(paras.length).toBeLessThanOrEqual(3);
+
+    // Banned slogans from the failing fixture
+    expect(findBannedHits(summary)).toEqual([]);
+    expect(summary.toLowerCase()).not.toMatch(/rising ruler/);
+    expect(summary.toLowerCase()).not.toMatch(/lights up/);
+    expect(summary.toLowerCase()).not.toMatch(/long road/);
+    expect(summary.toLowerCase()).not.toMatch(/negotiate daily/);
+    expect(summary.toLowerCase()).not.toMatch(/neither should win/);
+    expect(summary.toLowerCase()).not.toMatch(/appearance and feeling/);
+    expect(summary).not.toMatch(/mood should\s*[—–-]/);
+    expect(summary.toLowerCase()).not.toMatch(/road show/);
+    expect(summary.toLowerCase()).not.toMatch(/star-texture/);
+    expect(summary.toLowerCase()).not.toMatch(/pada\s*\d/);
+
+    // Basic grammatical English checks
+    expect(summary).toMatch(/^[A-Z]/); // starts with capital
+    expect(summary).toMatch(/\.(\n\n|$)/); // has sentence endings
+    expect(summary).not.toMatch(/\w\s+—\s*[a-z]*\s*$/); // no dangling em-dash tails
+    // Readable life lean
+    expect(summary).toMatch(/creative work, romance, play, and mentoring/i);
+    expect(summary).toMatch(/Saturn/);
+    // Outer + inner markers
+    expect(summary.toLowerCase()).toMatch(/meet the world|climbing with structure/);
+    expect(summary.toLowerCase()).toMatch(/pride and warmth|recognition soothes/);
+  });
+
+  it('negative Capricorn/Leo fixture still trips the detector', () => {
+    const bad =
+      'You climb with structure... Rising in Capricorn with a Leo Moon means appearance and feeling negotiate daily... when the Capricorn mask leads and when the Leo mood should — neither should win every argument. Blend earned endurance with generous presence. Your rising ruler (Saturn) sits in the area of creativity... Saturn lights up creativity, play, and romance. That’s where you take the long road show most clearly.';
+    expect(hasBannedProse(bad)).toBe(true);
+    expect(findBannedHits(bad).length).toBeGreaterThan(0);
   });
 });
 

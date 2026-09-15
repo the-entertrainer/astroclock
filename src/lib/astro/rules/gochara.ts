@@ -308,51 +308,51 @@ export const GOCHARA_HOUSE: Record<GrahaId, Record<number, GocharaHouseRule>> = 
   },
   Saturn: {
     1: {
-      lifeChapter: 'Saturn is highlighting how you show up and your body-energy for a while. You take the long road and notice what’s unfinished — especially there. This is weather, not a verdict.',
+      lifeChapter: 'Saturn is highlighting how you show up and your body-energy for a while. You build patiently and finish what others abandon — especially there. This is weather, not a verdict.',
       advice: 'Check your energy before you overcommit. Meanwhile, take one sober step instead of a grand promise.',
     },
     2: {
-      lifeChapter: 'Saturn is highlighting money talk and what you treat as valuable for a while. You take the long road and notice what’s unfinished — especially there. This is weather, not a verdict.',
+      lifeChapter: 'Saturn is highlighting money talk and what you treat as valuable for a while. You build patiently and finish what others abandon — especially there. This is weather, not a verdict.',
       advice: 'Slow the impulse spend; speak a beat slower. Meanwhile, take one sober step instead of a grand promise.',
     },
     3: {
-      lifeChapter: 'Saturn is highlighting courage, short trips, and everyday hustle for a while. You take the long road and notice what’s unfinished — especially there. This is weather, not a verdict.',
+      lifeChapter: 'Saturn is highlighting courage, short trips, and everyday hustle for a while. You build patiently and finish what others abandon — especially there. This is weather, not a verdict.',
       advice: 'Send the message or take the short bold step. Meanwhile, take one sober step instead of a grand promise.',
     },
     4: {
-      lifeChapter: 'Saturn is highlighting home, family base, and private mood for a while. You take the long road and notice what’s unfinished — especially there. This is weather, not a verdict.',
+      lifeChapter: 'Saturn is highlighting home, family base, and private mood for a while. You build patiently and finish what others abandon — especially there. This is weather, not a verdict.',
       advice: 'Tidy the base; protect private mood. Meanwhile, take one sober step instead of a grand promise.',
     },
     5: {
-      lifeChapter: 'Saturn is highlighting creativity, romance, play, and mentees for a while. You take the long road and notice what’s unfinished — especially there. This is weather, not a verdict.',
+      lifeChapter: 'Saturn is highlighting creativity, romance, play, and mentees for a while. You build patiently and finish what others abandon — especially there. This is weather, not a verdict.',
       advice: 'Make something fun or warm toward someone younger. Meanwhile, take one sober step instead of a grand promise.',
     },
     6: {
-      lifeChapter: 'Saturn is highlighting routines, health habits, and daily problems for a while. You take the long road and notice what’s unfinished — especially there. This is weather, not a verdict.',
+      lifeChapter: 'Saturn is highlighting routines, health habits, and daily problems for a while. You build patiently and finish what others abandon — especially there. This is weather, not a verdict.',
       advice: 'Keep routines tiny; solve one practical problem. Meanwhile, take one sober step instead of a grand promise.',
     },
     7: {
-      lifeChapter: 'Saturn is highlighting one-to-one bonds and fair contracts for a while. You take the long road and notice what’s unfinished — especially there. This is weather, not a verdict.',
+      lifeChapter: 'Saturn is highlighting one-to-one bonds and fair contracts for a while. You build patiently and finish what others abandon — especially there. This is weather, not a verdict.',
       advice: 'Have the honest one-to-one talk instead of guessing. Meanwhile, take one sober step instead of a grand promise.',
     },
     8: {
-      lifeChapter: 'Saturn is highlighting shared money, intimacy, and big resets for a while. You take the long road and notice what’s unfinished — especially there. This is weather, not a verdict.',
+      lifeChapter: 'Saturn is highlighting shared money, intimacy, and big resets for a while. You build patiently and finish what others abandon — especially there. This is weather, not a verdict.',
       advice: 'Go gently with shared resources and vulnerability. Meanwhile, take one sober step instead of a grand promise.',
     },
     9: {
-      lifeChapter: 'Saturn is highlighting beliefs, teachers, and the bigger why for a while. You take the long road and notice what’s unfinished — especially there. This is weather, not a verdict.',
+      lifeChapter: 'Saturn is highlighting beliefs, teachers, and the bigger why for a while. You build patiently and finish what others abandon — especially there. This is weather, not a verdict.',
       advice: 'Make room for a walk, a teacher, or a belief check. Meanwhile, take one sober step instead of a grand promise.',
     },
     10: {
-      lifeChapter: 'Saturn is highlighting career and what you’re known for for a while. You take the long road and notice what’s unfinished — especially there. This is weather, not a verdict.',
+      lifeChapter: 'Saturn is highlighting career and what you’re known for for a while. You build patiently and finish what others abandon — especially there. This is weather, not a verdict.',
       advice: 'Finish something visible at work. Meanwhile, take one sober step instead of a grand promise.',
     },
     11: {
-      lifeChapter: 'Saturn is highlighting friends, networks, and future goals for a while. You take the long road and notice what’s unfinished — especially there. This is weather, not a verdict.',
+      lifeChapter: 'Saturn is highlighting friends, networks, and future goals for a while. You build patiently and finish what others abandon — especially there. This is weather, not a verdict.',
       advice: 'Reach a friend or ask for a network favour cleanly. Meanwhile, take one sober step instead of a grand promise.',
     },
     12: {
-      lifeChapter: 'Saturn is highlighting rest, solitude, and quiet endings for a while. You take the long road and notice what’s unfinished — especially there. This is weather, not a verdict.',
+      lifeChapter: 'Saturn is highlighting rest, solitude, and quiet endings for a while. You build patiently and finish what others abandon — especially there. This is weather, not a verdict.',
       advice: 'Schedule real rest — endings count as work. Meanwhile, take one sober step instead of a grand promise.',
     },
   },

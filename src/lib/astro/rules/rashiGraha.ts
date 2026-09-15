@@ -308,51 +308,51 @@ export const RASHI_GRAHA: Record<GrahaId, Record<string, GrahaRashiRule>> = {
   },
   Saturn: {
     Mesha: {
-      temperament: 'In Aries, you take the long road in a fast and head-on way.',
+      temperament: 'In Aries, you build patiently in a fast and head-on way.',
       advice: 'Start before perfect clarity. Also take one sober step instead of a grand promise — and watch endless waiting.',
     },
     Vrishabha: {
-      temperament: 'In Taurus, you take the long road in a steady and sensory way.',
+      temperament: 'In Taurus, you build patiently in a steady and sensory way.',
       advice: 'Build comfort before big pivots. Also take one sober step instead of a grand promise — and watch fashion-chasing change.',
     },
     Mithuna: {
-      temperament: 'In Gemini, you take the long road in a curious and talkative way.',
+      temperament: 'In Gemini, you build patiently in a curious and talkative way.',
       advice: 'Finish one channel. Also take one sober step instead of a grand promise — and watch boredom dressed as multitasking.',
     },
     Karka: {
-      temperament: 'In Cancer, you take the long road in a protective and feeling-led way.',
+      temperament: 'In Cancer, you build patiently in a protective and feeling-led way.',
       advice: 'Secure the base before leading. Also take one sober step instead of a grand promise — and watch absorbing every room.',
     },
     Simha: {
-      temperament: 'In Leo, you take the long road in a warm and creative way.',
+      temperament: 'In Leo, you build patiently in a warm and creative way.',
       advice: 'Ask for recognition, then share it. Also take one sober step instead of a grand promise — and watch silent resentment.',
     },
     Kanya: {
-      temperament: 'In Virgo, you take the long road in a precise and useful way.',
+      temperament: 'In Virgo, you build patiently in a precise and useful way.',
       advice: 'Soften critique with one kind line. Also take one sober step instead of a grand promise — and watch perfection as a cage.',
     },
     Tula: {
-      temperament: 'In Libra, you take the long road in a fair and partnership-minded way.',
+      temperament: 'In Libra, you build patiently in a fair and partnership-minded way.',
       advice: 'Name your preference before negotiating. Also take one sober step instead of a grand promise — and watch swallowing discord.',
     },
     Vrischika: {
-      temperament: 'In Scorpio, you take the long road in a intense and all-or-nothing way.',
+      temperament: 'In Scorpio, you build patiently in a intense and all-or-nothing way.',
       advice: 'Choose honesty over half-open doors. Also take one sober step instead of a grand promise — and watch surface charm without loyalty.',
     },
     Dhanu: {
-      temperament: 'In Sagittarius, you take the long road in a meaning-hungry and horizon-facing way.',
+      temperament: 'In Sagittarius, you build patiently in a meaning-hungry and horizon-facing way.',
       advice: 'Keep a horizon so petty loops shrink. Also take one sober step instead of a grand promise — and watch frozen dogma.',
     },
     Makara: {
-      temperament: 'In Capricorn, you take the long road in a ambitious and long-game way.',
+      temperament: 'In Capricorn, you build patiently in a ambitious and long-game way.',
       advice: 'Schedule softness so the climb isn’t a cage. Also take one sober step instead of a grand promise — and watch status without rest.',
     },
     Kumbha: {
-      temperament: 'In Aquarius, you take the long road in a future-minded and friendship-toned way.',
+      temperament: 'In Aquarius, you build patiently in a future-minded and friendship-toned way.',
       advice: 'Invest in belonging on your terms. Also take one sober step instead of a grand promise — and watch detachment that erases intimacy.',
     },
     Meena: {
-      temperament: 'In Pisces, you take the long road in a empathic and imaginal way.',
+      temperament: 'In Pisces, you build patiently in a empathic and imaginal way.',
       advice: 'Choose company like climate; keep one daily vessel. Also take one sober step instead of a grand promise — and watch dissolving without a shore.',
     },
   },

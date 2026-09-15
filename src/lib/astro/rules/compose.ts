@@ -445,9 +445,9 @@ export function collectProfileAdviceFrags(args: {
     const tone = houseToneFlag(args.stressHouse);
     if (stress) {
       frags.push({
-        text: `There’s pressure around house-${args.stressHouse} themes. ${stress.advice}${tone.note ? ' ' + tone.note : ''}`,
+        text: `There’s pressure in a classic challenge zone. ${stress.advice}${tone.note ? ' ' + tone.note : ''}`,
         specificity: 50,
-        cite: `House ${args.stressHouse}`,
+        cite: `Stress area ${args.stressHouse}`,
         kind: 'advice',
       });
     }

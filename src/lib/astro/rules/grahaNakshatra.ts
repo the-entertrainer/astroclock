@@ -668,111 +668,111 @@ export const GRAHA_NAKSHATRA: Record<GrahaId, Record<string, GrahaNakRule>> = {
   },
   Saturn: {
     Ashwini: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. You’re in a quick-start mood — begin, then fix as you go.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. You’re in a quick-start mood — begin, then fix as you go.',
       advice: 'Take one sober step instead of a grand promise. Also: Start something small and correct it in motion rather than waiting for perfect.',
     },
     Bharani: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. You’re holding creative pressure until something real can land.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. You’re holding creative pressure until something real can land.',
       advice: 'Take one sober step instead of a grand promise. Also: Carry one deliverable all the way instead of dumping the weight early.',
     },
     Krittika: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. You want sharp clarity — fog bothers you today.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. You want sharp clarity — fog bothers you today.',
       advice: 'Take one sober step instead of a grand promise. Also: Make one clean decision. Aim the edge; don’t scorch people.',
     },
     Rohini: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. You’re drawn to grow and attract around one chosen thing.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. You’re drawn to grow and attract around one chosen thing.',
       advice: 'Take one sober step instead of a grand promise. Also: Pick one garden. Skip scatter.',
     },
     Mrigashira: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. You’re scanning options — curiosity is loud.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. You’re scanning options — curiosity is loud.',
       advice: 'Take one sober step instead of a grand promise. Also: Seek, then pick a trail before nightfall.',
     },
     Ardra: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. Insight may arrive after a storm — tear-down before rebuild.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Insight may arrive after a storm — tear-down before rebuild.',
       advice: 'Take one sober step instead of a grand promise. Also: Clear one honest mess before you rebuild.',
     },
     Punarvasu: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. Second chances feel available — renewal is in the air.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Second chances feel available — renewal is in the air.',
       advice: 'Take one sober step instead of a grand promise. Also: Take a return without shame, then aim it freshly.',
     },
     Pushya: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. Care and timing matter more than heroics.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Care and timing matter more than heroics.',
       advice: 'Take one sober step instead of a grand promise. Also: Nourish on a schedule — food, rest, people.',
     },
     Ashlesha: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. You’re reading undercurrents — intimacy needs ethics.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. You’re reading undercurrents — intimacy needs ethics.',
       advice: 'Take one sober step instead of a grand promise. Also: Keep honesty tight when you sense the hidden.',
     },
     Magha: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. Dignity and rightful presence are on your mind.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Dignity and rightful presence are on your mind.',
       advice: 'Take one sober step instead of a grand promise. Also: Stand tall without theatre.',
     },
     'Purva Phalguni': {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. Pleasure, play, and creative ease want airtime.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Pleasure, play, and creative ease want airtime.',
       advice: 'Take one sober step instead of a grand promise. Also: Finish one delight; ease is fuel, not escape.',
     },
     'Uttara Phalguni': {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. You want alliances and help that actually stick.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. You want alliances and help that actually stick.',
       advice: 'Take one sober step instead of a grand promise. Also: Ally in ways that endure past the vibe.',
     },
     Hasta: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. Your hands and practical cleverness want a job.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Your hands and practical cleverness want a job.',
       advice: 'Take one sober step instead of a grand promise. Also: Fix something tangible.',
     },
     Chitra: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. You want beauty designed into form — unfinished messes irritate.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. You want beauty designed into form — unfinished messes irritate.',
       advice: 'Take one sober step instead of a grand promise. Also: Close one ugly unfinished loop with care.',
     },
     Swati: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. You need room to move — freedom keeps you kind.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. You need room to move — freedom keeps you kind.',
       advice: 'Take one sober step instead of a grand promise. Also: Protect a little independence so you don’t snap.',
     },
     Vishakha: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. Two goals may tug — heat wants a single summit.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Two goals may tug — heat wants a single summit.',
       advice: 'Take one sober step instead of a grand promise. Also: Pick which goal gets the energy today.',
     },
     Anuradha: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. Loyal orbit around people and causes soothes you.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Loyal orbit around people and causes soothes you.',
       advice: 'Take one sober step instead of a grand promise. Also: Regulate through friendship, not isolation.',
     },
     Jyeshtha: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. You’re protective of earned skill and quiet rank.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. You’re protective of earned skill and quiet rank.',
       advice: 'Take one sober step instead of a grand promise. Also: Guard competence; skip loud proving.',
     },
     Mula: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. You want roots, not polish — honesty first.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. You want roots, not polish — honesty first.',
       advice: 'Take one sober step instead of a grand promise. Also: Dig once, cleanly; don’t excavate the whole yard.',
     },
     'Purva Ashadha': {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. Bold early push — declare, then prove.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Bold early push — declare, then prove.',
       advice: 'Take one sober step instead of a grand promise. Also: Say it, then take one proving step.',
     },
     'Uttara Ashadha': {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. You want wins that last — structure and allies.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. You want wins that last — structure and allies.',
       advice: 'Take one sober step instead of a grand promise. Also: Build something durable with help.',
     },
     Shravana: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. Listening wants to lead speaking.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Listening wants to lead speaking.',
       advice: 'Take one sober step instead of a grand promise. Also: Hear fully before you decide or reply.',
     },
     Dhanishta: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. Rhythm and teammates unlock you.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Rhythm and teammates unlock you.',
       advice: 'Take one sober step instead of a grand promise. Also: Sync, then time your burst.',
     },
     Shatabhisha: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. Odd, systems-level fixes appeal to you.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Odd, systems-level fixes appeal to you.',
       advice: 'Take one sober step instead of a grand promise. Also: Try the unusual remedy others skip — keep ethics.',
     },
     'Purva Bhadrapada': {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. Ideals run hot — aim the fire.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Ideals run hot — aim the fire.',
       advice: 'Take one sober step instead of a grand promise. Also: Stand for something without burning the room.',
     },
     'Uttara Bhadrapada': {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. Patient depth — wisdom from the long wait.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Patient depth — wisdom from the long wait.',
       advice: 'Take one sober step instead of a grand promise. Also: Bring one deep insight up slowly.',
     },
     Revati: {
-      temperament: 'When Saturn sits here, you take the long road and notice what’s unfinished. You’re shepherding a last stretch gently.',
+      temperament: 'When Saturn sits here, you build patiently and finish what others abandon. You’re shepherding a last stretch gently.',
       advice: 'Take one sober step instead of a grand promise. Also: Finish with care; guide someone across.',
     },
   },

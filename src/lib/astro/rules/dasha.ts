@@ -33,7 +33,7 @@ export const DASHA_PAIR: Record<string, DashaPairRule> = {
     advice: 'Own one clear act of presence, then share the spotlight. In the near stretch, also choose kindness and one beautiful detail on purpose.',
   },
   'Sun_Saturn': {
-    tone: 'You’re in a Sun chapter with a Saturn flavour right now. The long arc is about how you want to be seen and lead; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    tone: 'You’re in a Sun chapter with a Saturn flavour right now. The long arc is about how you want to be seen and lead; the near weeks lean toward how you build patiently and finish what others abandon.',
     advice: 'Own one clear act of presence, then share the spotlight. In the near stretch, also take one sober step instead of a grand promise.',
   },
   'Sun_Rahu': {
@@ -69,7 +69,7 @@ export const DASHA_PAIR: Record<string, DashaPairRule> = {
     advice: 'Eat, drink water, and find a soft landing before hard talks. In the near stretch, also choose kindness and one beautiful detail on purpose.',
   },
   'Moon_Saturn': {
-    tone: 'You’re in a Moon chapter with a Saturn flavour right now. The long arc is about how your moods and needs set the weather; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    tone: 'You’re in a Moon chapter with a Saturn flavour right now. The long arc is about how your moods and needs set the weather; the near weeks lean toward how you build patiently and finish what others abandon.',
     advice: 'Eat, drink water, and find a soft landing before hard talks. In the near stretch, also take one sober step instead of a grand promise.',
   },
   'Moon_Rahu': {
@@ -105,7 +105,7 @@ export const DASHA_PAIR: Record<string, DashaPairRule> = {
     advice: 'Put the heat into one clean effort, not a public fight. In the near stretch, also choose kindness and one beautiful detail on purpose.',
   },
   'Mars_Saturn': {
-    tone: 'You’re in a Mars chapter with a Saturn flavour right now. The long arc is about how you push hard for what you want; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    tone: 'You’re in a Mars chapter with a Saturn flavour right now. The long arc is about how you push hard for what you want; the near weeks lean toward how you build patiently and finish what others abandon.',
     advice: 'Put the heat into one clean effort, not a public fight. In the near stretch, also take one sober step instead of a grand promise.',
   },
   'Mars_Rahu': {
@@ -141,7 +141,7 @@ export const DASHA_PAIR: Record<string, DashaPairRule> = {
     advice: 'Write it down, then send the short clear version. In the near stretch, also choose kindness and one beautiful detail on purpose.',
   },
   'Mercury_Saturn': {
-    tone: 'You’re in a Mercury chapter with a Saturn flavour right now. The long arc is about how your mind wants to talk, learn, and sort details; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    tone: 'You’re in a Mercury chapter with a Saturn flavour right now. The long arc is about how your mind wants to talk, learn, and sort details; the near weeks lean toward how you build patiently and finish what others abandon.',
     advice: 'Write it down, then send the short clear version. In the near stretch, also take one sober step instead of a grand promise.',
   },
   'Mercury_Rahu': {
@@ -177,7 +177,7 @@ export const DASHA_PAIR: Record<string, DashaPairRule> = {
     advice: 'Learn something or help someone — skip the lecture. In the near stretch, also choose kindness and one beautiful detail on purpose.',
   },
   'Jupiter_Saturn': {
-    tone: 'You’re in a Jupiter chapter with a Saturn flavour right now. The long arc is about how you look for meaning, growth, and a wider frame; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    tone: 'You’re in a Jupiter chapter with a Saturn flavour right now. The long arc is about how you look for meaning, growth, and a wider frame; the near weeks lean toward how you build patiently and finish what others abandon.',
     advice: 'Learn something or help someone — skip the lecture. In the near stretch, also take one sober step instead of a grand promise.',
   },
   'Jupiter_Rahu': {
@@ -213,7 +213,7 @@ export const DASHA_PAIR: Record<string, DashaPairRule> = {
     advice: 'Choose kindness and one beautiful detail on purpose. Prefer practise harmony — don’t just assume it.',
   },
   'Venus_Saturn': {
-    tone: 'You’re in a Venus chapter with a Saturn flavour right now. The long arc is about how you care about comfort, beauty, and how you bond; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    tone: 'You’re in a Venus chapter with a Saturn flavour right now. The long arc is about how you care about comfort, beauty, and how you bond; the near weeks lean toward how you build patiently and finish what others abandon.',
     advice: 'Choose kindness and one beautiful detail on purpose. In the near stretch, also take one sober step instead of a grand promise.',
   },
   'Venus_Rahu': {
@@ -225,39 +225,39 @@ export const DASHA_PAIR: Record<string, DashaPairRule> = {
     advice: 'Choose kindness and one beautiful detail on purpose. In the near stretch, also drop one extra obligation and keep the lesson.',
   },
   'Saturn_Sun': {
-    tone: 'You’re in a Saturn chapter with a Sun flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how you want to be seen and lead.',
+    tone: 'You’re in a Saturn chapter with a Sun flavour right now. The long arc is about how you build patiently and finish what others abandon; the near weeks lean toward how you want to be seen and lead.',
     advice: 'Take one sober step instead of a grand promise. In the near stretch, also own one clear act of presence, then share the spotlight.',
   },
   'Saturn_Moon': {
-    tone: 'You’re in a Saturn chapter with a Moon flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how your moods and needs set the weather.',
+    tone: 'You’re in a Saturn chapter with a Moon flavour right now. The long arc is about how you build patiently and finish what others abandon; the near weeks lean toward how your moods and needs set the weather.',
     advice: 'Take one sober step instead of a grand promise. In the near stretch, also eat, drink water, and find a soft landing before hard talks.',
   },
   'Saturn_Mars': {
-    tone: 'You’re in a Saturn chapter with a Mars flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how you push hard for what you want.',
+    tone: 'You’re in a Saturn chapter with a Mars flavour right now. The long arc is about how you build patiently and finish what others abandon; the near weeks lean toward how you push hard for what you want.',
     advice: 'Take one sober step instead of a grand promise. In the near stretch, also put the heat into one clean effort, not a public fight.',
   },
   'Saturn_Mercury': {
-    tone: 'You’re in a Saturn chapter with a Mercury flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how your mind wants to talk, learn, and sort details.',
+    tone: 'You’re in a Saturn chapter with a Mercury flavour right now. The long arc is about how you build patiently and finish what others abandon; the near weeks lean toward how your mind wants to talk, learn, and sort details.',
     advice: 'Take one sober step instead of a grand promise. In the near stretch, also write it down, then send the short clear version.',
   },
   'Saturn_Jupiter': {
-    tone: 'You’re in a Saturn chapter with a Jupiter flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how you look for meaning, growth, and a wider frame.',
+    tone: 'You’re in a Saturn chapter with a Jupiter flavour right now. The long arc is about how you build patiently and finish what others abandon; the near weeks lean toward how you look for meaning, growth, and a wider frame.',
     advice: 'Take one sober step instead of a grand promise. In the near stretch, also learn something or help someone — skip the lecture.',
   },
   'Saturn_Venus': {
-    tone: 'You’re in a Saturn chapter with a Venus flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how you care about comfort, beauty, and how you bond.',
+    tone: 'You’re in a Saturn chapter with a Venus flavour right now. The long arc is about how you build patiently and finish what others abandon; the near weeks lean toward how you care about comfort, beauty, and how you bond.',
     advice: 'Take one sober step instead of a grand promise. In the near stretch, also choose kindness and one beautiful detail on purpose.',
   },
   'Saturn_Saturn': {
-    tone: 'You’re in a strong Saturn chapter — you take the long road and notice what’s unfinished. Themes concentrate; keep perspective.',
+    tone: 'You’re in a strong Saturn chapter — you build patiently and finish what others abandon. Themes concentrate; keep perspective.',
     advice: 'Take one sober step instead of a grand promise. Prefer stay disciplined but leave room to breathe.',
   },
   'Saturn_Rahu': {
-    tone: 'You’re in a Saturn chapter with a Rahu flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how you hunger for the new and unfamiliar.',
+    tone: 'You’re in a Saturn chapter with a Rahu flavour right now. The long arc is about how you build patiently and finish what others abandon; the near weeks lean toward how you hunger for the new and unfamiliar.',
     advice: 'Take one sober step instead of a grand promise. In the near stretch, also follow curiosity with a timer and a reality check.',
   },
   'Saturn_Ketu': {
-    tone: 'You’re in a Saturn chapter with a Ketu flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how you already know some things sideways and like to simplify.',
+    tone: 'You’re in a Saturn chapter with a Ketu flavour right now. The long arc is about how you build patiently and finish what others abandon; the near weeks lean toward how you already know some things sideways and like to simplify.',
     advice: 'Take one sober step instead of a grand promise. In the near stretch, also drop one extra obligation and keep the lesson.',
   },
   'Rahu_Sun': {
@@ -285,7 +285,7 @@ export const DASHA_PAIR: Record<string, DashaPairRule> = {
     advice: 'Follow curiosity with a timer and a reality check. In the near stretch, also choose kindness and one beautiful detail on purpose.',
   },
   'Rahu_Saturn': {
-    tone: 'You’re in a Rahu chapter with a Saturn flavour right now. The long arc is about how you hunger for the new and unfamiliar; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    tone: 'You’re in a Rahu chapter with a Saturn flavour right now. The long arc is about how you hunger for the new and unfamiliar; the near weeks lean toward how you build patiently and finish what others abandon.',
     advice: 'Follow curiosity with a timer and a reality check. In the near stretch, also take one sober step instead of a grand promise.',
   },
   'Rahu_Rahu': {
@@ -321,7 +321,7 @@ export const DASHA_PAIR: Record<string, DashaPairRule> = {
     advice: 'Drop one extra obligation and keep the lesson. In the near stretch, also choose kindness and one beautiful detail on purpose.',
   },
   'Ketu_Saturn': {
-    tone: 'You’re in a Ketu chapter with a Saturn flavour right now. The long arc is about how you already know some things sideways and like to simplify; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    tone: 'You’re in a Ketu chapter with a Saturn flavour right now. The long arc is about how you already know some things sideways and like to simplify; the near weeks lean toward how you build patiently and finish what others abandon.',
     advice: 'Drop one extra obligation and keep the lesson. In the near stretch, also take one sober step instead of a grand promise.',
   },
   'Ketu_Rahu': {
