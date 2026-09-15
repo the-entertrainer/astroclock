@@ -103,6 +103,8 @@ export interface BirthConfig {
   preset: string;
   lat: number;
   lon: number;
+  /** Human-readable place from search or preset label */
+  placeLabel?: string;
   isDemo: boolean;
 }
 
@@ -115,6 +117,7 @@ export const DEMO_BIRTH: BirthConfig = {
   preset: 'delhi',
   lat: 28.6139,
   lon: 77.209,
+  placeLabel: 'Delhi',
   isDemo: true,
 };
 

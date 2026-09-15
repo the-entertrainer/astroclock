@@ -1,5 +1,6 @@
 import {
   DEMO_BIRTH,
+  PRESETS,
   STORAGE_KEY,
   type BirthConfig,
 } from '@/lib/astro/constants';
@@ -11,7 +12,12 @@ export function loadConfig(): BirthConfig {
     if (!raw) return { ...DEMO_BIRTH };
     const data = JSON.parse(raw) as Partial<BirthConfig>;
     if (data && data.date) {
-      return { ...DEMO_BIRTH, ...data, isDemo: false };
+      const merged: BirthConfig = { ...DEMO_BIRTH, ...data, isDemo: false };
+      if (!merged.placeLabel) {
+        const preset = PRESETS[merged.preset];
+        merged.placeLabel = preset?.label || undefined;
+      }
+      return merged;
     }
   } catch {
     /* ignore */
@@ -29,6 +35,7 @@ export function saveConfig(birth: BirthConfig): void {
     preset: birth.preset,
     lat: +birth.lat,
     lon: +birth.lon,
+    placeLabel: birth.placeLabel || '',
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
 }

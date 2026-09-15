@@ -4,12 +4,15 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   DEMO_BIRTH,
   GRAHAS,
+  PRESETS,
   type BirthConfig,
   type GrahaId,
   type LonMap,
   clamp,
   computePlanets,
   computeTithi,
+  computeTodayInsights,
+  computeNatalProfile,
   harmonicScore,
   julianDay,
   lonMapFromPlanets,
@@ -22,11 +25,13 @@ import {
 } from '@/lib/astro';
 import { birthDateObj, clearConfig, loadConfig, saveConfig } from '@/lib/storage';
 import { formatMsClock, scrubHint } from '@/lib/format';
-import { TopBar } from './TopBar';
+import { TopBar, type MainView } from './TopBar';
 import { ClockCanvas, type FrameCache } from './ClockCanvas';
 import { HUD } from './HUD';
 import { ConfigDrawer } from './ConfigDrawer';
 import { PlanetDrawer, type PlanetDetail } from './PlanetDrawer';
+import { TodayPanel } from './TodayPanel';
+import { ProfileDrawer } from './ProfileDrawer';
 
 const LERP_MS = 700;
 
@@ -40,6 +45,8 @@ export function AstroClockApp() {
   const [selected, setSelected] = useState<GrahaId | null>(null);
   const [configOpen, setConfigOpen] = useState(false);
   const [detailOpen, setDetailOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  const [view, setView] = useState<MainView>('dial');
   const [visible, setVisible] = useState(true);
   const [natalLons, setNatalLons] = useState<LonMap | null>(null);
   const [natalLerp, setNatalLerp] = useState(1);
@@ -95,7 +102,6 @@ export function AstroClockApp() {
     return () => document.removeEventListener('visibilitychange', onVis);
   }, []);
 
-  // Live clock tick for simTime
   useEffect(() => {
     if (!live || !visible) return;
     let id = 0;
@@ -107,7 +113,6 @@ export function AstroClockApp() {
     return () => cancelAnimationFrame(id);
   }, [live, scrubHours, visible]);
 
-  // Natal lerp animation
   useEffect(() => {
     if (natalLerp >= 1 || !natalLerpFrom.current || !natalLerpTo.current) return;
     let id = 0;
@@ -140,6 +145,20 @@ export function AstroClockApp() {
   }, [natalLerp]);
 
   const currentNatal = natalLons;
+
+  const placeLabel = useMemo(() => {
+    if (birth.placeLabel) return birth.placeLabel;
+    return PRESETS[birth.preset]?.label;
+  }, [birth.placeLabel, birth.preset]);
+
+  const todayInsights = useMemo(() => {
+    return computeTodayInsights(new Date(simTime), birth, currentNatal);
+  }, [simTime, birth, currentNatal]);
+
+  const natalProfile = useMemo(() => {
+    if (birth.isDemo) return null;
+    return computeNatalProfile(birth, new Date(simTime));
+  }, [birth, simTime]);
 
   const openDetailFor = useCallback(
     (id: GrahaId, cache: FrameCache) => {
@@ -218,8 +237,7 @@ export function AstroClockApp() {
     [birth, selected, detailOpen, openDetailFor],
   );
 
-  const showSim =
-    !live || Math.abs(scrubHours) > 0.01;
+  const showSim = !live || Math.abs(scrubHours) > 0.01;
 
   const simLabel = useMemo(() => {
     return new Date(simTime).toISOString().replace('T', ' ').slice(0, 19) + 'Z';
@@ -259,6 +277,7 @@ export function AstroClockApp() {
       preset: draft.preset,
       lat: +draft.lat,
       lon: +draft.lon,
+      placeLabel: draft.placeLabel,
       isDemo: false,
     };
     setBirth(next);
@@ -273,6 +292,11 @@ export function AstroClockApp() {
     setDraft(demo);
     clearConfig();
     recomputeNatal(demo, true);
+    setProfileOpen(false);
+  };
+
+  const handleOpenProfile = () => {
+    setProfileOpen(true);
   };
 
   if (!hydrated) {
@@ -287,43 +311,97 @@ export function AstroClockApp() {
 
   return (
     <div className="max-w-md mx-auto h-dvh bg-ink text-mist overflow-hidden flex flex-col relative">
-      <TopBar utc={utc} local={local} onOpenConfig={openConfig} />
+      <TopBar
+        utc={utc}
+        local={local}
+        placeLabel={placeLabel}
+        view={view}
+        onViewChange={setView}
+        profileEnabled={true}
+        onOpenProfile={handleOpenProfile}
+        onOpenConfig={openConfig}
+      />
 
       <main className="flex-1 relative min-h-0">
-        <ClockCanvas
-          simTime={simTime}
-          lat={+birth.lat}
-          lon={+birth.lon}
-          natalLons={currentNatal}
-          natalLerp={natalLerp}
-          selected={selected}
-          visible={visible}
-          onFrame={onFrame}
-          onSelect={handleSelect}
-          onNatalLerpTick={() => {}}
-        />
-        {showSim && (
-          <div className="absolute top-2 left-1/2 -translate-x-1/2 glass rounded-full px-3 py-1 text-[10px] font-mono text-gold/90 fade-in">
-            SIM <span>{simLabel}</span>
+        {/* Keep canvas mounted so HUD clocks / frame cache stay live */}
+        <div
+          className={`absolute inset-0 ${view === 'dial' ? '' : 'invisible pointer-events-none'}`}
+          aria-hidden={view !== 'dial'}
+        >
+          <ClockCanvas
+            simTime={simTime}
+            lat={+birth.lat}
+            lon={+birth.lon}
+            natalLons={currentNatal}
+            natalLerp={natalLerp}
+            selected={selected}
+            visible={visible}
+            onFrame={onFrame}
+            onSelect={handleSelect}
+            onNatalLerpTick={() => {}}
+          />
+          {showSim && view === 'dial' && (
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 glass rounded-full px-3 py-1 text-[10px] font-mono text-gold/90 fade-in">
+              SIM <span>{simLabel}</span>
+            </div>
+          )}
+        </div>
+        {view === 'today' && (
+          <div className="absolute inset-0 bg-ink overflow-hidden">
+            <TodayPanel insights={todayInsights} />
           </div>
         )}
       </main>
 
-      <HUD
-        maha={maha}
-        antar={antar}
-        tithi={tithi}
-        lagna={lagna}
-        speeds={speeds}
-        selected={selected}
-        hrs={Math.round(hrsDisplay)}
-        live={live}
-        scrubHours={scrubHours}
-        scrubLabel={scrubHint(scrubHours)}
-        onSelect={handleSelect}
-        onToggleLive={handleToggleLive}
-        onScrub={handleScrub}
-      />
+      {view === 'dial' && (
+        <HUD
+          maha={maha}
+          antar={antar}
+          tithi={tithi}
+          lagna={lagna}
+          speeds={speeds}
+          selected={selected}
+          hrs={Math.round(hrsDisplay)}
+          live={live}
+          scrubHours={scrubHours}
+          scrubLabel={scrubHint(scrubHours)}
+          onSelect={handleSelect}
+          onToggleLive={handleToggleLive}
+          onScrub={handleScrub}
+        />
+      )}
+
+      {view === 'today' && (
+        <footer className="shrink-0 border-t border-white/10 glass px-3 py-2">
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleToggleLive}
+              className={`chip rounded-lg px-3 py-2 text-[10px] font-semibold tracking-wider uppercase shrink-0 ${
+                live ? 'active' : ''
+              }`}
+            >
+              Live Tick
+            </button>
+            <div className="flex-1 min-w-0">
+              <input
+                type="range"
+                min={-72}
+                max={72}
+                value={scrubHours}
+                step={0.25}
+                onChange={(e) => handleScrub(Number(e.target.value))}
+                className="scrub w-full h-1.5 appearance-none rounded-full bg-white/10 outline-none"
+              />
+              <div className="flex justify-between text-[8px] text-mist/40 font-mono mt-0.5">
+                <span>−3d</span>
+                <span>{scrubHint(scrubHours)}</span>
+                <span>+3d</span>
+              </div>
+            </div>
+          </div>
+        </footer>
+      )}
 
       <PlanetDrawer
         open={detailOpen}
@@ -341,6 +419,14 @@ export function AstroClockApp() {
         onClose={() => setConfigOpen(false)}
         onSave={handleSave}
         onReset={handleReset}
+      />
+
+      <ProfileDrawer
+        open={profileOpen}
+        profile={natalProfile}
+        isDemo={!!birth.isDemo}
+        onClose={() => setProfileOpen(false)}
+        onOpenConfig={openConfig}
       />
     </div>
   );

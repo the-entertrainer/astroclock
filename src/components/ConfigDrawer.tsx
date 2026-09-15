@@ -1,7 +1,15 @@
 'use client';
 
-import { X } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Loader2, MapPin, Search, X } from 'lucide-react';
 import { PRESETS, type BirthConfig } from '@/lib/astro';
+
+interface GeocodeHit {
+  displayName: string;
+  lat: number;
+  lon: number;
+  type?: string;
+}
 
 interface ConfigDrawerProps {
   open: boolean;
@@ -12,6 +20,8 @@ interface ConfigDrawerProps {
   onReset: () => void;
 }
 
+const PRESET_ORDER = ['delhi', 'tokyo', 'london', 'newyork', 'sf'] as const;
+
 export function ConfigDrawer({
   open,
   draft,
@@ -20,19 +30,101 @@ export function ConfigDrawer({
   onSave,
   onReset,
 }: ConfigDrawerProps) {
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState<GeocodeHit[]>([]);
+  const [searching, setSearching] = useState(false);
+  const [searchErr, setSearchErr] = useState<string | null>(null);
+  const abortRef = useRef<AbortController | null>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const set = <K extends keyof BirthConfig>(key: K, value: BirthConfig[K]) => {
     onChange({ ...draft, [key]: value });
   };
 
   const applyPreset = (key: string) => {
-    if (key === 'manual') {
-      set('preset', 'manual');
-      return;
-    }
     const p = PRESETS[key];
     if (!p) return;
-    onChange({ ...draft, preset: key, lat: p.lat, lon: p.lon });
+    onChange({
+      ...draft,
+      preset: key,
+      lat: p.lat,
+      lon: p.lon,
+      placeLabel: p.label,
+    });
+    setQuery('');
+    setResults([]);
   };
+
+  const selectHit = (hit: GeocodeHit) => {
+    const short =
+      hit.displayName.split(',').slice(0, 3).join(',').trim() ||
+      hit.displayName;
+    onChange({
+      ...draft,
+      preset: 'search',
+      lat: hit.lat,
+      lon: hit.lon,
+      placeLabel: short,
+    });
+    setQuery('');
+    setResults([]);
+  };
+
+  const runSearch = useCallback(async (q: string) => {
+    abortRef.current?.abort();
+    if (q.trim().length < 2) {
+      setResults([]);
+      setSearching(false);
+      setSearchErr(null);
+      return;
+    }
+    const ac = new AbortController();
+    abortRef.current = ac;
+    setSearching(true);
+    setSearchErr(null);
+    try {
+      const res = await fetch(
+        `/api/geocode?q=${encodeURIComponent(q.trim())}`,
+        { signal: ac.signal },
+      );
+      if (!res.ok) throw new Error('search failed');
+      const data = (await res.json()) as { results?: GeocodeHit[] };
+      if (!ac.signal.aborted) {
+        setResults(data.results || []);
+      }
+    } catch (e) {
+      if ((e as Error).name === 'AbortError') return;
+      setSearchErr('Search unavailable');
+      setResults([]);
+    } finally {
+      if (!ac.signal.aborted) setSearching(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => runSearch(query), 400);
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, [query, open, runSearch]);
+
+  useEffect(() => {
+    if (!open) {
+      setQuery('');
+      setResults([]);
+      setSearchErr(null);
+      abortRef.current?.abort();
+    }
+  }, [open]);
+
+  const placeShown =
+    draft.placeLabel ||
+    PRESETS[draft.preset]?.label ||
+    (draft.preset === 'search' || draft.preset === 'manual'
+      ? 'Custom'
+      : draft.preset);
 
   return (
     <>
@@ -121,21 +213,89 @@ export function ConfigDrawer({
             </label>
           </div>
 
-          <label className="block text-xs space-y-1">
-            <span className="text-mist/60">City preset</span>
-            <select
-              value={draft.preset}
-              onChange={(e) => applyPreset(e.target.value)}
-              className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2.5 text-sm outline-none focus:border-gold/50"
-            >
-              <option value="delhi">Delhi</option>
-              <option value="tokyo">Tokyo</option>
-              <option value="london">London</option>
-              <option value="newyork">New York</option>
-              <option value="sf">San Francisco</option>
-              <option value="manual">Manual</option>
-            </select>
-          </label>
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-mist/60">Birth place</span>
+              {placeShown && (
+                <span className="text-[10px] text-gold/80 flex items-center gap-1 max-w-[60%] truncate">
+                  <MapPin className="w-3 h-3 shrink-0" />
+                  {placeShown}
+                </span>
+              )}
+            </div>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-mist/40" />
+              <input
+                type="search"
+                placeholder="Search any place worldwide…"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                autoComplete="off"
+                className="w-full rounded-lg bg-black/40 border border-white/10 pl-9 pr-9 py-2.5 text-sm outline-none focus:border-gold/50"
+              />
+              {searching && (
+                <Loader2 className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gold animate-spin" />
+              )}
+            </div>
+            {searchErr && (
+              <p className="text-[10px] text-rose">{searchErr}</p>
+            )}
+            {results.length > 0 && (
+              <ul className="rounded-lg border border-white/10 bg-black/60 max-h-44 overflow-y-auto divide-y divide-white/5">
+                {results.map((hit) => (
+                  <li key={`${hit.lat},${hit.lon},${hit.displayName}`}>
+                    <button
+                      type="button"
+                      onClick={() => selectHit(hit)}
+                      className="w-full text-left px-3 py-2.5 hover:bg-white/5 active:bg-gold/10 transition"
+                    >
+                      <div className="text-[11px] text-mist leading-snug line-clamp-2">
+                        {hit.displayName}
+                      </div>
+                      <div className="font-mono text-[9px] text-mist/40 mt-0.5">
+                        {hit.lat.toFixed(4)}°, {hit.lon.toFixed(4)}°
+                      </div>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div className="flex flex-wrap gap-1.5 pt-0.5">
+              {PRESET_ORDER.map((key) => {
+                const p = PRESETS[key];
+                const active = draft.preset === key;
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => applyPreset(key)}
+                    className={`chip rounded-full px-2.5 py-1 text-[10px] ${
+                      active ? 'active' : ''
+                    }`}
+                  >
+                    {p.label}
+                  </button>
+                );
+              })}
+              <button
+                type="button"
+                onClick={() =>
+                  onChange({
+                    ...draft,
+                    preset: 'manual',
+                    placeLabel: draft.placeLabel || 'Manual',
+                  })
+                }
+                className={`chip rounded-full px-2.5 py-1 text-[10px] ${
+                  draft.preset === 'manual' || draft.preset === 'search'
+                    ? 'active'
+                    : ''
+                }`}
+              >
+                Manual
+              </button>
+            </div>
+          </div>
 
           <div className="grid grid-cols-2 gap-2">
             <label className="block text-xs space-y-1">
@@ -144,7 +304,14 @@ export function ConfigDrawer({
                 type="number"
                 step="0.0001"
                 value={draft.lat}
-                onChange={(e) => set('lat', Number(e.target.value))}
+                onChange={(e) =>
+                  onChange({
+                    ...draft,
+                    lat: Number(e.target.value),
+                    preset:
+                      draft.preset === 'search' ? 'search' : 'manual',
+                  })
+                }
                 className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2.5 text-sm outline-none focus:border-gold/50 font-mono"
               />
             </label>
@@ -154,16 +321,24 @@ export function ConfigDrawer({
                 type="number"
                 step="0.0001"
                 value={draft.lon}
-                onChange={(e) => set('lon', Number(e.target.value))}
+                onChange={(e) =>
+                  onChange({
+                    ...draft,
+                    lon: Number(e.target.value),
+                    preset:
+                      draft.preset === 'search' ? 'search' : 'manual',
+                  })
+                }
                 className="w-full rounded-lg bg-black/40 border border-white/10 px-3 py-2.5 text-sm outline-none focus:border-gold/50 font-mono"
               />
             </label>
           </div>
 
           <p className="text-[10px] text-mist/40 leading-relaxed">
-            Demo birth (Delhi 1990-01-01 12:00) until you save. Sidereal Lahiri ·
-            Whole-sign houses · Dial: Mesha at top (0°). Birth H:M:S treated as
-            UTC for offline determinism.
+            Demo birth (Delhi 1990-01-01 12:00) until you save. Place search via
+            OpenStreetMap Nominatim. Sidereal Lahiri · Whole-sign houses · Dial:
+            Mesha at top (0°). Birth H:M:S treated as UTC for offline
+            determinism.
           </p>
 
           <div className="flex gap-2 pt-1">
