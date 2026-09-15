@@ -36,7 +36,7 @@ export const ASPECT_RULES: Record<AspectLabel, AspectRule> = {
     softHard: 'hard',
     lifeMeaning: 'It can feel like a polar debate — both sides hold data.',
     advice: 'Hear the other side before you dig in.',
-    natalTransitNote: 'A familiar life theme is mirrored back — relate and negotiate; don’t declare war.',
+    natalTransitNote: 'A familiar life theme is mirrored back — relate and negotiate; don’t turn it into a fight.',
   },
 };
 

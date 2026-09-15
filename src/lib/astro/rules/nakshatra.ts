@@ -240,7 +240,7 @@ export const NAKSHATRA_RULES: Record<string, NakshatraRule> = {
     temperament: 'Odd, systems-level fixes appeal to you.',
     advice: 'Test one practical fix carefully, keep your ethics clean, and measure results before you scale it.',
     pada: [
-      'Propose the weird fix that might work.',
+      'Propose the practical experiment that might work.',
       'Ground the experiment so it doesn’t float away.',
       'Build the fix carefully and check it works before you trust it.',
       'Share the healing pattern; don’t isolate in eccentricity.',

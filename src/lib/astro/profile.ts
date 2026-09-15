@@ -130,7 +130,7 @@ const NAK_MIND: Record<string, string> = {
   'Uttara Ashadha': 'You prefer wins that last, through structure and allies — build the team and the checklist together.',
   Shravana: 'You learn by listening deeply before speaking — take notes first, then reply with one clear point.',
   Dhanishta: 'Rhythm and teamwork unlock you — time your bursts with others and keep the beat.',
-  Shatabhisha: 'You find odd, systems-level fixes others miss — ship the weird fix, then explain it simply.',
+  Shatabhisha: 'You spot system fixes others miss — try one practical experiment, measure it, then explain it in plain words.',
   'Purva Bhadrapada': 'Ideals can fire you past comfort — aim the heat at one reform, not at everyone.',
   'Uttara Bhadrapada': 'Patient depth suits you — bring one insight to the surface and act on it this week.',
   Revati: 'You shepherd people across finish lines gently — help someone complete, then rest.',

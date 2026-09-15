@@ -153,7 +153,7 @@ function aspectLife(label: string): string {
     return 'mixing voices closely';
   if (label === 'trine' || label === 'sextile') return 'offering easier cooperation';
   if (label === 'square') return 'creating productive friction';
-  if (label === 'oppose') return 'setting up a polar dialogue';
+  if (label === 'oppose') return 'facing off against';
   return `linking (${label})`;
 }
 
