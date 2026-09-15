@@ -63,9 +63,56 @@ describe('Design lane — prose must be human-readable', () => {
         fx.birth,
         natalLonMap(fx.birth),
       );
-      for (const sample of [today.daySummary, ...today.dayAdvice.items]) {
+      for (const sample of [
+        today.daySummary,
+        today.climateNote,
+        ...today.dayAdvice.items,
+        ...today.cards.map((c) => `${c.title}. ${c.body}`),
+      ]) {
         const hits = findBannedHits(sample);
         expect(hits, `banned in today: ${hits} :: ${sample.slice(0, 120)}`).toEqual([]);
+      }
+
+      // Planet-tap influence reading for Moon + a personal planet
+      for (const graha of ['Moon', 'Mars'] as const) {
+        const reading = computeInfluence({
+          graha,
+          rashi: 'Kumbha',
+          house: 9,
+          nakshatra: 'Shatabhisha',
+          speed: graha === 'Moon' ? 13 : 0.5,
+          natal: { rashi: 'Simha', house: 3 },
+          aspects: [
+            {
+              other: 'Rahu',
+              label: 'trine',
+              orb: 1.2,
+              motion: 'applying',
+              kind: 'natal',
+            },
+          ],
+          dasha: { maha: 'Saturn', antar: 'Ketu' },
+          isDemo: false,
+        });
+        for (const sample of [
+          reading.meansForYou,
+          reading.influencingNow,
+          reading.changing,
+          ...reading.advice.items,
+        ]) {
+          const hits = findBannedHits(sample);
+          expect(
+            hits,
+            `banned in influence ${graha}: ${hits} :: ${sample.slice(0, 140)}`,
+          ).toEqual([]);
+          expect(sample.toLowerCase()).not.toMatch(/personal theme is lit/);
+          expect(sample.toLowerCase()).not.toMatch(/colour the exchange/);
+          expect(sample.toLowerCase()).not.toMatch(/sky-link/);
+          expect(sample.toLowerCase()).not.toMatch(/sideways knowing/);
+          expect(sample.toLowerCase()).not.toMatch(/chapter flavour/);
+          expect(sample.toLowerCase()).not.toMatch(/treat it as weather/);
+          expect(sample.toLowerCase()).not.toMatch(/flowing easily/);
+        }
       }
 
       // jargon density: Lagnesha / Gochaara should not dominate body
@@ -202,3 +249,58 @@ describe('P3 snapshot bands', () => {
     });
   }
 });
+
+describe('Design lane — ban new fluff phrases across generators', () => {
+  const FLUFF = [
+    /personal theme is lit/i,
+    /colour the exchange/i,
+    /sky-link/i,
+    /sideways knowing/i,
+    /already know some things sideways/i,
+    /chapter flavour/i,
+    /treat it as weather/i,
+    /appetite for the new turns into a private research/i,
+    /flowing easily/i,
+    /set the weather/i,
+  ];
+
+  it('rule-bank samples stay fluff-free', async () => {
+    const { ASPECT_PAIRS } = await import('../rules/aspectPairs');
+    const { ASPECT_GRAHA_FLAVOUR, ASPECT_RULES } = await import('../rules/aspects');
+    const { RETROGRADE_RULES } = await import('../rules/retrograde');
+    const { DASHA_PAIR } = await import('../rules/dasha');
+    const { GRAHA_BHAVA } = await import('../rules/grahaBhava');
+
+    const samples: string[] = [
+      ...Object.values(ASPECT_RULES).flatMap((r) => [
+        r.lifeMeaning,
+        r.advice,
+        r.natalTransitNote,
+      ]),
+      ...Object.values(ASPECT_GRAHA_FLAVOUR),
+      ...Object.values(RETROGRADE_RULES).flatMap((r) => [r.temperament, r.advice]),
+      ASPECT_PAIRS['Mars_Saturn']?.trine.lifeMeaning ?? '',
+      ASPECT_PAIRS['Rahu_Moon']?.trine.lifeMeaning ?? '',
+      DASHA_PAIR['Sun_Ketu']?.tone ?? '',
+      DASHA_PAIR['Saturn_Rahu']?.tone ?? '',
+      GRAHA_BHAVA.Ketu[1].lifeArea,
+      GRAHA_BHAVA.Moon[4].lifeArea,
+    ];
+    for (const sample of samples) {
+      for (const re of FLUFF) {
+        expect(sample, sample.slice(0, 120)).not.toMatch(re);
+      }
+      expect(findBannedHits(sample)).toEqual([]);
+    }
+  });
+
+  it('welcome copy stays compass/will without soft weather slogans', () => {
+    const c = WELCOME_COPY;
+    expect(c.toLowerCase()).toMatch(/compass/);
+    expect(c.toLowerCase()).not.toMatch(/sketches weather/);
+    for (const re of FLUFF) {
+      expect(c).not.toMatch(re);
+    }
+  });
+});
+

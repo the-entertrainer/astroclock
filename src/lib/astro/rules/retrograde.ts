@@ -35,11 +35,11 @@ export const RETROGRADE_RULES: Record<GrahaId, RetroRule> = {
     advice: 'One sober step beats a grand promise. Leave room to breathe.',
   },
   Rahu: {
-    temperament: 'Appetite for the new turns into a private research phase.',
-    advice: 'Follow curiosity with a timer; reality-check before you leap.',
+    temperament: 'You’re more likely to research big changes privately than announce them.',
+    advice: 'Investigate options with a timer; wait before publicly committing.',
   },
   Ketu: {
-    temperament: 'Release and simplify go quieter — insight arrives sideways.',
+    temperament: 'Release and simplify go quieter — insight arrives as gut clarity, not a speech.',
     advice: 'Drop one extra obligation; keep the lesson and stay in the room.',
   },
 };

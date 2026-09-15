@@ -10,7 +10,7 @@ const ASPECT_SLANG =
 
 /** Profile / summary slogans that produce nonsense when stitched */
 const BANNED_PROFILE_SLANG =
-  /\b(rising ruler|lights? up|long road|negotiate daily|neither should win|appearance and feeling|\bmask\b|road show|mood should\s*[—–-]|braid|sediment|witness|curriculum|colour how you think|outer style invests|meet the world by climbing)/i;
+  /\b(rising ruler|lights? up|long road|negotiate daily|neither should win|appearance and feeling|\bmask\b|road show|mood should\s*[—–-]|braid|sediment|witness|curriculum|colour how you think|outer style invests|meet the world by climbing|personal theme is lit|colour the exchange|sky-link|sideways knowing|already know some things sideways|chapter flavour|treat it as weather|appetite for the new turns into a private research|flowing easily|set the weather)/i;
 
 /** Banned patterns that must not appear in user-visible body copy */
 export const BANNED_PROSE_PATTERNS: RegExp[] = [
@@ -65,7 +65,7 @@ export function scrubMechanic(text: string): string {
   t = t.replace(/\btransit\s+(\w+)\s+is\s+square\s+your\s+natal\s+(\w+)/gi,
     '$1 pressing on your $2');
   t = t.replace(/\btransit\s+(\w+)\s+is\s+trine\s+your\s+natal\s+(\w+)/gi,
-    '$1 flowing with your $2');
+    '$1 working smoothly with your $2');
   t = t.replace(/\btransit\s+(\w+)\s+is\s+sextile\s+your\s+natal\s+(\w+)/gi,
     '$1 gently supporting your $2');
   t = t.replace(/\(\d+(\.\d+)?°[^)]*\)/g, '');
@@ -112,7 +112,7 @@ export function aspectLifeVerb(label: string): string {
   if (l.includes('conjunct')) return 'mixing closely with';
   if (l.includes('sextile')) return 'gently cooperating with';
   if (l.includes('square')) return 'creating friction with';
-  if (l.includes('trine')) return 'flowing easily with';
+  if (l.includes('trine')) return 'working smoothly with';
   if (l.includes('oppose')) return 'sitting across from';
   return 'linking with';
 }

@@ -106,7 +106,7 @@ const DASHA_TONE: Record<string, string> = {
   Venus: 'bond, art, and desire-harmony',
   Saturn: 'long grind and sober accountability',
   Rahu: 'hunger for the unconventional',
-  Ketu: 'release, distill, sideways insight',
+  Ketu: 'release, simplify, quiet gut clarity',
 };
 
 export type ClimateLabel = 'tense' | 'fluid' | 'peak' | 'quiet' | 'volatile';
@@ -380,25 +380,25 @@ function buildDaySummary(args: {
           : natalHit.label === 'square'
             ? 'pressing on'
             : natalHit.label === 'trine'
-              ? 'flowing with'
+              ? 'working smoothly with'
               : natalHit.label === 'sextile'
                 ? 'gently supporting'
                 : 'linking with';
     frags.push({
-      text: `${natalHit.a} is ${verb} your ${natalHit.b} — a personal theme is lit, so respond with care rather than drama.`,
+      text: `${natalHit.a} is ${verb} your ${natalHit.b} story: expect sharper charge there today. Take one concrete step; don’t dramatize.`,
       specificity: 67,
       cite: `t${natalHit.a}→n${natalHit.b}`,
     });
   } else if (args.isDemo) {
     frags.push({
-      text: 'Save your birth details if you want these notes to name which personal themes are lit.',
+      text: 'Save your birth details if you want these notes to name which of your life themes are active today.',
       specificity: 20,
       cite: 'demo',
     });
   }
 
   frags.push({
-    text: 'None of this is a verdict — it is weather with a map. Use it to choose scope, not to outsource judgment.',
+    text: 'None of this decides your day for you. Use it to choose scope and next steps, not to outsource judgment.',
     specificity: 15,
     cite: 'agency',
   });
@@ -406,7 +406,7 @@ function buildDaySummary(args: {
   if (args.extraFrags?.length) frags.push(...args.extraFrags);
 
   const stitched = stitchParagraphs(frags, { perPara: 2, maxFrags: 12, maxChars: 1600 });
-  return stitched || `Emotional weather today sits in ${signEn(args.moonRashi)} (${args.moonNak}).`;
+  return stitched || `Emotional tone today sits in ${signEn(args.moonRashi)} (${args.moonNak}). Expect needs to show there; keep the next step small.`;
 }
 
 
@@ -474,7 +474,7 @@ function buildCards(args: {
     id: 'moon-nak',
     tone: 'sky',
     title: `Moon · ${args.moonNak}`,
-    body: `${nkRule?.temperament || NAK_THEMES[args.moonNak] || 'lunar weather'} ${moonRule?.temperament || `In ${signEn(args.moonRashi)}: ${RASHI_MOOD[args.moonRashi] || 'sign tone'}.`}`,
+    body: `${nkRule?.temperament || NAK_THEMES[args.moonNak] || 'lunar mood'} ${moonRule?.temperament || `In ${signEn(args.moonRashi)}: ${RASHI_MOOD[args.moonRashi] || 'sign tone'}.`} Do one small thing that matches the mood; skip inventing extra drama.`,
     graha: 'Moon',
   });
 
@@ -483,28 +483,28 @@ function buildCards(args: {
       id: 'texture-soft',
       tone: 'soft',
       title: 'Day texture · fluid',
-      body: `${args.soft} soft vs ${args.hard} hard — collaboration and flow over friction.`,
+      body: `${args.soft} soft vs ${args.hard} hard contacts — prefer collaboration and finish what’s ready; skip picking a fight.`,
     });
   } else if (args.hard > args.soft + 1) {
     cards.push({
       id: 'texture-hard',
       tone: 'hard',
       title: 'Day texture · edged',
-      body: `${args.hard} hard vs ${args.soft} soft — precision under pressure; watch sharp turns.`,
+      body: `${args.hard} hard vs ${args.soft} soft contacts — precision under pressure; pause before sharp turns in talk.`,
     });
   } else if (args.soft + args.hard <= 1) {
     cards.push({
       id: 'texture-quiet',
       tone: 'quiet',
       title: 'Day texture · quiet',
-      body: 'Few exact aspects — sparse sky. Deep work yes; forced pivots no.',
+      body: 'Few exact contacts — sparse sky. Deep work yes; forced pivots no.',
     });
   } else {
     cards.push({
       id: 'texture-mixed',
       tone: 'sky',
       title: 'Day texture · mixed',
-      body: `${args.soft} soft · ${args.hard} hard — alternate push and glide.`,
+      body: `${args.soft} soft · ${args.hard} hard contacts — alternate push and ease; name the main thread once.`,
     });
   }
 
@@ -513,7 +513,7 @@ function buildCards(args: {
       id: 'nudge-birth',
       tone: 'quiet',
       title: 'Transit sky only',
-      body: 'Set birth data for personal spotlights and period-lord hits.',
+      body: 'Save birth data to see which of your life themes are active and how period lords are hit.',
     });
   } else {
     for (const hit of args.natalHits.slice(0, 3)) {
@@ -522,9 +522,9 @@ function buildCards(args: {
         id: `spot-${hit.a}-${hit.b}-${hit.angle}`,
         tone: 'spotlight',
         title: conj
-          ? `Spotlight · t${hit.a} on n${hit.b}`
-          : `Hit · t${hit.a} ${hit.label} n${hit.b}`,
-        body: `${hit.orb.toFixed(1)}° ${hit.motion} — personal planet lighting natal ${hit.b}.`,
+          ? `Spotlight · ${hit.a} on your ${hit.b}`
+          : `Hit · ${hit.a} ${hit.label} your ${hit.b}`,
+        body: `${hit.a} is activating your ${hit.b} story — expect sharper charge there today. Take one concrete step; don’t dramatize.`,
         graha: hit.a,
       });
     }
@@ -548,7 +548,7 @@ function buildCards(args: {
             id: `dasha-${t}-${lord}`,
             tone: 'dasha',
             title: `Period echo · ${lord}`,
-            body: `Transit ${t} ${ASPECT_LABEL[toLord.angle]} natal ${lord} (period lord) — theme amp.`,
+            body: `Transit ${t} is activating your period lord ${lord} — that life theme gets louder. Practise its better habit today; skip the stereotype.`,
             graha: t,
           });
           dashaCardAdded = true;
@@ -712,7 +712,7 @@ export function computeTodayInsights(
     for (const g of gocharaList.slice(0, 2)) {
       const life = HOUSE_LIFE[g.house] || 'a live area of day-to-day life';
       extraFrags.push({
-        text: `${g.graha} is highlighting ${life} for a while — treat it as weather, not a verdict, and keep the next step small.`,
+        text: `${g.graha} is highlighting ${life} for a while. Keep the next step small and concrete; don’t over-read a temporary spotlight.`,
         specificity: 71,
         cite: `gochara ${g.graha}`,
       });

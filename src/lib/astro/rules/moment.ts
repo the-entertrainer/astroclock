@@ -66,18 +66,18 @@ export function orbBand(orbDeg: number): OrbBand {
 export function orbBandWording(band: OrbBand): { life: string; advice: string } {
   if (band === 'exact') {
     return {
-      life: 'A sky-link is right on the nose — that theme is loud right now.',
+      life: 'A contact is exact — that theme is loud right now in mood, talk, and choices.',
       advice: 'Treat the moment as a peak: act with care, then integrate.',
     };
   }
   if (band === 'tight') {
     return {
-      life: 'A sky-link is close — that theme is clearly in play.',
+      life: 'A contact is close — that theme is clearly in play in daily life.',
       advice: 'Stay precise; the window is open but not infinite.',
     };
   }
   return {
-    life: 'A sky-link is loose — more background colour than a headline.',
+    life: 'A contact is loose — more background noise than a headline; don’t over-weight it.',
     advice: 'Note it, but do not over-weight a loose connection.',
   };
 }
@@ -171,10 +171,10 @@ export function combustionWording(hit: CombustionHit): {
 export function moonSpeedNote(speedDegPerDay: number): string | null {
   const abs = Math.abs(speedDegPerDay);
   if (abs >= 14.5) {
-    return 'The Moon is moving fast — moods and needs may change costume quickly today.';
+    return 'The Moon is moving fast — moods and needs may shift quickly today; decide small, revisit later.';
   }
   if (abs <= 11.5) {
-    return 'The Moon is moving slowly — feelings linger; give them room rather than rushing a verdict.';
+    return 'The Moon is moving slowly — feelings linger; give them room rather than forcing a quick decision.';
   }
   return null;
 }
@@ -202,7 +202,7 @@ export function dayVolumeFromAspectCount(totalAspects: number): {
   }
   return {
     volume: 'balanced',
-    life: 'A balanced sky day — enough links to colour the hours without a stampede.',
+    life: 'A balanced sky day — enough contacts to shape the hours without a stampede.',
     advice: 'Alternate push and glide; name the main thread once.',
   };
 }
@@ -229,9 +229,9 @@ export function yogaWording(name: string): string {
     'Indra',
   ]);
   if (soft.has(name)) {
-    return 'The lunar-day colour leans cooperative — favour alliance and finish work.';
+    return 'This lunar-day leans cooperative — favour alliance and finish work.';
   }
-  return 'The lunar-day colour leans edged — favour precision and smaller scope.';
+  return 'This lunar-day leans edged — favour precision and smaller scope.';
 }
 
 export function karanaWording(name: string): string {

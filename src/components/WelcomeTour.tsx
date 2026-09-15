@@ -10,29 +10,29 @@ const STEPS = [
     title: 'Welcome to AstroClock',
     body: `This is a passion project by a geek into Indian philosophy & astrology.
 
-AstroClock is a **compass, not a pathfinder** — it sketches weather and temperament so you can choose, not so it can choose for you.
+AstroClock is a **compass, not a pathfinder** — it sketches today’s pressures and temperament so you can choose, not so it can choose for you.
 
 Nothing beats your own will. And will may move the stars if they come across your way.`,
   },
   {
     id: 'setup',
     title: 'Set up your details',
-    body: 'Open Config (gear) and fill Identity — name, birth date/time (UTC), and place. Save to unlock Profile and personal day notes.',
+    body: 'Open Config (gear). Enter name, birth date/time (UTC), and place. Save to unlock Profile and personal day notes.',
   },
   {
     id: 'dial',
     title: 'The clock dial',
-    body: 'The dial is live sidereal sky: rashis, nakshatras, planet hands, and your natal markers when birth is saved. Scrub time to simulate.',
+    body: 'The dial shows live sidereal sky — signs, stars, planet hands, and your birth markers when saved. Scrub time to preview other hours.',
   },
   {
     id: 'today',
     title: 'My Day (Today)',
-    body: 'Today is a plain-English sketch of the current sky — mood, climate, and practical advice. Weather with a map, not a verdict.',
+    body: 'Today gives a plain-English sketch of the current sky: what’s loud, how it shows up, and what to do or avoid.',
   },
   {
     id: 'profile',
     title: 'Profile',
-    body: 'Profile paints how you come across, feel, and drive — from rising, Moon, Sun, and period lords. Always interpretive, never fate.',
+    body: 'Profile shows how you come across, feel, and drive — from rising, Moon, Sun, and period lords. Use it as a map, not as fate.',
   },
 ] as const;
 

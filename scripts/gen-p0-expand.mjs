@@ -33,7 +33,7 @@ const GRAHA_CORE = {
   Venus: { noun:'bond, taste, pleasure, and harmony', verb:'relate and delight', advice:'choose beauty and kindness on purpose', kinder:'harmony practiced, not assumed', tip:'bond and choose what feels beautiful' },
   Saturn: { noun:'duration, structure, and sober accountability', verb:'endure and build', advice:'one sober step beats a grand promise', kinder:'discipline that leaves room to breathe', tip:'let time be the teacher' },
   Rahu: { noun:'appetite for the unfamiliar and unconventional', verb:'reach past the known', advice:'curiosity yes — obsession needs a timer and a reality check', kinder:'novel aim with feet still on ground', tip:'channel hunger for the new' },
-  Ketu: { noun:'release, distill, and sideways knowing', verb:'let go and refine', advice:'release one extra obligation and keep the distilled lesson', kinder:'insight without vanishing from the room', tip:'trust what you already know sideways' },
+  Ketu: { noun:'release, simplify, and quiet gut clarity', verb:'let go and refine', advice:'release one extra obligation and keep the distilled lesson', kinder:'insight without vanishing from the room', tip:'trust quiet gut clarity and simplify' },
 };
 
 const NAK_CORE = {

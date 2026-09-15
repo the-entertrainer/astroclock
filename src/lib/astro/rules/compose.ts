@@ -258,7 +258,7 @@ export function collectGocharaFrags(args: {
     } else {
       const verb = aspectLifeVerb(args.aspectToNatal.label);
       frags.push({
-        text: `${args.transitGraha} is ${verb} your ${args.aspectToNatal.natal} — that personal theme is getting airtime, so tend it gently.`,
+        text: `${args.transitGraha} is ${verb} your ${args.aspectToNatal.natal} story: expect that mix in mood, talk, and choices. Take one concrete step; don’t dramatize.`,
         specificity: 66,
         cite: args.aspectToNatal.label,
         kind: 'life',
@@ -623,7 +623,7 @@ export function collectDayFrags(args: {
     } else {
       const verb = aspectLifeVerb(args.aspectLabel);
       frags.push({
-        text: `${args.aspectGraha} is ${verb} ${args.aspectOther} in the sky — expect that mix to colour conversations and decisions.`,
+        text: `${args.aspectGraha} is ${verb} ${args.aspectOther} in the sky — expect that mix in conversations and decisions today.`,
         specificity: 62,
         cite: args.aspectLabel,
         kind: 'life',
@@ -643,7 +643,7 @@ export function collectDayFrags(args: {
     } else {
       const verb = aspectLifeVerb(p.label);
       frags.push({
-        text: `${p.transit} is ${verb} your ${p.natal} — a personal theme is lit, so respond with care rather than drama.`,
+        text: `${p.transit} is ${verb} your ${p.natal} story: expect sharper charge there today. Respond with one concrete step, not drama.`,
         specificity: 77,
         cite: `${p.transit}→${p.natal}`,
         kind: 'life',
@@ -795,7 +795,7 @@ export function collectDayAdviceFrags(args: {
       });
     } else {
       frags.push({
-        text: 'A personal theme is lit today — tend it with care, not fatalism.',
+        text: 'A familiar life theme is active today — take one concrete step; don’t treat it as fate.',
         specificity: 52,
         cite: 'natal hit',
         kind: 'advice',
@@ -803,7 +803,7 @@ export function collectDayAdviceFrags(args: {
     }
   } else if (args.natalHit) {
     frags.push({
-      text: 'A personal theme is lit today — tend it with care, not fatalism.',
+      text: 'A familiar life theme is active today — take one concrete step; don’t treat it as fate.',
       specificity: 52,
       cite: 'natal hit',
       kind: 'advice',

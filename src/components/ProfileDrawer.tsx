@@ -63,7 +63,7 @@ export function ProfileDrawer({
           {isDemo || !profile ? (
             <div className="chip rounded-xl px-4 py-6 text-center space-y-3">
               <p className="text-sm text-mist/80">
-                Save your birth details to unlock a placement-accurate character
+                Save your birth details to unlock a placement-accurate profile
                 reading.
               </p>
               <p className="text-[10px] text-mist/45 leading-relaxed">

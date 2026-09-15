@@ -51,14 +51,14 @@ export const HOUSE_LIFE: Record<number, string> = {
 
 const GRAHA_PLAIN: Record<GrahaId, string> = {
   Sun: 'your drive to be seen and lead — identity and vitality',
-  Moon: 'your moods, needs, and emotional weather',
+  Moon: 'your moods, needs, and emotional safety',
   Mars: 'your courage, anger, and how you push for what you want',
   Mercury: 'how you think, talk, learn, and negotiate',
   Jupiter: 'growth, luck-with-meaning, teachers, and generosity',
   Venus: 'love, taste, pleasure, and how you bond',
   Saturn: 'responsibility, delays that teach, and long-game structure',
-  Rahu: 'appetite for the new, unfamiliar, or slightly obsessive',
-  Ketu: 'what you release, distill, or already know sideways',
+  Rahu: 'ambition for novelty, shortcuts, and unfamiliar wins',
+  Ketu: 'what you release, simplify, or trust as quiet gut clarity',
 };
 
 const SIGN_STYLE: Record<string, string> = {
@@ -275,7 +275,7 @@ export function computeInfluence(input: InfluenceInput): InfluenceReading {
         },
         { text: `In plain terms, ${graha} rules ${grahaPlain}.${nakBit}`, specificity: 40 },
         {
-          text: 'Without your birth chart saved, this is sky-weather — useful mood context, not a personal verdict.',
+          text: 'Without your birth chart saved, this is general sky context — useful for mood and timing, not a personal reading.',
           specificity: 20,
         },
       ],
@@ -298,7 +298,7 @@ export function computeInfluence(input: InfluenceInput): InfluenceReading {
           specificity: 65,
         },
         {
-          text: gr?.temperament || `Today the same planet is moving through ${sign}, colouring that natal theme with a ${sign.toLowerCase()} mood — ${style}.`,
+          text: gr?.temperament || `Today the same planet is moving through ${sign}, adding a ${sign.toLowerCase()} mood (${style}) to that natal theme.`,
           specificity: 55,
         },
         { text: nakBit.trim(), specificity: 60 },
@@ -315,7 +315,7 @@ export function computeInfluence(input: InfluenceInput): InfluenceReading {
         specificity: 70,
       },
       {
-        text: 'Expect more notice, decisions, or emotional charge around that area — not as fate, just as where attention wants to go.',
+        text: 'Expect more notice, decisions, or emotional charge around that area. Act where attention is already pulling; don’t invent drama elsewhere.',
         specificity: 40,
       },
       {
@@ -333,20 +333,22 @@ export function computeInfluence(input: InfluenceInput): InfluenceReading {
   const top = aspects.slice(0, 3);
   if (top.length === 0) {
     changeBits.push(
-      `No tight aspects involving ${graha} right now — the story is quieter, more about its house and sign than dramatic sky-links.`,
+      `No tight contacts involving ${graha} right now — the story is quieter, more about its life area and sign than loud sky pressure.`,
     );
   } else {
     for (const a of top) {
-      const who =
-        a.kind === 'natal' ? `your natal ${a.other}` : `transit ${a.other}`;
       const ar = aspectRule(a.label);
       const flavour = ASPECT_GRAHA_FLAVOUR[graha] || '';
-      const life = ar
-        ? `${ar.lifeMeaning}${a.kind === 'natal' ? ' ' + ar.natalTransitNote : ''}`
-        : aspectLife(a.label);
+      const verb = aspectLife(a.label);
       const whoPlain = a.kind === 'natal' ? `your ${a.other}` : `${a.other}`;
+      const natalNote =
+        a.kind === 'natal' && ar?.natalTransitNote ? ` ${ar.natalTransitNote}` : '';
+      const pairHint =
+        a.kind === 'natal'
+          ? `${graha} is activating the same area as your ${a.other} story — ${verb}.`
+          : `${graha} is ${verb} with ${whoPlain}.`;
       changeBits.push(
-        `${graha} is ${life} ${whoPlain}. ${flavour}`.replace(/\s+/g, ' ').trim(),
+        `${pairHint}${natalNote} ${flavour}`.replace(/\s+/g, ' ').trim(),
       );
     }
   }
@@ -355,15 +357,15 @@ export function computeInfluence(input: InfluenceInput): InfluenceReading {
     changeBits.push(
       dp
         ? `${dp.tone} ${dp.advice}`
-        : `${graha} is also a period lord right now (${dasha.maha} / ${dasha.antar}), so its themes get a louder chapter heading — practise its better habits rather than fearing the stereotype.`,
+        : `${graha} is also a period lord right now (${dasha.maha} / ${dasha.antar}), so its themes get louder — practise its better habits rather than fearing the stereotype.`,
     );
     cites.push(`Period: ${dasha.maha}/${dasha.antar}`);
   } else if (dasha && dasha.maha !== '—') {
     const dp = dashaPairRule(dasha.maha, dasha.antar);
     changeBits.push(
       dp
-        ? `Background chapter: ${dp.tone}`
-        : `Background chapter: a ${dasha.maha} stretch with a ${dasha.antar} flavour — that colours the month even when ${graha} is not the headline.`,
+        ? `Background period: ${dp.tone}`
+        : `Background period: a ${dasha.maha} stretch shaped by ${dasha.antar} — that still affects the month even when ${graha} is not the headline.`,
     );
   }
 

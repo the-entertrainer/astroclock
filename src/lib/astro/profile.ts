@@ -498,7 +498,7 @@ export function computeNatalProfile(
   sections.push({
     id: 'mind',
     title: 'Mind & emotions',
-    body: `${moonSignRule?.temperament || MOON_SIGN[moon.rashi] || ''} ${moonHouseRule?.lifeArea || `In the house of ${HOUSE_LIFE[moon.house] || 'daily life'}, feelings show up first.`} ${moonNakRule?.temperament || `${NAK_MIND[moon.nakshatra] || 'Your Moon has a distinctive habit.'}`} ${padaNote} Emotionally, stories your heart rehearses often lean toward ${moonNakLord}-flavoured themes.`,
+    body: `${moonSignRule?.temperament || MOON_SIGN[moon.rashi] || ''} ${moonHouseRule?.lifeArea || `In the house of ${HOUSE_LIFE[moon.house] || 'daily life'}, feelings show up first.`} ${moonNakRule?.temperament || `${NAK_MIND[moon.nakshatra] || 'Your Moon has a distinctive habit.'}`} ${padaNote} Emotionally, stories your heart rehearses often lean toward ${moonNakLord}-toned themes — notice when that planet’s habits show up in mood.`,
     cites: [
       `Moon in ${signEn(moon.rashi)}, house ${moon.house}`,
       `${moon.nakshatra} (part ${moon.pada})`,
@@ -512,7 +512,7 @@ export function computeNatalProfile(
   sections.push({
     id: 'drive',
     title: 'Drive & vitality',
-    body: `${sunSignRule?.temperament || SUN_DRIVE[sun.rashi] || ''} ${sunHouseRule?.lifeArea || `The Sun in the house of ${HOUSE_LIFE[sun.house] || 'focus'} marks where identity heat concentrates.`} ${sunNakRule?.temperament || `${sun.nakshatra} adds a method to how you prefer to shine and renew a sense of self.`}`,
+    body: `${sunSignRule?.temperament || SUN_DRIVE[sun.rashi] || ''} ${sunHouseRule?.lifeArea || `The Sun in the house of ${HOUSE_LIFE[sun.house] || 'focus'} marks where identity heat concentrates.`} ${sunNakRule?.temperament || `${sun.nakshatra} shapes how you prefer to show up and renew your sense of self — use that method on purpose.`}`,
     cites: [
       `Sun in ${signEn(sun.rashi)}, house ${sun.house} · ${sun.nakshatra}`,
     ],
@@ -620,10 +620,10 @@ export function computeNatalProfile(
 
   sections.push({
     id: 'dasha',
-    title: 'This chapter of life',
+    title: 'This period of life',
     body: pair
-      ? `${pair.tone} ${pair.advice} Think of it as a chapter heading across your chart — not a rewrite of who you are.`
-      : `You’re in a ${dasha.maha} chapter with a ${dasha.antar} flavour. Think of it as a heading across your chart — not a rewrite of who you are. Practise the better habits of this chapter rather than fearing a stereotype.`,
+      ? `${pair.tone} ${pair.advice} Treat this as a period focus across your chart — not a rewrite of who you are.`
+      : `You’re in a ${dasha.maha} period, and ${dasha.antar} is shaping the near weeks. Treat this as a period focus — not a rewrite of who you are. Practise the better habits of this period rather than fearing a stereotype.`,
     cites: [`Period ${dasha.maha}`, `Sub-period ${dasha.antar}`],
   });
 
