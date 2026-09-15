@@ -4,3 +4,4 @@ export * from './planets';
 export * from './dasha';
 export * from './insights';
 export * from './profile';
+export * from './influence';

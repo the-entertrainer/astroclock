@@ -15,156 +15,125 @@ import {
   wholeSignHouse,
 } from './planets';
 import { vimshottari } from './dasha';
+import {
+  HOUSE_LIFE,
+  PLANET_SIGN_PLAIN,
+  signEn,
+} from './influence';
 
-/** Sign lords (whole-sign) */
 const RASHI_LORDS: GrahaId[] = [
-  'Mars', // Mesha
-  'Venus', // Vrishabha
-  'Mercury', // Mithuna
-  'Moon', // Karka
-  'Sun', // Simha
-  'Mercury', // Kanya
-  'Venus', // Tula
-  'Mars', // Vrischika
-  'Jupiter', // Dhanu
-  'Saturn', // Makara
-  'Saturn', // Kumbha
-  'Jupiter', // Meena
+  'Mars',
+  'Venus',
+  'Mercury',
+  'Moon',
+  'Sun',
+  'Mercury',
+  'Venus',
+  'Mars',
+  'Jupiter',
+  'Saturn',
+  'Saturn',
+  'Jupiter',
 ];
 
+/** Rising-sign character sketches — plain English */
 const LAGNA_ESSENCE: Record<string, string> = {
-  Mesha: 'You meet the world head-on — initiative, heat, and a bias toward action before consensus.',
-  Vrishabha: 'You build through steadiness and taste — value, body-sense, and loyalty to what lasts.',
-  Mithuna: 'You orient through curiosity and exchange — words, routes, and dual tracks of attention.',
-  Karka: 'You lead from the emotional tide — protectiveness, memory, and a need for safe harbour.',
-  Simha: 'You radiate a centre — dignity, creative will, and an instinct to be seen as sovereign.',
-  Kanya: 'You refine and serve through precision — analysis, craft, and quiet competence.',
-  Tula: 'You weigh and relate — diplomacy, aesthetic balance, and partnership as a mirror.',
-  Vrischika: 'You intensify and probe — depth, secrecy, and transformative will under pressure.',
-  Dhanu: 'You aim beyond the near field — belief, teaching, and restless expansion of horizon.',
-  Makara: 'You climb with structure — duty, endurance, and long-game authority.',
-  Kumbha: 'You network the future — systems, unconventional peers, and detached idealism.',
-  Meena: 'You dissolve boundaries — empathy, dream logic, and porous edges between self and other.',
+  Mesha:
+    'You tend to meet life head-on. People often read you as someone who starts before the committee finishes talking — warm under pressure, impatient with fog, and more honest in motion than in waiting rooms. Initiative is your comfort zone; restlessness shows when nothing needs doing.',
+  Vrishabha:
+    'You build trust slowly and keep what you value. Others may notice a calm body-sense, a good ear for comfort, and loyalty that outlasts fashion. You are not quick to pivot, and that steadiness is a feature — once you commit, you mean it.',
+  Mithuna:
+    'Curiosity is how you orient. You collect people, routes, and ideas the way others collect trophies, and boredom hits harder than hard work. Conversation is oxygen; you feel most yourself when something interesting is being exchanged.',
+  Karka:
+    'You lead from feeling and protectiveness. Belonging matters more than applause, and memory colours how you read a room. When the harbour feels safe, you are generous; when it does not, you shell up until trust returns.',
+  Simha:
+    'You carry a centre. Being invisible feels like a kind of exile, and creative warmth is how you lead — not only ego, but a need to put a signature on things. Recognition soothes; being taken for granted stings.',
+  Kanya:
+    'You refine and help through competence. Mess and vagueness bother you; usefulness feels like care. People may lean on your quiet precision more than they notice, and critique is often your love language in disguise.',
+  Tula:
+    'You weigh and relate. Fairness is not abstract — discord in a room becomes discord in your chest. Partnership and aesthetics are how you think, and you prefer negotiated grace to blunt force.',
+  Vrischika:
+    'You go deep or you go nowhere. Trust is a gate, not a greeting, and intensity sits under a still surface. Half-measures starve you; real loyalty and real honesty wake you up.',
+  Dhanu:
+    'You aim past the near field. Meaning, humour, and horizon keep you kind; petty loops make you irritable. You bond over shared quests more than shared furniture, and you need room to roam — literally or through learning.',
+  Makara:
+    'You climb with structure. Reliability outranks charm, and time is a collaborator. Status, for you, is sediment of work kept — not costume. Softness arrives after respect is earned.',
+  Kumbha:
+    'You network the future. Friendship-toned bonds often outlast romantic theatre, and you feel at home among odd, systems-minded people. Detachment is a shield; belonging still matters, just not on traditional terms.',
+  Meena:
+    'You feel through porous edges. Empathy and imagination are gifts and costs — you absorb atmospheres, so company is climate. Art, sanctuary, and quiet service suit you when feet stay on enough ground to deliver.',
 };
 
 const MOON_SIGN: Record<string, string> = {
-  Mesha: 'Emotions ignite quickly and seek an outlet; mood is martial and restless until expressed.',
-  Vrishabha: 'Feelings settle when comfort, beauty, and reliability are secured; attachment runs deep.',
-  Mithuna: 'The mind narrates feeling — talk, novelty, and mental companionship regulate the heart.',
-  Karka: 'Sensitivity is oceanic; belonging and ancestral memory colour every response.',
-  Simha: 'Pride and warmth braid together; recognition soothes, slight wounds the centre.',
-  Kanya: 'Emotion is sorted into categories; care shows as usefulness and quiet critique.',
-  Tula: 'Harmony-seeking; relational weather dictates inner weather more than admitted.',
-  Vrischika: 'Feelings are all-or-nothing — loyalty, jealousy, and regenerative depth.',
-  Dhanu: 'Mood expands toward meaning; boredom or dogma collapses the emotional sky.',
-  Makara: 'Affect is reserved and durable; safety is earned through competence and time.',
-  Kumbha: 'Detached care — friendship-toned emotion, quirky needs, group belonging.',
-  Meena: 'Diffuse empathy; dreams, music, and compassion blur self/other lines.',
+  Mesha:
+    'Emotionally you ignite fast and need an outlet. Feelings arrive as urges to act, speak, or start — sitting still with raw mood feels like holding hot iron. Honesty of temper beats polite fog, if you aim the heat.',
+  Vrishabha:
+    'You settle when comfort, beauty, and reliability are secured. Attachment runs deep and slow; abrupt change can feel like theft. Once your heart decides, revision takes time and sensory proof.',
+  Mithuna:
+    'Your heart narrates. Talk, novelty, and mental companionship regulate mood as much as hugs do. Emotions change costume when the conversation does — clarify whether you are flirting with ideas or with people.',
+  Karka:
+    'Sensitivity is oceanic. Belonging and family-memory colour responses, and other people’s weather enters your harbour easily. Caregiving and being cared for are lifelong themes, blood or chosen.',
+  Simha:
+    'Pride and warmth braid together. Recognition soothes; slight wounds the centre. You are generous when admired and creative when the heart has a witness.',
+  Kanya:
+    'You sort feelings into categories. Care shows as usefulness and quiet critique more than melodrama. Chaos in someone’s habits can fray the bond; repair manuals for emotion feel safer than storms.',
+  Tula:
+    'Harmony-seeking runs deep. Relational weather often dictates inner weather more than you admit. Beauty and fairness are emotional medicine; unfairness lands in the body.',
+  Vrischika:
+    'Feelings are all-or-nothing — loyalty, jealousy, regenerative depth. Surface calm may hide undertow. Trust is everything; half-open doors frustrate this Moon.',
+  Dhanu:
+    'Mood expands toward meaning. Boredom or dogma collapses the emotional sky. You want a horizon — belief, travel, teaching, humour that widens the frame.',
+  Makara:
+    'Affect is reserved and durable. Safety is earned through competence and time, not instant confession. Commitment shows as endurance; displays of feeling may come late and land heavy.',
+  Kumbha:
+    'Care can feel detached or friendship-toned. You may feel odd in private and lucid in groups. Quirky needs and egalitarian bonds soothe more than possessive romance.',
+  Meena:
+    'Empathy is diffuse. Dreams, music, and compassion blur self and other. Beautiful for art and healing; costly without boundaries. Choose company the way you choose climate.',
 };
 
 const NAK_MIND: Record<string, string> = {
-  Ashwini: 'Swift healer impulse — start before the map is finished.',
-  Bharani: 'Creative pressure and containment; birth-through-constraint motif.',
-  Krittika: 'Cutting clarity; purification and sharp discernment.',
-  Rohini: 'Growth, allure, and fertile focus once a target is chosen.',
-  Mrigashira: 'Seeking mind — hunt, sniff, revise; rarely still.',
-  Ardra: 'Storm-clearing intellect; tear-down before rebuild.',
-  Punarvasu: 'Return and renew; optimism after scatter.',
-  Pushya: 'Nourishing steadiness; priestly care and timing.',
-  Ashlesha: 'Coiled insight; hypnotic perception and caution with entanglement.',
-  Magha: 'Ancestral throne; pride in lineage and ceremonial presence.',
-  'Purva Phalguni': 'Pleasure-craft; creative ease and social warmth.',
-  'Uttara Phalguni': 'Allied contracts; lasting bonds through duty.',
-  Hasta: 'Skillful hands; craft, sleight, and practical magic.',
-  Chitra: 'Design brilliance; shape beauty into form.',
-  Swati: 'Independent wind; flexible path, self-directed.',
-  Vishakha: 'Forked determination; aim at dual goals until one wins.',
-  Anuradha: 'Devotional network; loyalty in orbit around a cause.',
-  Jyeshtha: 'Elder authority; protect rank and earned expertise.',
-  Mula: 'Root excavation; dismantle to find bare truth.',
-  'Purva Ashadha': 'Invincible early push; declare victory mid-climb.',
-  'Uttara Ashadha': 'Structured triumph; lasting win through alliance.',
-  Shravana: 'Deep listening; learn by transmission and echo.',
-  Dhanishta: 'Rhythm and fame; ensemble drive, timed bursts.',
-  Shatabhisha: 'Veiled systems healer; eccentric cures.',
-  'Purva Bhadrapada': 'Fierce idealism; edge sacrifice for vision.',
-  'Uttara Bhadrapada': 'Patient depth; wisdom from the long dark.',
-  Revati: 'Shepherding close; soft completion and guidance.',
+  Ashwini: 'Your mind likes swift starts — begin, then correct in motion.',
+  Bharani: 'You hold creative pressure until something real can be delivered.',
+  Krittika: 'You cut through fog; clarity can scorch if unaimed.',
+  Rohini: 'Once fascinated, you grow and attract around a chosen target.',
+  Mrigashira: 'You hunt options; stillness is rare until the trail is sniffed.',
+  Ardra: 'Insight often arrives after a storm — tear-down before rebuild.',
+  Punarvasu: 'You bounce back; second chances feel native.',
+  Pushya: 'You nourish on schedule; care and timing steady the mind.',
+  Ashlesha: 'You read undercurrents; keep ethics tight in intimacy.',
+  Magha: 'Legacy and rightful presence colour how you think.',
+  'Purva Phalguni': 'Pleasure and creative ease loosen the mind — finish one delight.',
+  'Uttara Phalguni': 'You think in lasting alliances and help that sticks.',
+  Hasta: 'Skillful, hands-on cleverness; fix something tangible.',
+  Chitra: 'You design beauty into form; unfinished ugliness irritates.',
+  Swati: 'Independence keeps you kind; cages make you sharp.',
+  Vishakha: 'You can chase dual goals — pick which summit gets heat.',
+  Anuradha: 'Loyalty in orbit around people and causes regulates you.',
+  Jyeshtha: 'You protect earned skill and quiet rank.',
+  Mula: 'You dig to roots; honesty before polish.',
+  'Purva Ashadha': 'Bold early push — declare, then prove.',
+  'Uttara Ashadha': 'You prefer wins that last, through structure and allies.',
+  Shravana: 'You learn by listening deeply before speaking.',
+  Dhanishta: 'Rhythm and teamwork unlock you; timed bursts land.',
+  Shatabhisha: 'You find odd, systems-level fixes others miss.',
+  'Purva Bhadrapada': 'Ideals can fire you past comfort — aim the heat.',
+  'Uttara Bhadrapada': 'Patient depth; bring one insight to the surface.',
+  Revati: 'You shepherd people across finish lines gently.',
 };
 
 const SUN_DRIVE: Record<string, string> = {
-  Mesha: 'Vitality peaks when pioneering; identity forged in contest.',
-  Vrishabha: 'Vitality through embodied security and creative possession.',
-  Mithuna: 'Vitality in dialogue, learning loops, and dual roles.',
-  Karka: 'Vitality tied to home base, family field, and emotional weather.',
-  Simha: 'Vitality when centre-stage — creative leadership is fuel.',
-  Kanya: 'Vitality via craft mastery and useful service.',
-  Tula: 'Vitality in fair exchange and aesthetic partnership.',
-  Vrischika: 'Vitality in crisis alchemy and intimate power.',
-  Dhanu: 'Vitality through belief quests and far-range aims.',
-  Makara: 'Vitality in achievement architecture and status earned.',
-  Kumbha: 'Vitality among innovators and future-facing tribes.',
-  Meena: 'Vitality in imaginative immersion and compassionate cause.',
-};
-
-const HOUSE_BEHAVIOUR: Record<number, string> = {
-  1: 'colours self-presentation and body language directly',
-  2: 'shows in speech, values, and resource habits',
-  3: 'drives courage, siblings/peers, and short-range hustle',
-  4: 'roots in home, mother-field, and private mood base',
-  5: 'expresses via creativity, romance, and speculative play',
-  6: 'works through service, rivals, and daily discipline',
-  7: 'plays out in one-to-one contracts and mirroring others',
-  8: 'deepens via shared resources, secrecy, and rebirth cycles',
-  9: 'orients toward dharma, teachers, and long journeys',
-  10: 'aims at vocation, public face, and hierarchical climb',
-  11: 'networks gains, allies, and future-facing groups',
-  12: 'withdraws into solitude, loss, and liminal spaces',
-};
-
-const PLANET_STYLE: Partial<Record<GrahaId, Record<string, string>>> = {
-  Mercury: {
-    Mesha: 'blunt, fast speech; ideas as weapons or sparks',
-    Vrishabha: 'deliberate, sensory language; stubborn opinions once set',
-    Mithuna: 'native wit; restless multitasking intellect',
-    Karka: 'feeling-toned logic; memory-rich conversation',
-    Simha: 'dramatic phrasing; opinions as performance',
-    Kanya: 'analytic scalpel; lists, edits, service-minded mind',
-    Tula: 'diplomatic phrasing; weighs both sides aloud',
-    Vrischika: 'probing questions; strategic silence',
-    Dhanu: 'big-picture talk; preachy when unchecked',
-    Makara: 'structured argument; dry professional tone',
-    Kumbha: 'systems thinker; eccentric vocabulary',
-    Meena: 'poetic/diffuse mind; intuition over syllabus',
-  },
-  Venus: {
-    Mesha: 'desire pursues; romance as conquest spark',
-    Vrishabha: 'sensual loyalty; beauty as nest',
-    Mithuna: 'flirtatious exchange; variety in affection',
-    Karka: 'nurturing love; attachment to familiar',
-    Simha: 'grand gestures; pride in the beloved',
-    Kanya: 'care through utility; critical affection',
-    Tula: 'partnership artist; harmony as craft',
-    Vrischika: 'intense bond; transformative desire',
-    Dhanu: 'love of freedom and shared ideals',
-    Makara: 'committed, status-aware affection',
-    Kumbha: 'friendly, unconventional bonding',
-    Meena: 'devotional/romantic idealism; porous edges',
-  },
-  Mars: {
-    Mesha: 'direct force; competitive ignition',
-    Vrishabha: 'stubborn endurance; slow-burn assertiveness',
-    Mithuna: 'argumentative drive; scattered heat',
-    Karka: 'defensive passion; mood-fuelled action',
-    Simha: 'proud courage; theatrical will',
-    Kanya: 'precise effort; craft-warrior',
-    Tula: 'assertiveness via negotiation and charm',
-    Vrischika: 'strategic intensity; surgical will',
-    Dhanu: 'ideological crusader; restless campaign',
-    Makara: 'disciplined ambition; climb-as-combat',
-    Kumbha: 'collective fighter; cause over ego',
-    Meena: 'diffused drive; sacrifice or escape under stress',
-  },
+  Mesha: 'Vitality peaks when you pioneer. Identity forges in clean contests, not waiting rooms.',
+  Vrishabha: 'You shine by building and keeping — body, craft, and valued things steady the will.',
+  Mithuna: 'Dialogue and learning loops fuel you. Too many channels scatter the signal.',
+  Karka: 'Home base and emotional weather power the will. Protect the harbour, then lead.',
+  Simha: 'Centre-stage creative leadership is fuel. Authentic shine includes lifting others.',
+  Kanya: 'Craft mastery and useful service keep you lit. Keep a signature even in humility.',
+  Tula: 'Fair exchange and aesthetic partnership feed vitality. Strengthen your own preferences.',
+  Vrischika: 'Crisis alchemy and intimate power renew you. Motive integrity is the real test.',
+  Dhanu: 'Belief quests and far aims wake the will. Avoid dogma that freezes the quest.',
+  Makara: 'Achievement architecture and earned status sustain you. Soften so the climb is not a cage.',
+  Kumbha: 'Innovators and future tribes light you up. Still belong somewhere specific.',
+  Meena: 'Imagination and compassionate cause immerse you. Keep a daily vessel so you do not dissolve.',
 };
 
 export interface ProfilePlacement {
@@ -182,7 +151,6 @@ export interface ProfileSection {
   id: string;
   title: string;
   body: string;
-  /** Placement citations that drove the copy */
   cites: string[];
 }
 
@@ -190,6 +158,8 @@ export interface NatalProfile {
   name: string;
   placeLabel?: string;
   birthSummary: string;
+  /** Plain-English character sketch (1–3 short paragraphs) */
+  summary: string;
   lagna: { rashi: string; degree: number; lord: GrahaId };
   moon: { rashi: string; nakshatra: string; pada: number; house: number };
   sun: { rashi: string; nakshatra: string; pada: number; house: number };
@@ -200,7 +170,6 @@ export interface NatalProfile {
 }
 
 function nakLord(nakIndex: number): GrahaId {
-  // Vimshottari: Ashwini=Ketu, then Venus, Sun, Moon, Mars, Rahu, Jupiter, Saturn, Mercury
   const lords: GrahaId[] = [
     'Ketu',
     'Venus',
@@ -217,7 +186,7 @@ function nakLord(nakIndex: number): GrahaId {
 
 function citeGraha(p: ProfilePlacement): string {
   const r = p.retrograde ? ' R' : '';
-  return `${p.id} in ${p.rashi}, ${p.house}th${r}`;
+  return `${p.id} in ${signEn(p.rashi)}, ${p.house}th${r}`;
 }
 
 function houseWeight(grahas: ProfilePlacement[]): Map<number, number> {
@@ -237,6 +206,35 @@ function houseWeight(grahas: ProfilePlacement[]): Map<number, number> {
     w.set(g.house, (w.get(g.house) || 0) + (weight[g.id] || 1));
   }
   return w;
+}
+
+function buildSummary(args: {
+  lagRashi: string;
+  moon: ProfilePlacement;
+  sun: ProfilePlacement;
+  lagLord: GrahaId;
+  lagLordP: ProfilePlacement;
+}): string {
+  const lagEn = signEn(args.lagRashi);
+  const moonEn = signEn(args.moon.rashi);
+  const sunEn = signEn(args.sun.rashi);
+  const lagBit =
+    LAGNA_ESSENCE[args.lagRashi] ||
+    `With ${lagEn} rising, you have a distinct outer style people notice quickly.`;
+  const moonBit =
+    MOON_SIGN[args.moon.rashi] ||
+    `Inside, a ${moonEn} Moon sets the emotional weather.`;
+  const lordLife =
+    HOUSE_LIFE[args.lagLordP.house] || 'a central life arena';
+  const sunBit =
+    SUN_DRIVE[args.sun.rashi] ||
+    `Solar drive through ${sunEn} wants expression.`;
+
+  const p1 = `${lagBit} (Rising ${lagEn}.)`;
+  const p2 = `${moonBit} Your Moon also sits in the area of life about ${HOUSE_LIFE[args.moon.house] || 'daily experience'}, so feelings often show up there first.`;
+  const p3 = `${sunBit} The planet that rules your rising sign (${args.lagLord}) lives in the house of ${lordLife} — that is a practical stage where your style becomes biography. Together, rising + Moon + Sun sketch how you tend to think, feel, act, and relate when nobody is performing for an audience.`;
+
+  return `${p1}\n\n${p2}\n\n${p3}`;
 }
 
 export function computeNatalProfile(
@@ -299,11 +297,11 @@ export function computeNatalProfile(
     .map(([h]) => h);
 
   const dominant: string[] = [
-    `Lagna ${lagRashi} (lord ${lagLord})`,
-    `Moon ${moon.rashi} · ${moon.nakshatra} p${moon.pada}`,
-    `Sun ${sun.rashi}`,
-    `Emphasized houses: ${topHouses.map((h) => `${h}`).join(', ')}`,
-    `Moon nak lord: ${moonNakLord}`,
+    `Rising ${signEn(lagRashi)} (ruled by ${lagLord})`,
+    `Moon ${signEn(moon.rashi)} · ${moon.nakshatra}`,
+    `Sun ${signEn(sun.rashi)}`,
+    `Loud life areas: ${topHouses.map((h) => `${h}`).join(', ')}`,
+    `Moon-star tone lord: ${moonNakLord}`,
   ];
 
   let dasha = { maha: '—', antar: '—' };
@@ -314,71 +312,78 @@ export function computeNatalProfile(
     /* ignore */
   }
 
+  const summary = buildSummary({
+    lagRashi,
+    moon,
+    sun,
+    lagLord,
+    lagLordP,
+  });
+
   const sections: ProfileSection[] = [];
 
-  // 1 Essence
-  const lagnaText = LAGNA_ESSENCE[lagRashi] || 'Lagna sets the outer style.';
-  const moonBlend = MOON_SIGN[moon.rashi] || '';
+  const blendNote =
+    lagRashi === moon.rashi
+      ? `Rising and Moon share ${signEn(lagRashi)}, so outer style and inner weather often agree — you may feel “of a piece,” and life asks you to refine one strong tone rather than juggle two.`
+      : `Rising in ${signEn(lagRashi)} with a ${signEn(moon.rashi)} Moon means appearance and feeling negotiate daily. Neither mask nor mood should win every argument; skill is learning when each leads.`;
+
   sections.push({
     id: 'essence',
-    title: 'Essence',
-    body: `${lagnaText} Internally, ${moonBlend} The blend of ${lagRashi} rising with a ${moon.rashi} Moon gives a temperament that ${
-      lagRashi === moon.rashi
-        ? 'reinforces one clear signature — outer style and inner weather agree.'
-        : 'negotiates between how you appear and how you feel; integration is lifelong craft.'
-    } Lagna lord ${lagLord} in the ${lagLordP.house}th ${HOUSE_BEHAVIOUR[lagLordP.house] || 'shapes the life vector'}.`,
+    title: 'How you come across',
+    body: `${LAGNA_ESSENCE[lagRashi] || ''} ${blendNote} Your rising ruler (${lagLord}) sits in the area of ${HOUSE_LIFE[lagLordP.house] || 'life focus'}${lagLordP.retrograde ? ' — and because it is retrograde, that theme often turns inward first: revisit, revise, then show.' : '.'}`,
     cites: [
-      `Lagna ${lagRashi} ${lagDeg.toFixed(1)}°`,
-      `Moon in ${moon.rashi}, ${moon.house}th · ${moon.nakshatra} p${moon.pada}`,
+      `Rising ${signEn(lagRashi)} ${lagDeg.toFixed(1)}°`,
+      `Moon in ${signEn(moon.rashi)}, house ${moon.house}`,
       citeGraha(lagLordP),
     ],
   });
 
-  // 2 Mind & emotions
   const padaNote =
     moon.pada === 1
-      ? 'Pada 1 leans initiatory within the nakshatra.'
+      ? 'This quarter of the star leans initiatory — first-foot energy.'
       : moon.pada === 2
-        ? 'Pada 2 seeks stability and resource inside the star.'
+        ? 'This quarter of the star seeks stability and something keepable.'
         : moon.pada === 3
-          ? 'Pada 3 sharpens courage and skillful effort.'
-          : 'Pada 4 ripens toward wisdom and completion tones.';
+          ? 'This quarter of the star sharpens effort and skillful hustle.'
+          : 'This quarter of the star ripens toward completion and counsel.';
+
   sections.push({
     id: 'mind',
     title: 'Mind & emotions',
-    body: `${MOON_SIGN[moon.rashi] || ''} Nakshatra ${moon.nakshatra}: ${NAK_MIND[moon.nakshatra] || 'lunar texture unique to this star.'} ${padaNote} Ruled in Vimshottari by ${moonNakLord}, the emotional narrative often runs through ${moonNakLord}-flavoured themes.`,
+    body: `${MOON_SIGN[moon.rashi] || ''} In the house of ${HOUSE_LIFE[moon.house] || 'daily life'}, feelings show up first. Star-texture ${moon.nakshatra}: ${NAK_MIND[moon.nakshatra] || 'a distinctive lunar habit.'} ${padaNote} Emotionally, themes linked to ${moonNakLord} often colour the stories your heart rehearses.`,
     cites: [
-      `Moon in ${moon.rashi}, ${moon.house}th`,
-      `${moon.nakshatra} p${moon.pada}`,
-      `Nak lord ${moonNakLord}`,
+      `Moon in ${signEn(moon.rashi)}, house ${moon.house}`,
+      `${moon.nakshatra} (part ${moon.pada})`,
+      `Tone lord ${moonNakLord}`,
     ],
   });
 
-  // 3 Drive & vitality
   sections.push({
     id: 'drive',
     title: 'Drive & vitality',
-    body: `${SUN_DRIVE[sun.rashi] || 'Solar identity seeks expression through its sign.'} Sun in the ${sun.house}th ${HOUSE_BEHAVIOUR[sun.house] || ''}. Nakshatra ${sun.nakshatra} (p${sun.pada}) tints the will with that star’s method.`,
+    body: `${SUN_DRIVE[sun.rashi] || ''} The Sun in the house of ${HOUSE_LIFE[sun.house] || 'focus'} marks where identity heat concentrates. ${sun.nakshatra} adds a method to how you prefer to shine and renew a sense of self.`,
     cites: [
-      `Sun in ${sun.rashi}, ${sun.house}th · ${sun.nakshatra} p${sun.pada}`,
+      `Sun in ${signEn(sun.rashi)}, house ${sun.house} · ${sun.nakshatra}`,
     ],
   });
 
-  // 4 Behavioural style
   const merc = byId.Mercury;
   const ven = byId.Venus;
   const mars = byId.Mars;
   const mercLine =
-    PLANET_STYLE.Mercury?.[merc.rashi] ||
-    `Mercury in ${merc.rashi} colours cognition`;
+    PLANET_SIGN_PLAIN.Mercury?.[merc.rashi] ||
+    `Mercury in ${signEn(merc.rashi)} colours how you think`;
   const venLine =
-    PLANET_STYLE.Venus?.[ven.rashi] || `Venus in ${ven.rashi} colours desire`;
+    PLANET_SIGN_PLAIN.Venus?.[ven.rashi] ||
+    `Venus in ${signEn(ven.rashi)} colours desire`;
   const marsLine =
-    PLANET_STYLE.Mars?.[mars.rashi] || `Mars in ${mars.rashi} colours assertion`;
+    PLANET_SIGN_PLAIN.Mars?.[mars.rashi] ||
+    `Mars in ${signEn(mars.rashi)} colours assertion`;
+
   sections.push({
     id: 'behaviour',
     title: 'Behavioural style',
-    body: `Lagna lord ${lagLord} in ${lagLordP.rashi} (${lagLordP.house}th) is the primary behavioural engine — it ${HOUSE_BEHAVIOUR[lagLordP.house] || 'steers conduct'}${lagLordP.retrograde ? ' (retrograde: internalized / revisited expression)' : ''}. Mercury: ${mercLine}; occupies ${merc.house}th. Venus: ${venLine}; ${ven.house}th. Mars: ${marsLine}; ${mars.house}th.`,
+    body: `Your rising ruler ${lagLord} in ${signEn(lagLordP.rashi)} (house of ${HOUSE_LIFE[lagLordP.house] || 'focus'}) is a primary behavioural engine${lagLordP.retrograde ? ' — retrograde means you may rehearse the same lesson until style ripens' : ''}. Mercury: ${mercLine}; that shows in ${HOUSE_LIFE[merc.house] || 'daily life'}. Venus: ${venLine}; routed through ${HOUSE_LIFE[ven.house] || 'relating'}. Mars: ${marsLine}; spent on ${HOUSE_LIFE[mars.house] || 'effort'}. Together they describe how you move, argue, desire, and decide on ordinary days.`,
     cites: [
       citeGraha(lagLordP),
       citeGraha(merc),
@@ -387,92 +392,75 @@ export function computeNatalProfile(
     ],
   });
 
-  // 5 Relational / outer
   const jup = byId.Jupiter;
   const h7occupants = grahas.filter((g) => g.house === 7).map((g) => g.id);
-  const relBits: string[] = [];
-  relBits.push(
-    `7th-house field ${
-      h7occupants.length
-        ? `hosts ${h7occupants.join(', ')} — partners mirror those tones`
-        : `is empty of grahas — relationships often activate through lord of 7th (${RASHI_LORDS[(rashiIndex(asc.sidereal) + 6) % 12]}) rather than packed conjunctions`
-    }.`,
-  );
-  relBits.push(
-    `Venus in ${ven.rashi}/${ven.house}th sets pleasure and bonding style; Jupiter in ${jup.rashi}/${jup.house}th expands grace, teachers, and ethical stretch${jup.retrograde ? ' (Jupiter R: internalized faith, revised mentors)' : ''}.`,
-  );
+  const lord7 = RASHI_LORDS[(rashiIndex(asc.sidereal) + 6) % 12];
+  const relBody = h7occupants.length
+    ? `Your one-to-one house hosts ${h7occupants.join(', ')} — partners and open counterparts often mirror those tones. Venus in ${signEn(ven.rashi)} (house of ${HOUSE_LIFE[ven.house]}) sets pleasure and bonding style; Jupiter in ${signEn(jup.rashi)} (house of ${HOUSE_LIFE[jup.house]}) expands grace, teachers, and ethical stretch${jup.retrograde ? ' — Jupiter retrograde turns faith inward and revises mentors' : ''}. Read partners as curricula, not verdicts.`
+    : `Your one-to-one house is empty of planets — relationships often activate through the ruler of that house (${lord7}) rather than crowded conjunctions. Venus in ${signEn(ven.rashi)} (house of ${HOUSE_LIFE[ven.house]}) sets bonding style; Jupiter in ${signEn(jup.rashi)} (house of ${HOUSE_LIFE[jup.house]}) expands grace and counsel${jup.retrograde ? ' — Jupiter retrograde turns faith inward' : ''}. Absence is quieter staging, not missing destiny.`;
+
   sections.push({
     id: 'relational',
     title: 'Relational / outer life',
-    body: relBits.join(' '),
+    body: relBody,
     cites: [
-      `7th from Lagna ${lagRashi}`,
+      `7th from rising ${signEn(lagRashi)}`,
       citeGraha(ven),
       citeGraha(jup),
       ...(h7occupants.length
         ? h7occupants.map((id) => citeGraha(byId[id]))
-        : [`7th lord ${RASHI_LORDS[(rashiIndex(asc.sidereal) + 6) % 12]}`]),
+        : [`7th ruler ${lord7}`]),
     ],
   });
 
-  // 6 Pressures & growth
   const sat = byId.Saturn;
   const rahu = byId.Rahu;
   const ketu = byId.Ketu;
-  const pressure: string[] = [];
-  pressure.push(
-    `Saturn in ${sat.rashi}/${sat.house}th asks for time-discipline where that house lives — delay as teacher, not punishment.`,
-  );
-  pressure.push(
-    `Rahu in ${rahu.rashi}/${rahu.house}th hungers toward unfamiliar mastery there; Ketu in ${ketu.rashi}/${ketu.house}th releases or distills the opposite axis.`,
-  );
+  let growth = `Saturn in ${signEn(sat.rashi)} (house of ${HOUSE_LIFE[sat.house]}) asks for time-discipline there — delay as teacher, not punishment. Rahu in ${signEn(rahu.rashi)} (house of ${HOUSE_LIFE[rahu.house]}) hungers toward unfamiliar mastery; Ketu in ${signEn(ketu.rashi)} (house of ${HOUSE_LIFE[ketu.house]}) releases or distills the opposite axis.`;
   if (mars.house === 1 || mars.house === 8 || mars.house === 12) {
-    pressure.push(
-      `Mars in ${mars.house}th sharpens heat in self/crisis/withdrawal zones — channel into clean effort.`,
-    );
+    growth += ` Mars in house ${mars.house} sharpens heat in self, crisis, or withdrawal zones — aim it into clean effort.`;
   } else if (mars.retrograde) {
-    pressure.push(
-      'Mars retrograde turns assertion inward first — strategize before strike.',
-    );
+    growth += ' Mars retrograde turns assertion inward first — strategize before you strike.';
   } else {
-    pressure.push(
-      `Mars in ${mars.house}th supplies courage that ${HOUSE_BEHAVIOUR[mars.house] || 'needs a worthy contest'}.`,
-    );
+    growth += ` Mars in the house of ${HOUSE_LIFE[mars.house]} supplies courage that wants a worthy contest.`;
   }
+  growth +=
+    ' Meet pressure as training: Saturn teaches duration, Rahu appetite, Ketu release, Mars directed heat.';
+
   sections.push({
     id: 'growth',
     title: 'Pressures & growth',
-    body: pressure.join(' '),
+    body: growth,
     cites: [citeGraha(sat), citeGraha(rahu), citeGraha(ketu), citeGraha(mars)],
   });
 
-  // 7 Dasha colour
   const mahaTone: Record<string, string> = {
-    Sun: 'visibility, authority tests, and identity heat are foregrounded',
-    Moon: 'mood currents, care loops, and public-private tides lead',
-    Mars: 'decisive force, conflict craft, and initiative spike',
-    Mercury: 'commerce of ideas, skill traffic, and nervous agility',
-    Jupiter: 'expansion, teaching, and ethical opportunity widen',
+    Sun: 'visibility, authority tests, and identity heat are louder',
+    Moon: 'moods, care loops, and private-public tides lead',
+    Mars: 'decisive force and initiative spike',
+    Mercury: 'ideas, skills, and nervous agility trade faster',
+    Jupiter: 'growth, teaching, and ethical opportunity widen',
     Venus: 'bond, art, and desire-harmony colour choices',
     Saturn: 'long grind, structure, and sober accountability',
-    Rahu: 'unconventional hunger and foreign/novel vectors',
+    Rahu: 'unconventional hunger and novel vectors',
     Ketu: 'release, distill, and sideways insight',
   };
+
   sections.push({
     id: 'dasha',
-    title: 'Dasha colour · now',
-    body: `Current Mahadasha ${dasha.maha} with Antardasha ${dasha.antar}: ${mahaTone[dasha.maha] || 'period themes active'}, while antar ${dasha.antar} ${mahaTone[dasha.antar] || 'modulates the subplot'}. This is how the natal pattern shows in the present chapter — not a rewrite of the chart.`,
-    cites: [`Maha ${dasha.maha}`, `Antar ${dasha.antar}`],
+    title: 'This chapter of life',
+    body: `You are in a ${dasha.maha} period with a ${dasha.antar} subplot: ${mahaTone[dasha.maha] || 'period themes are active'}, while ${dasha.antar} ${mahaTone[dasha.antar] || 'modulates the tone'}. Think of it as a chapter heading across your chart — not a rewrite of who you are. Practice the period’s better habits rather than fearing its stereotype.`,
+    cites: [`Period ${dasha.maha}`, `Sub-period ${dasha.antar}`],
   });
 
   const place =
-    birth.placeLabel ||
-    `${lat.toFixed(2)}°, ${lon.toFixed(2)}°`;
+    birth.placeLabel || `${lat.toFixed(2)}°, ${lon.toFixed(2)}°`;
 
   return {
     name: birth.name || 'Native',
     placeLabel: birth.placeLabel,
     birthSummary: `${birth.date} ${String(birth.h).padStart(2, '0')}:${String(birth.m).padStart(2, '0')}:${String(birth.s).padStart(2, '0')} UTC · ${place}`,
+    summary,
     lagna: { rashi: lagRashi, degree: lagDeg, lord: lagLord },
     moon: {
       rashi: moon.rashi,
@@ -493,7 +481,6 @@ export function computeNatalProfile(
   };
 }
 
-/** Convenience: natal lon map at birth (for other callers) */
 export function natalLonMap(birth: BirthConfig): LonMap {
   const birthDt = new Date(
     Date.UTC(
@@ -511,3 +498,4 @@ export function natalLonMap(birth: BirthConfig): LonMap {
   return out;
 }
 
+// silence unused if tree-shaken oddly

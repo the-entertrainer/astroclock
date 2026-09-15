@@ -2,6 +2,7 @@
 
 import { X } from 'lucide-react';
 import type { GrahaDef } from '@/lib/astro';
+import type { InfluenceReading } from '@/lib/astro/influence';
 
 export interface PlanetDetail {
   graha: GrahaDef;
@@ -11,6 +12,7 @@ export interface PlanetDetail {
   pada: number;
   house: number;
   speed: number;
+  influence?: InfluenceReading | null;
 }
 
 interface PlanetDrawerProps {
@@ -20,6 +22,7 @@ interface PlanetDrawerProps {
 }
 
 export function PlanetDrawer({ open, detail, onClose }: PlanetDrawerProps) {
+  const inf = detail?.influence;
   return (
     <>
       <div
@@ -30,7 +33,7 @@ export function PlanetDrawer({ open, detail, onClose }: PlanetDrawerProps) {
         aria-hidden={!open}
       />
       <div
-        className={`drawer absolute bottom-0 left-0 right-0 z-50 glass rounded-t-2xl p-4 max-h-[55vh] overflow-y-auto ${
+        className={`drawer absolute bottom-0 left-0 right-0 z-50 glass rounded-t-2xl p-4 max-h-[70vh] overflow-y-auto overscroll-contain ${
           open ? 'open' : ''
         }`}
       >
@@ -51,13 +54,16 @@ export function PlanetDrawer({ open, detail, onClose }: PlanetDrawerProps) {
             <X className="w-5 h-5" />
           </button>
         </div>
+
         <div className="grid grid-cols-2 gap-3 text-sm">
           <div>
             <div className="text-[9px] uppercase text-mist/50">Sidereal°</div>
-            <div className="font-mono">{detail ? detail.lon.toFixed(3) + '°' : '—'}</div>
+            <div className="font-mono">
+              {detail ? detail.lon.toFixed(3) + '°' : '—'}
+            </div>
           </div>
           <div>
-            <div className="text-[9px] uppercase text-mist/50">Rashi</div>
+            <div className="text-[9px] uppercase text-mist/50">Sign</div>
             <div>{detail?.rashi ?? '—'}</div>
           </div>
           <div>
@@ -74,7 +80,9 @@ export function PlanetDrawer({ open, detail, onClose }: PlanetDrawerProps) {
           </div>
           <div>
             <div className="text-[9px] uppercase text-mist/50">Speed °/day</div>
-            <div className="font-mono">{detail ? detail.speed.toFixed(4) : '—'}</div>
+            <div className="font-mono">
+              {detail ? detail.speed.toFixed(4) : '—'}
+            </div>
           </div>
           <div className="col-span-2">
             <div className="text-[9px] uppercase text-mist/50">Motion</div>
@@ -92,6 +100,45 @@ export function PlanetDrawer({ open, detail, onClose }: PlanetDrawerProps) {
             </div>
           </div>
         </div>
+
+        {inf && (
+          <div className="mt-4 space-y-3 border-t border-white/10 pt-3">
+            <article className="space-y-1">
+              <h3 className="text-[10px] uppercase tracking-wider text-gold/80">
+                What this means for you
+              </h3>
+              <p className="text-[11px] text-mist/75 leading-[1.65]">
+                {inf.meansForYou}
+              </p>
+            </article>
+            <article className="space-y-1">
+              <h3 className="text-[10px] uppercase tracking-wider text-gold/80">
+                What it’s influencing right now
+              </h3>
+              <p className="text-[11px] text-mist/75 leading-[1.65]">
+                {inf.influencingNow}
+              </p>
+            </article>
+            <article className="space-y-1">
+              <h3 className="text-[10px] uppercase tracking-wider text-gold/80">
+                What seems to be changing
+              </h3>
+              <p className="text-[11px] text-mist/75 leading-[1.65]">
+                {inf.changing}
+              </p>
+            </article>
+            <div className="flex flex-wrap gap-1 pt-0.5">
+              {inf.cites.map((c) => (
+                <span
+                  key={c}
+                  className="text-[8px] font-mono text-mist/35 border border-white/5 rounded px-1.5 py-0.5"
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

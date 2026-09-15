@@ -9,6 +9,7 @@ import {
   type GrahaId,
   type LonMap,
   clamp,
+  computeInfluence,
   computePlanets,
   computeTithi,
   computeTodayInsights,
@@ -20,6 +21,7 @@ import {
   norm360,
   rashiName,
   shortestArc,
+  signEn,
   vimshottari,
   wholeSignHouse,
 } from '@/lib/astro';
@@ -167,18 +169,49 @@ export function AstroClockApp() {
       const nak = nakshatraInfo(lon);
       const house = wholeSignHouse(lon, cache.asc.sidereal);
       const sp = cache.speeds[id];
+      const rashi = rashiName(lon);
+
+      const natalG = natalProfile?.grahas.find((x) => x.id === id);
+      const aspectHits = todayInsights.aspects
+        .filter((a) => a.a === id || a.b === id)
+        .map((a) => ({
+          other: (a.a === id ? a.b : a.a) as GrahaId,
+          label: a.label,
+          orb: a.orb,
+          motion: a.motion,
+          kind: a.kind,
+        }));
+
+      const influence = computeInfluence({
+        graha: id,
+        rashi,
+        house,
+        nakshatra: nak.name,
+        speed: sp,
+        natal: natalG
+          ? { rashi: natalG.rashi, house: natalG.house }
+          : null,
+        aspects: aspectHits,
+        dasha: {
+          maha: todayInsights.dasha.maha,
+          antar: todayInsights.dasha.antar,
+        },
+        isDemo: !!birth.isDemo,
+      });
+
       setDetail({
         graha: g,
         lon,
-        rashi: `${rashiName(lon)} ${(lon % 30).toFixed(2)}°`,
+        rashi: `${signEn(rashi)} ${(lon % 30).toFixed(2)}°`,
         nak: nak.name,
         pada: nak.pada,
         house,
         speed: sp,
+        influence,
       });
       setDetailOpen(true);
     },
-    [],
+    [birth.isDemo, natalProfile, todayInsights],
   );
 
   const handleSelect = useCallback(
@@ -348,7 +381,7 @@ export function AstroClockApp() {
         </div>
         {view === 'today' && (
           <div className="absolute inset-0 bg-ink overflow-hidden">
-            <TodayPanel insights={todayInsights} />
+            <TodayPanel insights={todayInsights} onSelectGraha={handleSelect} />
           </div>
         )}
       </main>

@@ -6,7 +6,7 @@ import {
   type PlanetMap,
   type SpeedMap,
 } from './constants';
-import { absShortest, ascendant, julianDay, lst, norm360, shortestArc } from './math';
+import { absShortest, ascendant, julianDay, lst, norm360 } from './math';
 import {
   computePlanets,
   computeSpeeds,
@@ -18,8 +18,8 @@ import {
   rashiName,
 } from './planets';
 import { vimshottari } from './dasha';
+import { signEn } from './influence';
 
-/** Personal planets used for natal spotlight hits */
 const PERSONAL: GrahaId[] = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'];
 
 const ASPECT_LABEL: Record<number, string> = {
@@ -31,60 +31,60 @@ const ASPECT_LABEL: Record<number, string> = {
 };
 
 const NAK_THEMES: Record<string, string> = {
-  Ashwini: 'swift starts · heal & initiate',
-  Bharani: 'hold & transform · creative pressure',
-  Krittika: 'cut clean · sharpen focus',
-  Rohini: 'grow & attract · sensual craft',
-  Mrigashira: 'seek & scan · curious hunt',
-  Ardra: 'storm clarity · tear then rebuild',
-  Punarvasu: 'renew · return with bounty',
-  Pushya: 'nourish · steady care',
-  Ashlesha: 'coil insight · psychic edge',
-  Magha: 'ancestral fire · claim seat',
-  'Purva Phalguni': 'play & pleasure · creative ease',
-  'Uttara Phalguni': 'ally & contract · lasting bonds',
-  Hasta: 'skillful hands · craft precision',
-  Chitra: 'design brilliance · shape beauty',
-  Swati: 'independent wind · flexible path',
-  Vishakha: 'aim dual goals · determined fork',
-  Anuradha: 'devotion network · loyal orbit',
-  Jyeshtha: 'elder authority · protect rank',
-  Mula: 'root dig · dismantle to truth',
-  'Purva Ashadha': 'early victory · invincible push',
-  'Uttara Ashadha': 'lasting win · structured triumph',
-  Shravana: 'listen deep · learn transmission',
-  Dhanishta: 'rhythm & fame · ensemble drive',
-  Shatabhisha: 'veiled healing · systems cure',
-  'Purva Bhadrapada': 'fierce idealism · edge sacrifice',
-  'Uttara Bhadrapada': 'deep wisdom · patient depth',
-  Revati: 'shepherd close · soft completion',
+  Ashwini: 'quick-start, fix-it energy',
+  Bharani: 'hold pressure until something real lands',
+  Krittika: 'cut clean and sharpen focus',
+  Rohini: 'grow and attract around a chosen target',
+  Mrigashira: 'seek, scan, stay curious',
+  Ardra: 'storm clarity — tear then rebuild',
+  Punarvasu: 'renew and return with a second chance',
+  Pushya: 'steady care and right timing',
+  Ashlesha: 'read undercurrents carefully',
+  Magha: 'legacy mood and rightful presence',
+  'Purva Phalguni': 'play, pleasure, creative ease',
+  'Uttara Phalguni': 'ally, contract, help that sticks',
+  Hasta: 'skillful hands and practical craft',
+  Chitra: 'design beauty into form',
+  Swati: 'independent wind — keep room to move',
+  Vishakha: 'aim — pick which goal gets the heat',
+  Anuradha: 'loyal orbit around people and causes',
+  Jyeshtha: 'protect earned skill',
+  Mula: 'dig to the root',
+  'Purva Ashadha': 'bold early push',
+  'Uttara Ashadha': 'wins that last through structure',
+  Shravana: 'listen deep before speaking',
+  Dhanishta: 'rhythm, teams, timed bursts',
+  Shatabhisha: 'odd, systems-level healing',
+  'Purva Bhadrapada': 'fierce idealism — aim the fire',
+  'Uttara Bhadrapada': 'patient depth',
+  Revati: 'shepherd the last stretch gently',
 };
 
-const RASHI_THEMES: Record<string, string> = {
-  Mesha: 'initiate · raw momentum',
-  Vrishabha: 'stabilize · value & body',
-  Mithuna: 'connect · message traffic',
-  Karka: 'shelter · emotional tide',
-  Simha: 'radiate · creative center',
-  Kanya: 'refine · analyze & serve',
-  Tula: 'balance · relate & weigh',
-  Vrischika: 'intensify · covert power',
-  Dhanu: 'expand · aim beyond',
-  Makara: 'structure · climb & endure',
-  Kumbha: 'network · future systems',
-  Meena: 'dissolve · dream & merge',
+const RASHI_MOOD: Record<string, string> = {
+  Mesha: 'initiating and a bit martial',
+  Vrishabha: 'steady, sensory, loyalty-seeking',
+  Mithuna: 'talkative, dual, idea-hungry',
+  Karka: 'protective and tide-sensitive',
+  Simha: 'warm, proud, creative',
+  Kanya: 'precise, useful, quietly critical',
+  Tula: 'harmony-seeking and relational',
+  Vrischika: 'intense and all-or-nothing',
+  Dhanu: 'meaning-hungry and horizon-facing',
+  Makara: 'sober, ambitious, endurance-minded',
+  Kumbha: 'future-minded and friendship-toned',
+  Meena: 'empathic, imaginal, porous',
 };
 
 const DASHA_TONE: Record<string, string> = {
-  Sun: 'identity heat · visibility',
-  Moon: 'mood current · care loops',
-  Mars: 'drive & cut · decisive force',
-  Mercury: 'signal traffic · trade ideas',
-  Jupiter: 'expand grace · teach & trust',
-  Venus: 'desire harmony · art & bond',
-  Saturn: 'pressure craft · long grind',
-  Rahu: 'hunger vector · unconventional pull',
-  Ketu: 'release vector · detach & distill',
+  Sun: 'identity heat and visibility',
+  Moon: 'mood currents and care loops',
+  Mars: 'drive, cut-through, decisive force',
+  Mercury: 'ideas, messages, and skill traffic',
+  Jupiter: 'growth, teaching, and trust',
+  Venus: 'bond, art, and desire-harmony',
+  Saturn: 'long grind and sober accountability',
+  Rahu: 'hunger for the unconventional',
+  Ketu: 'release, distill, sideways insight',
 };
 
 export type ClimateLabel = 'tense' | 'fluid' | 'peak' | 'quiet' | 'volatile';
@@ -104,6 +104,8 @@ export interface InsightCard {
   tone: 'sky' | 'soft' | 'hard' | 'spotlight' | 'dasha' | 'quiet';
   title: string;
   body: string;
+  /** Optional graha to open on tap */
+  graha?: GrahaId;
 }
 
 export interface TodayInsights {
@@ -127,6 +129,8 @@ export interface TodayInsights {
   hrs: number;
   climate: ClimateLabel;
   climateNote: string;
+  /** Multi-paragraph plain-English day write-up */
+  daySummary: string;
   cards: InsightCard[];
   isDemoNatal: boolean;
 }
@@ -240,18 +244,110 @@ function climateFrom(
   exactHard: number,
 ): { climate: ClimateLabel; note: string } {
   if (exactHard >= 2 || (hard >= 4 && soft <= 1)) {
-    return { climate: 'volatile', note: 'many hard edges locking in' };
+    return {
+      climate: 'volatile',
+      note: 'Several hard edges at once — keep scope small and technique high.',
+    };
   }
   if (soft + hard <= 1) {
-    return { climate: 'quiet', note: 'sparse aspect weave — void-ish sky' };
+    return {
+      climate: 'quiet',
+      note: 'Sparse sky — good for deep work, weak for forced pivots.',
+    };
   }
   if (hrs >= 72 && soft >= hard) {
-    return { climate: 'peak', note: 'soft density cresting' };
+    return {
+      climate: 'peak',
+      note: 'Soft links are loud — ship what is ready and collaborate.',
+    };
   }
   if (hard > soft + 1) {
-    return { climate: 'tense', note: 'squares/oppositions dominate' };
+    return {
+      climate: 'tense',
+      note: 'Friction dominates — precision under pressure beats drama.',
+    };
   }
-  return { climate: 'fluid', note: 'trines/sextiles ease traffic' };
+  return {
+    climate: 'fluid',
+    note: 'Easier traffic — prefer alliance and polish over confrontation.',
+  };
+}
+
+function buildDaySummary(args: {
+  moonNak: string;
+  moonRashi: string;
+  waxing: boolean;
+  lagRashi: string;
+  changedVs2h: boolean;
+  prevRashi: string;
+  soft: number;
+  hard: number;
+  climate: ClimateLabel;
+  climateNote: string;
+  retrogrades: GrahaId[];
+  dasha: { maha: string; antar: string };
+  hrs: number;
+  natalHits: AspectHit[];
+  transitAspects: AspectHit[];
+  isDemo: boolean;
+}): string {
+  const moonEn = signEn(args.moonRashi);
+  const nakTheme =
+    NAK_THEMES[args.moonNak] || 'a distinct emotional texture';
+  const mood = RASHI_MOOD[args.moonRashi] || 'coloured by its sign';
+  const paksha = args.waxing
+    ? 'The Moon is waxing, so appetite and visibility tend to grow rather than shrink.'
+    : 'The Moon is waning, so editing, releasing, and finishing often feel smarter than launching.';
+
+  const p1 = `Emotional weather today sits in ${moonEn} (${args.moonNak}): ${nakTheme}. The tone is ${mood}. ${paksha}`;
+
+  const lagEn = signEn(args.lagRashi);
+  const lagBit = args.changedVs2h
+    ? `The rising sign recently shifted from ${signEn(args.prevRashi)} into ${lagEn}, so the “how you meet the next few hours” mask just changed costume.`
+    : `The rising sign is ${lagEn}, colouring how the next stretch of hours wants to be approached.`;
+
+  let texture: string;
+  if (args.climate === 'volatile') {
+    texture = `The day reads volatile: ${args.hard} hard links versus ${args.soft} soft ones, with harmonic resonance around ${args.hrs}. ${args.climateNote} Friction is a tutor if you refuse to panic.`;
+  } else if (args.climate === 'quiet') {
+    texture = `The day reads quiet — few exact aspects and harmonic resonance near ${args.hrs}. ${args.climateNote}`;
+  } else if (args.climate === 'peak') {
+    texture = `The day has a peak-fluid feel (${args.soft} soft / ${args.hard} hard, HRS ${args.hrs}). ${args.climateNote}`;
+  } else if (args.climate === 'tense') {
+    texture = `The day carries contested edges (${args.hard} hard / ${args.soft} soft, HRS ${args.hrs}). ${args.climateNote}`;
+  } else {
+    texture = `The day is relatively fluid (${args.soft} soft / ${args.hard} hard, HRS ${args.hrs}). ${args.climateNote}`;
+  }
+
+  const p2 = `${lagBit} ${texture}`;
+
+  const retro =
+    args.retrogrades.length > 0
+      ? `${args.retrogrades.join(', ')} ${args.retrogrades.length === 1 ? 'is' : 'are'} retrograde — expect more review, redo, and inward loops on those themes.`
+      : 'No major retrogrades yelling for attention in the personal set right now.';
+
+  const topAsp = args.transitAspects[0];
+  const aspBit = topAsp
+    ? `Closest sky-link: ${topAsp.a} ${topAsp.label} ${topAsp.b} (${topAsp.orb.toFixed(1)}°, ${topAsp.motion}).`
+    : 'No single aspect is dominating the foreground.';
+
+  const dashaBit =
+    args.dasha.maha !== '—'
+      ? `Background chapter: ${args.dasha.maha} period with ${args.dasha.antar} subplot (${DASHA_TONE[args.dasha.maha] || 'period tone'} / ${DASHA_TONE[args.dasha.antar] || 'subplot'}).`
+      : '';
+
+  let personal = '';
+  if (!args.isDemo && args.natalHits.length > 0) {
+    const h = args.natalHits[0];
+    personal = ` Personal spotlight: transit ${h.a} is ${h.label} your natal ${h.b} (${h.orb.toFixed(1)}°, ${h.motion}) — that natal theme is temporarily lit.`;
+  } else if (args.isDemo) {
+    personal =
+      ' Save birth data if you want these sky notes to name which of your natal themes are lit.';
+  }
+
+  const p3 = `${retro} ${aspBit} ${dashaBit}${personal} None of this is a verdict — it is weather with a map. Use it to choose scope, not to outsource judgment.`;
+
+  return `${p1}\n\n${p2}\n\n${p3}`;
 }
 
 function buildCards(args: {
@@ -268,13 +364,12 @@ function buildCards(args: {
 }): InsightCard[] {
   const cards: InsightCard[] = [];
 
-  const nakTheme = NAK_THEMES[args.moonNak] || 'lunar weather shift';
-  const rashiTheme = RASHI_THEMES[args.moonRashi] || 'sign tone';
   cards.push({
     id: 'moon-nak',
     tone: 'sky',
     title: `Moon · ${args.moonNak}`,
-    body: `${nakTheme}. In ${args.moonRashi}: ${rashiTheme}.`,
+    body: `${NAK_THEMES[args.moonNak] || 'lunar weather'}. In ${signEn(args.moonRashi)}: ${RASHI_MOOD[args.moonRashi] || 'sign tone'}.`,
+    graha: 'Moon',
   });
 
   if (args.soft > args.hard + 1) {
@@ -282,7 +377,7 @@ function buildCards(args: {
       id: 'texture-soft',
       tone: 'soft',
       title: 'Day texture · fluid',
-      body: `${args.soft} soft vs ${args.hard} hard — collaboration and flow favored over friction.`,
+      body: `${args.soft} soft vs ${args.hard} hard — collaboration and flow over friction.`,
     });
   } else if (args.hard > args.soft + 1) {
     cards.push({
@@ -296,7 +391,7 @@ function buildCards(args: {
       id: 'texture-quiet',
       tone: 'quiet',
       title: 'Day texture · quiet',
-      body: 'Few exact aspects — sparse sky. Good for deep work, poor for forced pivots.',
+      body: 'Few exact aspects — sparse sky. Deep work yes; forced pivots no.',
     });
   } else {
     cards.push({
@@ -312,7 +407,7 @@ function buildCards(args: {
       id: 'nudge-birth',
       tone: 'quiet',
       title: 'Transit sky only',
-      body: 'Set birth data for natal↔transit spotlights and dasha-lord hits.',
+      body: 'Set birth data for personal spotlights and period-lord hits.',
     });
   } else {
     for (const hit of args.natalHits.slice(0, 3)) {
@@ -321,9 +416,10 @@ function buildCards(args: {
         id: `spot-${hit.a}-${hit.b}-${hit.angle}`,
         tone: 'spotlight',
         title: conj
-          ? `Spotlight · t${hit.a} ☌ n${hit.b}`
+          ? `Spotlight · t${hit.a} on n${hit.b}`
           : `Hit · t${hit.a} ${hit.label} n${hit.b}`,
         body: `${hit.orb.toFixed(1)}° ${hit.motion} — personal planet lighting natal ${hit.b}.`,
+        graha: hit.a,
       });
     }
 
@@ -345,26 +441,9 @@ function buildCards(args: {
           cards.push({
             id: `dasha-${t}-${lord}`,
             tone: 'dasha',
-            title: `Dasha echo · ${lord}`,
-            body: `t${t} ${ASPECT_LABEL[toLord.angle]} natal ${lord} (period lord). Theme amp.`,
-          });
-          dashaCardAdded = true;
-          break;
-        }
-        const toMoon = findAspect(args.transit[t].sidereal, args.natal.Moon);
-        if (
-          toMoon &&
-          lord !== 'Moon' &&
-          Math.abs(
-            absShortest(args.transit[t].sidereal, args.natal.Moon) -
-              toMoon.angle,
-          ) <= 2
-        ) {
-          cards.push({
-            id: `dasha-moon-${t}`,
-            tone: 'dasha',
-            title: 'Dasha · Moon lit',
-            body: `t${t} touches natal Moon while ${maha}/${antar} runs — mood is the channel.`,
+            title: `Period echo · ${lord}`,
+            body: `Transit ${t} ${ASPECT_LABEL[toLord.angle]} natal ${lord} (period lord) — theme amp.`,
+            graha: t,
           });
           dashaCardAdded = true;
           break;
@@ -378,7 +457,7 @@ function buildCards(args: {
       id: 'vol',
       tone: 'hard',
       title: 'Volatile window',
-      body: 'Multiple exact hard aspects — expect rapid polarity flips; tighten scope.',
+      body: 'Multiple exact hard aspects — tighten scope; skip theatre.',
     });
   }
 
@@ -438,7 +517,7 @@ export function computeTodayInsights(
     dasha = {
       maha: d.maha,
       antar: d.antar,
-      tone: `${DASHA_TONE[d.maha] || 'period tone'} · antar ${d.antar}: ${DASHA_TONE[d.antar] || '—'}`,
+      tone: `${DASHA_TONE[d.maha] || 'period'} · ${d.antar}: ${DASHA_TONE[d.antar] || '—'}`,
     };
   } catch {
     /* keep defaults */
@@ -467,6 +546,25 @@ export function computeTodayInsights(
 
   const hrs = harmonicScore(planets);
   const { climate, note } = climateFrom(hrs, soft, hard, exactHard);
+
+  const daySummary = buildDaySummary({
+    moonNak: nak.name,
+    moonRashi,
+    waxing,
+    lagRashi,
+    changedVs2h,
+    prevRashi,
+    soft,
+    hard,
+    climate,
+    climateNote: note,
+    retrogrades,
+    dasha,
+    hrs,
+    natalHits,
+    transitAspects,
+    isDemo: !!birth.isDemo,
+  });
 
   const cards = buildCards({
     moonNak: nak.name,
@@ -502,8 +600,10 @@ export function computeTodayInsights(
     hrs,
     climate,
     climateNote: note,
+    daySummary,
     cards,
     isDemoNatal: !!birth.isDemo,
   };
 }
 
+// keep HOUSE_LIFE import used for future / lint

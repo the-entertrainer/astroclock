@@ -2,6 +2,7 @@
 
 import { X } from 'lucide-react';
 import type { NatalProfile } from '@/lib/astro/profile';
+import { signEn } from '@/lib/astro/influence';
 
 interface ProfileDrawerProps {
   open: boolean;
@@ -58,7 +59,7 @@ export function ProfileDrawer({
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3 pb-8">
+        <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-3 space-y-4 pb-10">
           {isDemo || !profile ? (
             <div className="chip rounded-xl px-4 py-6 text-center space-y-3">
               <p className="text-sm text-mist/80">
@@ -66,8 +67,8 @@ export function ProfileDrawer({
                 reading.
               </p>
               <p className="text-[10px] text-mist/45 leading-relaxed">
-                Readings are rule-based from Lagna, Moon, Sun, and graha houses —
-                not LLM fluff.
+                Readings are rule-based from your rising sign, Moon, Sun, and
+                planet houses — not AI fluff.
               </p>
               <button
                 type="button"
@@ -82,13 +83,27 @@ export function ProfileDrawer({
             </div>
           ) : (
             <>
+              <article className="chip rounded-xl px-3 py-3 space-y-2">
+                <h3 className="text-[11px] font-semibold tracking-wide text-gold">
+                  Profile summary
+                </h3>
+                {profile.summary.split(/\n\n+/).map((para, i) => (
+                  <p
+                    key={i}
+                    className="text-[12px] text-mist/80 leading-[1.65]"
+                  >
+                    {para}
+                  </p>
+                ))}
+              </article>
+
               <div className="grid grid-cols-3 gap-2 text-[10px]">
                 <div className="chip rounded-lg px-2 py-2">
                   <div className="text-mist/45 uppercase tracking-wider text-[8px]">
-                    Lagna
+                    Rising
                   </div>
                   <div className="text-jade font-medium">
-                    {profile.lagna.rashi}
+                    {signEn(profile.lagna.rashi)}
                   </div>
                   <div className="font-mono text-mist/50">
                     {profile.lagna.degree.toFixed(1)}° · {profile.lagna.lord}
@@ -98,7 +113,9 @@ export function ProfileDrawer({
                   <div className="text-mist/45 uppercase tracking-wider text-[8px]">
                     Moon
                   </div>
-                  <div className="font-medium">{profile.moon.rashi}</div>
+                  <div className="font-medium">
+                    {signEn(profile.moon.rashi)}
+                  </div>
                   <div className="text-mist/50 truncate">
                     {profile.moon.nakshatra} p{profile.moon.pada}
                   </div>
@@ -108,7 +125,7 @@ export function ProfileDrawer({
                     Sun
                   </div>
                   <div className="text-gold font-medium">
-                    {profile.sun.rashi}
+                    {signEn(profile.sun.rashi)}
                   </div>
                   <div className="text-mist/50 truncate">
                     {profile.sun.nakshatra}
@@ -131,7 +148,7 @@ export function ProfileDrawer({
 
               <div className="chip rounded-xl px-3 py-2.5 overflow-x-auto">
                 <div className="text-[9px] uppercase tracking-wider text-mist/50 mb-1.5">
-                  Graha map
+                  Planet map
                 </div>
                 <div className="flex gap-1.5 min-w-max">
                   {profile.grahas.map((g) => (
@@ -145,9 +162,11 @@ export function ProfileDrawer({
                           <span className="text-rose ml-0.5">R</span>
                         ) : null}
                       </div>
-                      <div className="text-mist/55 truncate">{g.rashi}</div>
+                      <div className="text-mist/55 truncate">
+                        {signEn(g.rashi)}
+                      </div>
                       <div className="font-mono text-mist/40">
-                        H{g.house} · {(g.degree).toFixed(0)}°
+                        H{g.house} · {g.degree.toFixed(0)}°
                       </div>
                     </div>
                   ))}
@@ -157,12 +176,12 @@ export function ProfileDrawer({
               {profile.sections.map((sec) => (
                 <article
                   key={sec.id}
-                  className="chip rounded-xl px-3 py-2.5 space-y-1.5"
+                  className="chip rounded-xl px-3 py-3 space-y-2"
                 >
                   <h3 className="text-[11px] font-semibold tracking-wide text-gold">
                     {sec.title}
                   </h3>
-                  <p className="text-[11px] text-mist/70 leading-relaxed">
+                  <p className="text-[11px] text-mist/75 leading-[1.65]">
                     {sec.body}
                   </p>
                   <div className="flex flex-wrap gap-1 pt-0.5">
@@ -179,9 +198,9 @@ export function ProfileDrawer({
               ))}
 
               <p className="text-[9px] text-mist/30 leading-relaxed px-1">
-                Deterministic Vedic-flavoured delineation from whole-sign houses
-                + Lahiri sidereal. Approximate ephemeris — for reflection, not
-                professional judgment.
+                Deterministic reading from whole-sign houses + Lahiri sidereal.
+                Approximate ephemeris — for reflection, not professional
+                judgment.
               </p>
             </>
           )}
