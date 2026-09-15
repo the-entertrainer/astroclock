@@ -125,7 +125,7 @@ describe('Design lane — welcome + tour contracts', () => {
 
 
 describe('Design lane — Capricorn rising / Leo Moon summary essay', () => {
-  it('forced Capricorn rising + Leo Moon is grammatical and ban-free', () => {
+  it('forced Capricorn rising + Leo Moon is grammatical, actionable, and ban-free', () => {
     const summary = buildProfileSummaryEssay({
       lagRashi: 'Makara',
       moonRashi: 'Simha',
@@ -140,7 +140,7 @@ describe('Design lane — Capricorn rising / Leo Moon summary essay', () => {
     expect(paras.length).toBeGreaterThanOrEqual(2);
     expect(paras.length).toBeLessThanOrEqual(3);
 
-    // Banned slogans from the failing fixture
+    // Banned slogans from the failing fixture + metaphor soup
     expect(findBannedHits(summary)).toEqual([]);
     expect(summary.toLowerCase()).not.toMatch(/rising ruler/);
     expect(summary.toLowerCase()).not.toMatch(/lights up/);
@@ -152,17 +152,26 @@ describe('Design lane — Capricorn rising / Leo Moon summary essay', () => {
     expect(summary.toLowerCase()).not.toMatch(/road show/);
     expect(summary.toLowerCase()).not.toMatch(/star-texture/);
     expect(summary.toLowerCase()).not.toMatch(/pada\s*\d/);
+    expect(summary.toLowerCase()).not.toMatch(/braid/);
+    expect(summary.toLowerCase()).not.toMatch(/sediment/);
+    expect(summary.toLowerCase()).not.toMatch(/witness/);
+    expect(summary.toLowerCase()).not.toMatch(/curriculum/);
+    expect(summary.toLowerCase()).not.toMatch(/outer style invests/);
+    expect(summary.toLowerCase()).not.toMatch(/meet the world by climbing/);
 
     // Basic grammatical English checks
     expect(summary).toMatch(/^[A-Z]/); // starts with capital
     expect(summary).toMatch(/\.(\n\n|$)/); // has sentence endings
     expect(summary).not.toMatch(/\w\s+—\s*[a-z]*\s*$/); // no dangling em-dash tails
-    // Readable life lean
+    // Readable life lean + instructions-adjacent
     expect(summary).toMatch(/creative work, romance, play, and mentoring/i);
-    expect(summary).toMatch(/Saturn/);
-    // Outer + inner markers
-    expect(summary.toLowerCase()).toMatch(/meet the world|climbing with structure/);
-    expect(summary.toLowerCase()).toMatch(/pride and warmth|recognition soothes/);
+    expect(summary).toMatch(/small steady output|long route/i);
+    // Leo Moon actionable cue
+    expect(summary.toLowerCase()).toMatch(/recognition|feedback|applause|noticed|overlooked/);
+    // Capricorn outer: concrete behaviour, not metaphor climb
+    expect(summary.toLowerCase()).toMatch(/earn respect|finishing hard|reliability|results speak/);
+    // You… voice
+    expect(summary).toMatch(/\bYou\b/);
   });
 
   it('negative Capricorn/Leo fixture still trips the detector', () => {

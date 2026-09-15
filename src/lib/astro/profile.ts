@@ -54,86 +54,86 @@ const RASHI_LORDS: GrahaId[] = [
 /** Rising-sign outer style — how they meet the world (plain English) */
 const LAGNA_OUTER_STYLE: Record<string, string> = {
   Mesha:
-    'You meet the world head-on. People often read you as someone who starts before the committee finishes talking — warm under pressure, impatient with fog, and more honest in motion than in waiting rooms. Initiative is your comfort zone; restlessness shows when nothing needs doing.',
+    'You start before the committee finishes talking. People read you as direct, warm under pressure, and impatient with vague plans. When nothing needs doing, restlessness shows — channel it into one clear next step instead of picking fights with the silence.',
   Vrishabha:
-    'You meet the world by building trust slowly and keeping what you value. Others notice a calm body-sense, a good ear for comfort, and loyalty that outlasts fashion. You are not quick to pivot, and that steadiness is a feature — once you commit, you mean it.',
+    'You build trust slowly and keep what you value. Others notice calm loyalty and a good sense for comfort; you are not quick to pivot. Once you commit, follow through — and say no early when a change would scrap something you still care about.',
   Mithuna:
-    'You meet the world through curiosity. You collect people, routes, and ideas the way others collect trophies, and boredom hits harder than hard work. Conversation is oxygen; you feel most yourself when something interesting is being exchanged.',
+    'You collect people, routes, and ideas. Conversation is how you think, and boredom hits harder than hard work. Finish one thread before opening three more, or you leave people unsure what you meant.',
   Karka:
-    'You meet the world from feeling and protectiveness. Belonging matters more than applause, and memory colours how you read a room. When the harbour feels safe, you are generous; when it does not, you shell up until trust returns.',
+    'Belonging matters more than applause. You read rooms through feeling, and you protect your people. When home feels safe you are generous; when it does not, you pull back — name what would restore trust instead of going silent.',
   Simha:
-    'You meet the world with a centre. Being invisible feels like a kind of exile, and creative warmth is how you lead — not only ego, but a need to put a signature on things. Recognition soothes; being taken for granted stings.',
+    'Being overlooked feels personal. You lead with creative warmth and want your effort noticed. Ask for clear feedback in private, put your name on work you care about, and do not bet your whole mood on applause.',
   Kanya:
-    'You meet the world by refining and helping through competence. Mess and vagueness bother you; usefulness feels like care. People may lean on your quiet precision more than they notice, and critique is often your love language in disguise.',
+    'Mess and vagueness bother you. You help through competence, and quiet precision is how you show care. Soften critique with one kind line, and pick one useful fix instead of rewriting the whole system.',
   Tula:
-    'You meet the world by weighing and relating. Fairness is not abstract — discord in a room becomes discord in your chest. Partnership and aesthetics are how you think, and you prefer negotiated grace to blunt force.',
+    'You weigh options and keep the peace. Unfairness lands in your body before you argue. Name your preference before you negotiate, and do not swallow discord just to keep the room pretty.',
   Vrischika:
-    'You meet the world deep or not at all. Trust is a gate, not a greeting, and intensity sits under a still surface. Half-measures starve you; real loyalty and real honesty wake you up.',
+    'You go deep or not at all. Trust is earned, not assumed, and half-measures frustrate you. Ask for honesty early, and put intensity into one loyal project instead of testing everyone.',
   Dhanu:
-    'You meet the world aiming past the near field. Meaning, humour, and horizon keep you kind; petty loops make you irritable. You bond over shared quests more than shared furniture, and you need room to roam — literally or through learning.',
+    'You aim past the near field — meaning, humour, and a wider horizon keep you kind. Petty loops make you irritable. Book learning or travel that widens the frame, and leave one small duty finished so freedom does not become avoidance.',
   Makara:
-    'You meet the world by climbing with structure. Reliability outranks charm, and time is a collaborator. Status, for you, is sediment of work kept — not costume. Softness arrives after respect is earned.',
+    'You earn respect by finishing hard things over time. You do not trust flashy talk; reliability outranks charm. Let results speak, schedule rest so the climb is not a cage, and soften after respect is already clear.',
   Kumbha:
-    'You meet the world by networking the future. Friendship-toned bonds often outlast romantic theatre, and you feel at home among odd, systems-minded people. Detachment is a shield; belonging still matters, just not on traditional terms.',
+    'You bond through ideas, odd allies, and future plans more than traditional romance theatre. Detachment can be a shield. Pick one group or cause to show up for regularly so belonging has a real address.',
   Meena:
-    'You meet the world through porous edges. Empathy and imagination are gifts and costs — you absorb atmospheres, so company is climate. Art, sanctuary, and quiet service suit you when feet stay on enough ground to deliver.',
+    'You absorb atmospheres — empathy and imagination are gifts and costs. Art, quiet service, and sanctuary suit you when feet stay on the ground. Choose company the way you choose climate, and keep one daily task that proves you delivered.',
 };
 
 const MOON_SIGN: Record<string, string> = {
   Mesha:
-    'Emotionally you ignite fast and need an outlet. Feelings arrive as urges to act, speak, or start — sitting still with raw mood feels like holding hot iron. Honesty of temper beats polite fog, if you aim the heat.',
+    'Feelings arrive as urges to act, speak, or start. Sitting still with raw mood feels like holding heat. Move the energy into one clean action, then cool down before hard talks.',
   Vrishabha:
-    'You settle when comfort, beauty, and reliability are secured. Attachment runs deep and slow; abrupt change can feel like theft. Once your heart decides, revision takes time and sensory proof.',
+    'You settle when comfort, beauty, and reliability are secured. Abrupt change can feel like theft. Slow the pivot, keep one sensory anchor (food, music, routine), and revise only with proof.',
   Mithuna:
-    'Your heart narrates. Talk, novelty, and mental companionship regulate mood as much as hugs do. Emotions change costume when the conversation does — clarify whether you are flirting with ideas or with people.',
+    'Talk, novelty, and mental companionship regulate your mood. Emotions shift when the conversation does. Check whether you are flirting with ideas or with people — then finish one chat before opening another.',
   Karka:
-    'Sensitivity is oceanic. Belonging and family-memory colour responses, and other people’s weather enters your harbour easily. Caregiving and being cared for are lifelong themes, blood or chosen.',
+    'Sensitivity runs deep; other people’s weather enters easily. Caregiving and being cared for are lifelong themes. Secure your base before leading, and say when you need care instead of absorbing every room.',
   Simha:
-    'Pride and warmth braid together. Recognition soothes; slight wounds the centre. You are generous when admired and creative when the heart has a witness.',
+    'You feel strongest when people notice your effort. Kindness comes easily when you feel respected. Public criticism or being overlooked can knock your mood harder than you let on — so ask for clear feedback in private, and don’t bet your whole day on applause.',
   Kanya:
-    'You sort feelings into categories. Care shows as usefulness and quiet critique more than melodrama. Chaos in someone’s habits can fray the bond; repair manuals for emotion feel safer than storms.',
+    'You sort feelings into categories. Care shows as usefulness and quiet critique more than melodrama. Chaos in someone’s habits frays the bond — offer one practical repair instead of a storm of fixes.',
   Tula:
-    'Harmony-seeking runs deep. Relational weather often dictates inner weather more than you admit. Beauty and fairness are emotional medicine; unfairness lands in the body.',
+    'Harmony-seeking runs deep; relational weather often dictates inner weather. Beauty and fairness are emotional medicine. Name unfairness early, and state one preference before you smooth everything over.',
   Vrischika:
-    'Feelings are all-or-nothing — loyalty, jealousy, regenerative depth. Surface calm may hide undertow. Trust is everything; half-open doors frustrate this Moon.',
+    'Feelings are all-or-nothing — loyalty, jealousy, deep resets. Surface calm may hide undertow. Choose honesty over half-open doors, and give trust time instead of testing people.',
   Dhanu:
-    'Mood expands toward meaning. Boredom or dogma collapses the emotional sky. You want a horizon — belief, travel, teaching, humour that widens the frame.',
+    'Mood expands toward meaning. Boredom or dogma collapses the emotional sky. Keep a horizon (belief, travel, teaching, humour that widens the frame), and exit one petty loop on purpose.',
   Makara:
-    'Affect is reserved and durable. Safety is earned through competence and time, not instant confession. Commitment shows as endurance; displays of feeling may come late and land heavy.',
+    'Affect is reserved and durable. Safety is earned through competence and time, not instant confession. Show commitment as endurance, schedule softness so you do not bottle feelings until they land heavy.',
   Kumbha:
-    'Care can feel detached or friendship-toned. You may feel odd in private and lucid in groups. Quirky needs and egalitarian bonds soothe more than possessive romance.',
+    'Care can feel friendship-toned. You may feel odd in private and lucid in groups. Seek egalitarian bonds and quirky needs openly — possessive romance usually backfires.',
   Meena:
-    'Empathy is diffuse. Dreams, music, and compassion blur self and other. Beautiful for art and healing; costly without boundaries. Choose company the way you choose climate.',
+    'Empathy is diffuse; dreams, music, and compassion blur self and other. Beautiful for art and healing; costly without boundaries. Choose company carefully, and keep one clear edge so you do not dissolve.',
 };
 
 const NAK_MIND: Record<string, string> = {
-  Ashwini: 'Your mind likes swift starts — begin, then correct in motion.',
-  Bharani: 'You hold creative pressure until something real can be delivered.',
-  Krittika: 'You cut through fog; clarity can scorch if unaimed.',
-  Rohini: 'Once fascinated, you grow and attract around a chosen target.',
-  Mrigashira: 'You hunt options; stillness is rare until the trail is sniffed.',
-  Ardra: 'Insight often arrives after a storm — tear-down before rebuild.',
-  Punarvasu: 'You bounce back; second chances feel native.',
-  Pushya: 'You nourish on schedule; care and timing steady the mind.',
-  Ashlesha: 'You read undercurrents; keep ethics tight in intimacy.',
-  Magha: 'Legacy and rightful presence colour how you think.',
-  'Purva Phalguni': 'Pleasure and creative ease loosen the mind — finish one delight.',
-  'Uttara Phalguni': 'You think in lasting alliances and help that sticks.',
-  Hasta: 'Skillful, hands-on cleverness; fix something tangible.',
-  Chitra: 'You design beauty into form; unfinished ugliness irritates.',
-  Swati: 'Independence keeps you kind; cages make you sharp.',
-  Vishakha: 'You can chase dual goals — pick which summit gets heat.',
-  Anuradha: 'Loyalty in orbit around people and causes regulates you.',
-  Jyeshtha: 'You protect earned skill and quiet rank.',
-  Mula: 'You dig to roots; honesty before polish.',
-  'Purva Ashadha': 'Bold early push — declare, then prove.',
-  'Uttara Ashadha': 'You prefer wins that last, through structure and allies.',
-  Shravana: 'You learn by listening deeply before speaking.',
-  Dhanishta: 'Rhythm and teamwork unlock you; timed bursts land.',
-  Shatabhisha: 'You find odd, systems-level fixes others miss.',
-  'Purva Bhadrapada': 'Ideals can fire you past comfort — aim the heat.',
-  'Uttara Bhadrapada': 'Patient depth; bring one insight to the surface.',
-  Revati: 'You shepherd people across finish lines gently.',
+  Ashwini: 'Your mind likes swift starts — begin, then correct in motion instead of waiting for perfect plans.',
+  Bharani: 'You hold creative pressure until something real can be delivered — set a finish date so the wait does not stall you.',
+  Krittika: 'You cut through fog; aim the clarity at the problem, not at the person, or it scorches trust.',
+  Rohini: 'Once fascinated, you grow and attract around a chosen target — pick one, then feed it daily.',
+  Mrigashira: 'You hunt options; stillness is rare until the trail is sniffed — shortlist two choices and decide by tonight.',
+  Ardra: 'Insight often arrives after a storm — tear down what is broken, then rebuild one piece before the next critique.',
+  Punarvasu: 'You bounce back; second chances feel native — take the retry, and change one habit so the loop closes.',
+  Pushya: 'You nourish on schedule; care and timing steady the mind — keep meal, rest, and check-in times sacred.',
+  Ashlesha: 'You read undercurrents; keep ethics tight in intimacy — ask before you dig, and do not use secrets as leverage.',
+  Magha: 'You think about legacy and rightful presence — claim credit cleanly, then share the spotlight.',
+  'Purva Phalguni': 'Pleasure and creative ease loosen the mind — finish one delight instead of collecting unfinished fun.',
+  'Uttara Phalguni': 'You think in lasting alliances and help that sticks — offer one concrete assist and keep the promise.',
+  Hasta: 'Skillful, hands-on cleverness wants a job — fix something tangible today.',
+  Chitra: 'You design beauty into form; unfinished ugliness irritates — close one craft loop before starting a new sketch.',
+  Swati: 'Independence keeps you kind; cages make you sharp — negotiate room to move before you snap.',
+  Vishakha: 'You can chase dual goals — pick which summit gets heat this week and park the other.',
+  Anuradha: 'Loyalty in orbit around people and causes regulates you — show up for one person or project on schedule.',
+  Jyeshtha: 'You protect earned skill and quiet rank — mentor once, and refuse status games that waste the craft.',
+  Mula: 'You dig to roots; honesty before polish — ask the hard question, then offer one practical next step.',
+  'Purva Ashadha': 'Bold early push — declare the aim, then prove it with one delivered result.',
+  'Uttara Ashadha': 'You prefer wins that last, through structure and allies — build the team and the checklist together.',
+  Shravana: 'You learn by listening deeply before speaking — take notes first, then reply with one clear point.',
+  Dhanishta: 'Rhythm and teamwork unlock you — time your bursts with others and keep the beat.',
+  Shatabhisha: 'You find odd, systems-level fixes others miss — ship the weird fix, then explain it simply.',
+  'Purva Bhadrapada': 'Ideals can fire you past comfort — aim the heat at one reform, not at everyone.',
+  'Uttara Bhadrapada': 'Patient depth suits you — bring one insight to the surface and act on it this week.',
+  Revati: 'You shepherd people across finish lines gently — help someone complete, then rest.',
 };
 
 
@@ -153,16 +153,28 @@ const SUMMARY_LIFE: Record<number, string> = {
   12: 'rest, solitude, endings, travel abroad, and quiet recharge',
 };
 
-const PLANET_ROLE: Record<string, string> = {
-  Sun: 'brings identity-heat and a need to lead',
-  Moon: 'sets emotional weather and care needs',
-  Mars: 'pushes with courage and competitive heat',
-  Mercury: 'wants talk, learning, and sorting details',
-  Jupiter: 'expands meaning, grace, and generosity',
-  Venus: 'seeks comfort, beauty, and bonding',
-  Saturn: 'builds patiently and finishes what others abandon',
-  Rahu: 'hungers for the unfamiliar',
-  Ketu: 'simplifies, releases, and knows some things sideways',
+const LEAN_OPENER: Record<string, string> = {
+  Sun: 'A clear Sun-led streak shows up most',
+  Moon: 'A Moon-led care streak shows up most',
+  Mars: 'A Mars-led drive shows up most',
+  Mercury: 'A Mercury-led mind shows up most',
+  Jupiter: 'A Jupiter-led stretch shows up most',
+  Venus: 'A Venus-led soft streak shows up most',
+  Saturn: 'A serious, patient streak shows up most',
+  Rahu: 'A hunger for the unfamiliar shows up most',
+  Ketu: 'A simplify-and-release streak shows up most',
+};
+
+const LEAN_TIP: Record<string, string> = {
+  Sun: 'own one visible contribution, then share credit',
+  Moon: 'ask for care early and keep one soothing routine',
+  Mars: 'put heat into one clean contest, not a public fight',
+  Mercury: 'finish one conversation or draft before opening another',
+  Jupiter: 'teach or expand one idea without overpromising',
+  Venus: 'invest in comfort and fair bonding, not people-pleasing',
+  Saturn: 'small steady output beats big dramatic starts',
+  Rahu: 'try the new path with a time-box and a mentor check',
+  Ketu: 'drop one extra obligation and keep the lesson',
 };
 
 function softPadaNuance(pada: number): string {
@@ -196,10 +208,11 @@ export function buildProfileSummaryEssay(args: {
   const inner = [moonBase, nakBit, padaBit].filter(Boolean).join(' ');
 
   const life = SUMMARY_LIFE[args.lagLordHouse] || 'a core life theme';
-  const role = PLANET_ROLE[args.lagLord] || 'shapes how effort lands';
-  let lean = `${args.lagLord} leans into ${life}, where it ${role}. That is where your outer style invests most consistently.`;
+  const tip = LEAN_TIP[args.lagLord] || 'show up steadily and check results weekly';
+  const opener = LEAN_OPENER[args.lagLord] || `A ${args.lagLord} streak shows up most`;
+  let lean = `${opener} in ${life}. You’ll do better taking the long route there — ${tip}.`;
   if (args.lagLordRetro) {
-    lean += ' Because that planet turns inward first, the theme often ripens through revisit and revise before it shows.';
+    lean += ' Because that planet turns inward first, revisit and revise the theme privately before you show the result.';
   }
 
   return [outer, inner, lean].join('\n\n');
@@ -461,7 +474,7 @@ export function computeNatalProfile(
   sections.push({
     id: 'essence',
     title: 'How you come across',
-    body: `${LAGNA_OUTER_STYLE[lagRashi] || ''} ${blendNote} ${lagLord} leans into ${lifeLean}${lagLordP.retrograde ? ' — and because it turns inward first, that theme often ripens through revisit and revise before it shows.' : '.'}${lagLordHouse ? ' ' + lagLordHouse.lifeArea : ''}`,
+    body: `${LAGNA_OUTER_STYLE[lagRashi] || ''} ${blendNote} A ${lagLord} streak shows up most in ${lifeLean}${lagLordP.retrograde ? ' — and because it turns inward first, revisit and revise privately before you show the result.' : '.'}${lagLordHouse ? ' ' + lagLordHouse.lifeArea : ''}`,
     cites: [
       `Rising ${signEn(lagRashi)} ${lagDeg.toFixed(1)}°`,
       `Moon in ${signEn(moon.rashi)}, house ${moon.house}`,
@@ -511,15 +524,15 @@ export function computeNatalProfile(
   const mercLine =
     grahaRashiRule('Mercury', merc.rashi)?.temperament ||
     PLANET_SIGN_PLAIN.Mercury?.[merc.rashi] ||
-    `Mercury in ${signEn(merc.rashi)} colours how you think`;
+    `Mercury in ${signEn(merc.rashi)} shapes how you talk and decide`;
   const venLine =
     grahaRashiRule('Venus', ven.rashi)?.temperament ||
     PLANET_SIGN_PLAIN.Venus?.[ven.rashi] ||
-    `Venus in ${signEn(ven.rashi)} colours desire`;
+    `Venus in ${signEn(ven.rashi)} shapes what you want and how you bond`;
   const marsLine =
     grahaRashiRule('Mars', mars.rashi)?.temperament ||
     PLANET_SIGN_PLAIN.Mars?.[mars.rashi] ||
-    `Mars in ${signEn(mars.rashi)} colours assertion`;
+    `Mars in ${signEn(mars.rashi)} shapes how you push and compete`;
 
   sections.push({
     id: 'behaviour',
@@ -537,7 +550,7 @@ export function computeNatalProfile(
   const h7occupants = grahas.filter((g) => g.house === 7).map((g) => g.id);
   const lord7 = RASHI_LORDS[(rashiIndex(asc.sidereal) + 6) % 12];
   const relBody = h7occupants.length
-    ? `Your one-to-one house hosts ${h7occupants.join(', ')} — partners and open counterparts often mirror those tones. Venus in ${signEn(ven.rashi)} (house of ${HOUSE_LIFE[ven.house]}) sets pleasure and bonding style; Jupiter in ${signEn(jup.rashi)} (house of ${HOUSE_LIFE[jup.house]}) expands grace, teachers, and ethical stretch${jup.retrograde ? ' — Jupiter retrograde turns faith inward and revises mentors' : ''}. Read partners as curricula, not verdicts.`
+    ? `Your one-to-one house hosts ${h7occupants.join(', ')} — partners and open counterparts often mirror those tones. Venus in ${signEn(ven.rashi)} (house of ${HOUSE_LIFE[ven.house]}) sets pleasure and bonding style; Jupiter in ${signEn(jup.rashi)} (house of ${HOUSE_LIFE[jup.house]}) expands grace, teachers, and ethical stretch${jup.retrograde ? ' — Jupiter retrograde turns faith inward and revises mentors' : ''}. Treat partners as practice partners, not verdicts on your worth.`
     : `Your one-to-one house is empty of planets — relationships often activate through the ruler of that house (${lord7}) rather than crowded conjunctions. Venus in ${signEn(ven.rashi)} (house of ${HOUSE_LIFE[ven.house]}) sets bonding style; Jupiter in ${signEn(jup.rashi)} (house of ${HOUSE_LIFE[jup.house]}) expands grace and counsel${jup.retrograde ? ' — Jupiter retrograde turns faith inward' : ''}. Absence is quieter staging, not missing destiny.`;
 
   sections.push({
@@ -590,7 +603,7 @@ export function computeNatalProfile(
     sections.push({
       id: 'moon-lord',
       title: 'What steadies the heart',
-      body: `${mLord} steers your ${signEn(moon.rashi)} Moon and leans into ${mlLife}. Tend those themes when emotional weather gets loud.`,
+      body: `${mLord} steers your ${signEn(moon.rashi)} Moon and shows up most in ${mlLife}. When feelings get loud, do one practical thing in that area first.`,
       cites: [citeGraha(mLordP)],
     });
   }

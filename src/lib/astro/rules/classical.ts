@@ -138,7 +138,7 @@ export function atmakarakaWording(id: GrahaId, degree: number): {
   advice: string;
 } {
   return {
-    body: `A quiet signature in your chart: ${id} sits furthest into its sign. Many readers treat that as a life-curriculum hint — what you keep learning to master — not a ranking of worth.`,
+    body: `A quiet signature in your chart: ${id} sits furthest into its sign. Many readers treat that as a life lesson you keep practising — what you keep learning to master — not a ranking of worth.`,
     advice: `Watch how ${id} themes keep returning. Practise the warm, useful version of ${id}, not the stereotype.`,
   };
 }

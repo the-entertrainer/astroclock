@@ -10,7 +10,7 @@ const ASPECT_SLANG =
 
 /** Profile / summary slogans that produce nonsense when stitched */
 const BANNED_PROFILE_SLANG =
-  /\b(rising ruler|lights? up|long road|negotiate daily|neither should win|appearance and feeling|\bmask\b|road show|mood should\s*[—–-])/i;
+  /\b(rising ruler|lights? up|long road|negotiate daily|neither should win|appearance and feeling|\bmask\b|road show|mood should\s*[—–-]|braid|sediment|witness|curriculum|colour how you think|outer style invests|meet the world by climbing)/i;
 
 /** Banned patterns that must not appear in user-visible body copy */
 export const BANNED_PROSE_PATTERNS: RegExp[] = [
