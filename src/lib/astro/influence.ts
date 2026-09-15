@@ -247,7 +247,7 @@ export function computeInfluence(input: InfluenceInput): InfluenceReading {
   const nakBit = nk
     ? ` ${nk.temperament}`
     : input.nakshatra && NAK_PLAIN[input.nakshatra]
-      ? ` The star-texture (${input.nakshatra}) adds a flavour of being ${NAK_PLAIN[input.nakshatra]}.`
+      ? ` Under ${input.nakshatra}, the mood leans toward being ${NAK_PLAIN[input.nakshatra]}.`
       : '';
 
   const cites: string[] = [
