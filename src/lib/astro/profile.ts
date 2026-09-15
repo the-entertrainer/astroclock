@@ -197,7 +197,7 @@ export function buildProfileSummaryEssay(args: {
 
   const life = SUMMARY_LIFE[args.lagLordHouse] || 'a core life theme';
   const role = PLANET_ROLE[args.lagLord] || 'shapes how effort lands';
-  let lean = `${args.lagLord} leans into ${life}. There, ${role} — that is where your outer style invests most consistently.`;
+  let lean = `${args.lagLord} leans into ${life}, where it ${role}. That is where your outer style invests most consistently.`;
   if (args.lagLordRetro) {
     lean += ' Because that planet turns inward first, the theme often ripens through revisit and revise before it shows.';
   }
