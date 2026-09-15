@@ -5,354 +5,335 @@ export interface DashaPairRule {
   advice: string;
 }
 
-/** Maha × Antar 9×9 tone + advice */
-export const DASHA_PAIR: Record<GrahaId, Record<GrahaId, DashaPairRule>> = {
-  Sun: {
-    Sun: {
-      tone: 'A pure Sun chapter: identity heat and vitality are both heading and subplot — themes concentrate around where you renew a sense of self.',
-      advice: 'In a double-Sun stretch, own one clear act of presence, then share the airtime. Practice the kinder form: authentic shine that lifts others.',
-    },
-    Moon: {
-      tone: 'Sun period with Moon subplot: the long arc centres identity heat and vitality, while the near chapter modulates with moods, needs, and emotional weather.',
-      advice: 'Live the Sun chapter’s better habits (own one clear act of presence, then share the airtime) while the Moon subplot asks you to tend and belong — check food, water, and a soft landing before big talks.',
-    },
-    Mars: {
-      tone: 'Sun period with Mars subplot: the long arc centres identity heat and vitality, while the near chapter modulates with courage, drive, and directed heat.',
-      advice: 'Live the Sun chapter’s better habits (own one clear act of presence, then share the airtime) while the Mars subplot asks you to assert and cut through — aim heat into one clean effort; skip audience fights.',
-    },
-    Mercury: {
-      tone: 'Sun period with Mercury subplot: the long arc centres identity heat and vitality, while the near chapter modulates with thinking, talk, and skill traffic.',
-      advice: 'Live the Sun chapter’s better habits (own one clear act of presence, then share the airtime) while the Mercury subplot asks you to name and negotiate — write it down, then send the short clear version.',
-    },
-    Jupiter: {
-      tone: 'Sun period with Jupiter subplot: the long arc centres identity heat and vitality, while the near chapter modulates with growth, meaning, and generous stretch.',
-      advice: 'Live the Sun chapter’s better habits (own one clear act of presence, then share the airtime) while the Jupiter subplot asks you to teach and widen — widen the frame with learning or generosity; avoid lecturing.',
-    },
-    Venus: {
-      tone: 'Sun period with Venus subplot: the long arc centres identity heat and vitality, while the near chapter modulates with bond, taste, pleasure, and harmony.',
-      advice: 'Live the Sun chapter’s better habits (own one clear act of presence, then share the airtime) while the Venus subplot asks you to relate and delight — choose beauty and kindness on purpose.',
-    },
-    Saturn: {
-      tone: 'Sun period with Saturn subplot: the long arc centres identity heat and vitality, while the near chapter modulates with duration, structure, and sober accountability.',
-      advice: 'Live the Sun chapter’s better habits (own one clear act of presence, then share the airtime) while the Saturn subplot asks you to endure and build — one sober step beats a grand promise.',
-    },
-    Rahu: {
-      tone: 'Sun period with Rahu subplot: the long arc centres identity heat and vitality, while the near chapter modulates with appetite for the unfamiliar and unconventional.',
-      advice: 'Live the Sun chapter’s better habits (own one clear act of presence, then share the airtime) while the Rahu subplot asks you to reach past the known — curiosity yes — obsession needs a timer and a reality check.',
-    },
-    Ketu: {
-      tone: 'Sun period with Ketu subplot: the long arc centres identity heat and vitality, while the near chapter modulates with release, distill, and sideways knowing.',
-      advice: 'Live the Sun chapter’s better habits (own one clear act of presence, then share the airtime) while the Ketu subplot asks you to let go and refine — release one extra obligation and keep the distilled lesson.',
-    },
+const LORDS: GrahaId[] = ['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rahu','Ketu'];
+
+export const DASHA_PAIR: Record<string, DashaPairRule> = {
+  'Sun_Sun': {
+    tone: 'You’re in a strong Sun chapter — you want to be seen and lead. Themes concentrate; keep perspective.',
+    advice: 'Own one clear act of presence, then share the spotlight. Prefer show up warmly without needing a standing ovation.',
   },
-  Moon: {
-    Sun: {
-      tone: 'Moon period with Sun subplot: the long arc centres moods, needs, and emotional weather, while the near chapter modulates with identity heat and vitality.',
-      advice: 'Live the Moon chapter’s better habits (check food, water, and a soft landing before big talks) while the Sun subplot asks you to lead and be seen — own one clear act of presence, then share the airtime.',
-    },
-    Moon: {
-      tone: 'A pure Moon chapter: moods, needs, and emotional weather are both heading and subplot — themes concentrate around how feelings arrive and settle.',
-      advice: 'In a double-Moon stretch, check food, water, and a soft landing before big talks. Practice the kinder form: care that includes asking for harbour.',
-    },
-    Mars: {
-      tone: 'Moon period with Mars subplot: the long arc centres moods, needs, and emotional weather, while the near chapter modulates with courage, drive, and directed heat.',
-      advice: 'Live the Moon chapter’s better habits (check food, water, and a soft landing before big talks) while the Mars subplot asks you to assert and cut through — aim heat into one clean effort; skip audience fights.',
-    },
-    Mercury: {
-      tone: 'Moon period with Mercury subplot: the long arc centres moods, needs, and emotional weather, while the near chapter modulates with thinking, talk, and skill traffic.',
-      advice: 'Live the Moon chapter’s better habits (check food, water, and a soft landing before big talks) while the Mercury subplot asks you to name and negotiate — write it down, then send the short clear version.',
-    },
-    Jupiter: {
-      tone: 'Moon period with Jupiter subplot: the long arc centres moods, needs, and emotional weather, while the near chapter modulates with growth, meaning, and generous stretch.',
-      advice: 'Live the Moon chapter’s better habits (check food, water, and a soft landing before big talks) while the Jupiter subplot asks you to teach and widen — widen the frame with learning or generosity; avoid lecturing.',
-    },
-    Venus: {
-      tone: 'Moon period with Venus subplot: the long arc centres moods, needs, and emotional weather, while the near chapter modulates with bond, taste, pleasure, and harmony.',
-      advice: 'Live the Moon chapter’s better habits (check food, water, and a soft landing before big talks) while the Venus subplot asks you to relate and delight — choose beauty and kindness on purpose.',
-    },
-    Saturn: {
-      tone: 'Moon period with Saturn subplot: the long arc centres moods, needs, and emotional weather, while the near chapter modulates with duration, structure, and sober accountability.',
-      advice: 'Live the Moon chapter’s better habits (check food, water, and a soft landing before big talks) while the Saturn subplot asks you to endure and build — one sober step beats a grand promise.',
-    },
-    Rahu: {
-      tone: 'Moon period with Rahu subplot: the long arc centres moods, needs, and emotional weather, while the near chapter modulates with appetite for the unfamiliar and unconventional.',
-      advice: 'Live the Moon chapter’s better habits (check food, water, and a soft landing before big talks) while the Rahu subplot asks you to reach past the known — curiosity yes — obsession needs a timer and a reality check.',
-    },
-    Ketu: {
-      tone: 'Moon period with Ketu subplot: the long arc centres moods, needs, and emotional weather, while the near chapter modulates with release, distill, and sideways knowing.',
-      advice: 'Live the Moon chapter’s better habits (check food, water, and a soft landing before big talks) while the Ketu subplot asks you to let go and refine — release one extra obligation and keep the distilled lesson.',
-    },
+  'Sun_Moon': {
+    tone: 'You’re in a Sun chapter with a Moon flavour right now. The long arc is about how you want to be seen and lead; the near weeks lean toward how your moods and needs set the weather.',
+    advice: 'Own one clear act of presence, then share the spotlight. In the near stretch, also eat, drink water, and find a soft landing before hard talks.',
   },
-  Mars: {
-    Sun: {
-      tone: 'Mars period with Sun subplot: the long arc centres courage, drive, and directed heat, while the near chapter modulates with identity heat and vitality.',
-      advice: 'Live the Mars chapter’s better habits (aim heat into one clean effort; skip audience fights) while the Sun subplot asks you to lead and be seen — own one clear act of presence, then share the airtime.',
-    },
-    Moon: {
-      tone: 'Mars period with Moon subplot: the long arc centres courage, drive, and directed heat, while the near chapter modulates with moods, needs, and emotional weather.',
-      advice: 'Live the Mars chapter’s better habits (aim heat into one clean effort; skip audience fights) while the Moon subplot asks you to tend and belong — check food, water, and a soft landing before big talks.',
-    },
-    Mars: {
-      tone: 'A pure Mars chapter: courage, drive, and directed heat are both heading and subplot — themes concentrate around how you push for what you want.',
-      advice: 'In a double-Mars stretch, aim heat into one clean effort; skip audience fights. Practice the kinder form: protective courage without theatre.',
-    },
-    Mercury: {
-      tone: 'Mars period with Mercury subplot: the long arc centres courage, drive, and directed heat, while the near chapter modulates with thinking, talk, and skill traffic.',
-      advice: 'Live the Mars chapter’s better habits (aim heat into one clean effort; skip audience fights) while the Mercury subplot asks you to name and negotiate — write it down, then send the short clear version.',
-    },
-    Jupiter: {
-      tone: 'Mars period with Jupiter subplot: the long arc centres courage, drive, and directed heat, while the near chapter modulates with growth, meaning, and generous stretch.',
-      advice: 'Live the Mars chapter’s better habits (aim heat into one clean effort; skip audience fights) while the Jupiter subplot asks you to teach and widen — widen the frame with learning or generosity; avoid lecturing.',
-    },
-    Venus: {
-      tone: 'Mars period with Venus subplot: the long arc centres courage, drive, and directed heat, while the near chapter modulates with bond, taste, pleasure, and harmony.',
-      advice: 'Live the Mars chapter’s better habits (aim heat into one clean effort; skip audience fights) while the Venus subplot asks you to relate and delight — choose beauty and kindness on purpose.',
-    },
-    Saturn: {
-      tone: 'Mars period with Saturn subplot: the long arc centres courage, drive, and directed heat, while the near chapter modulates with duration, structure, and sober accountability.',
-      advice: 'Live the Mars chapter’s better habits (aim heat into one clean effort; skip audience fights) while the Saturn subplot asks you to endure and build — one sober step beats a grand promise.',
-    },
-    Rahu: {
-      tone: 'Mars period with Rahu subplot: the long arc centres courage, drive, and directed heat, while the near chapter modulates with appetite for the unfamiliar and unconventional.',
-      advice: 'Live the Mars chapter’s better habits (aim heat into one clean effort; skip audience fights) while the Rahu subplot asks you to reach past the known — curiosity yes — obsession needs a timer and a reality check.',
-    },
-    Ketu: {
-      tone: 'Mars period with Ketu subplot: the long arc centres courage, drive, and directed heat, while the near chapter modulates with release, distill, and sideways knowing.',
-      advice: 'Live the Mars chapter’s better habits (aim heat into one clean effort; skip audience fights) while the Ketu subplot asks you to let go and refine — release one extra obligation and keep the distilled lesson.',
-    },
+  'Sun_Mars': {
+    tone: 'You’re in a Sun chapter with a Mars flavour right now. The long arc is about how you want to be seen and lead; the near weeks lean toward how you push hard for what you want.',
+    advice: 'Own one clear act of presence, then share the spotlight. In the near stretch, also put the heat into one clean effort, not a public fight.',
   },
-  Mercury: {
-    Sun: {
-      tone: 'Mercury period with Sun subplot: the long arc centres thinking, talk, and skill traffic, while the near chapter modulates with identity heat and vitality.',
-      advice: 'Live the Mercury chapter’s better habits (write it down, then send the short clear version) while the Sun subplot asks you to lead and be seen — own one clear act of presence, then share the airtime.',
-    },
-    Moon: {
-      tone: 'Mercury period with Moon subplot: the long arc centres thinking, talk, and skill traffic, while the near chapter modulates with moods, needs, and emotional weather.',
-      advice: 'Live the Mercury chapter’s better habits (write it down, then send the short clear version) while the Moon subplot asks you to tend and belong — check food, water, and a soft landing before big talks.',
-    },
-    Mars: {
-      tone: 'Mercury period with Mars subplot: the long arc centres thinking, talk, and skill traffic, while the near chapter modulates with courage, drive, and directed heat.',
-      advice: 'Live the Mercury chapter’s better habits (write it down, then send the short clear version) while the Mars subplot asks you to assert and cut through — aim heat into one clean effort; skip audience fights.',
-    },
-    Mercury: {
-      tone: 'A pure Mercury chapter: thinking, talk, and skill traffic are both heading and subplot — themes concentrate around how you learn, argue, and message.',
-      advice: 'In a double-Mercury stretch, write it down, then send the short clear version. Practice the kinder form: wit in service of understanding.',
-    },
-    Jupiter: {
-      tone: 'Mercury period with Jupiter subplot: the long arc centres thinking, talk, and skill traffic, while the near chapter modulates with growth, meaning, and generous stretch.',
-      advice: 'Live the Mercury chapter’s better habits (write it down, then send the short clear version) while the Jupiter subplot asks you to teach and widen — widen the frame with learning or generosity; avoid lecturing.',
-    },
-    Venus: {
-      tone: 'Mercury period with Venus subplot: the long arc centres thinking, talk, and skill traffic, while the near chapter modulates with bond, taste, pleasure, and harmony.',
-      advice: 'Live the Mercury chapter’s better habits (write it down, then send the short clear version) while the Venus subplot asks you to relate and delight — choose beauty and kindness on purpose.',
-    },
-    Saturn: {
-      tone: 'Mercury period with Saturn subplot: the long arc centres thinking, talk, and skill traffic, while the near chapter modulates with duration, structure, and sober accountability.',
-      advice: 'Live the Mercury chapter’s better habits (write it down, then send the short clear version) while the Saturn subplot asks you to endure and build — one sober step beats a grand promise.',
-    },
-    Rahu: {
-      tone: 'Mercury period with Rahu subplot: the long arc centres thinking, talk, and skill traffic, while the near chapter modulates with appetite for the unfamiliar and unconventional.',
-      advice: 'Live the Mercury chapter’s better habits (write it down, then send the short clear version) while the Rahu subplot asks you to reach past the known — curiosity yes — obsession needs a timer and a reality check.',
-    },
-    Ketu: {
-      tone: 'Mercury period with Ketu subplot: the long arc centres thinking, talk, and skill traffic, while the near chapter modulates with release, distill, and sideways knowing.',
-      advice: 'Live the Mercury chapter’s better habits (write it down, then send the short clear version) while the Ketu subplot asks you to let go and refine — release one extra obligation and keep the distilled lesson.',
-    },
+  'Sun_Mercury': {
+    tone: 'You’re in a Sun chapter with a Mercury flavour right now. The long arc is about how you want to be seen and lead; the near weeks lean toward how your mind wants to talk, learn, and sort details.',
+    advice: 'Own one clear act of presence, then share the spotlight. In the near stretch, also write it down, then send the short clear version.',
   },
-  Jupiter: {
-    Sun: {
-      tone: 'Jupiter period with Sun subplot: the long arc centres growth, meaning, and generous stretch, while the near chapter modulates with identity heat and vitality.',
-      advice: 'Live the Jupiter chapter’s better habits (widen the frame with learning or generosity; avoid lecturing) while the Sun subplot asks you to lead and be seen — own one clear act of presence, then share the airtime.',
-    },
-    Moon: {
-      tone: 'Jupiter period with Moon subplot: the long arc centres growth, meaning, and generous stretch, while the near chapter modulates with moods, needs, and emotional weather.',
-      advice: 'Live the Jupiter chapter’s better habits (widen the frame with learning or generosity; avoid lecturing) while the Moon subplot asks you to tend and belong — check food, water, and a soft landing before big talks.',
-    },
-    Mars: {
-      tone: 'Jupiter period with Mars subplot: the long arc centres growth, meaning, and generous stretch, while the near chapter modulates with courage, drive, and directed heat.',
-      advice: 'Live the Jupiter chapter’s better habits (widen the frame with learning or generosity; avoid lecturing) while the Mars subplot asks you to assert and cut through — aim heat into one clean effort; skip audience fights.',
-    },
-    Mercury: {
-      tone: 'Jupiter period with Mercury subplot: the long arc centres growth, meaning, and generous stretch, while the near chapter modulates with thinking, talk, and skill traffic.',
-      advice: 'Live the Jupiter chapter’s better habits (widen the frame with learning or generosity; avoid lecturing) while the Mercury subplot asks you to name and negotiate — write it down, then send the short clear version.',
-    },
-    Jupiter: {
-      tone: 'A pure Jupiter chapter: growth, meaning, and generous stretch are both heading and subplot — themes concentrate around where grace and teachers show up.',
-      advice: 'In a double-Jupiter stretch, widen the frame with learning or generosity; avoid lecturing. Practice the kinder form: faith that stays curious.',
-    },
-    Venus: {
-      tone: 'Jupiter period with Venus subplot: the long arc centres growth, meaning, and generous stretch, while the near chapter modulates with bond, taste, pleasure, and harmony.',
-      advice: 'Live the Jupiter chapter’s better habits (widen the frame with learning or generosity; avoid lecturing) while the Venus subplot asks you to relate and delight — choose beauty and kindness on purpose.',
-    },
-    Saturn: {
-      tone: 'Jupiter period with Saturn subplot: the long arc centres growth, meaning, and generous stretch, while the near chapter modulates with duration, structure, and sober accountability.',
-      advice: 'Live the Jupiter chapter’s better habits (widen the frame with learning or generosity; avoid lecturing) while the Saturn subplot asks you to endure and build — one sober step beats a grand promise.',
-    },
-    Rahu: {
-      tone: 'Jupiter period with Rahu subplot: the long arc centres growth, meaning, and generous stretch, while the near chapter modulates with appetite for the unfamiliar and unconventional.',
-      advice: 'Live the Jupiter chapter’s better habits (widen the frame with learning or generosity; avoid lecturing) while the Rahu subplot asks you to reach past the known — curiosity yes — obsession needs a timer and a reality check.',
-    },
-    Ketu: {
-      tone: 'Jupiter period with Ketu subplot: the long arc centres growth, meaning, and generous stretch, while the near chapter modulates with release, distill, and sideways knowing.',
-      advice: 'Live the Jupiter chapter’s better habits (widen the frame with learning or generosity; avoid lecturing) while the Ketu subplot asks you to let go and refine — release one extra obligation and keep the distilled lesson.',
-    },
+  'Sun_Jupiter': {
+    tone: 'You’re in a Sun chapter with a Jupiter flavour right now. The long arc is about how you want to be seen and lead; the near weeks lean toward how you look for meaning, growth, and a wider frame.',
+    advice: 'Own one clear act of presence, then share the spotlight. In the near stretch, also learn something or help someone — skip the lecture.',
   },
-  Venus: {
-    Sun: {
-      tone: 'Venus period with Sun subplot: the long arc centres bond, taste, pleasure, and harmony, while the near chapter modulates with identity heat and vitality.',
-      advice: 'Live the Venus chapter’s better habits (choose beauty and kindness on purpose) while the Sun subplot asks you to lead and be seen — own one clear act of presence, then share the airtime.',
-    },
-    Moon: {
-      tone: 'Venus period with Moon subplot: the long arc centres bond, taste, pleasure, and harmony, while the near chapter modulates with moods, needs, and emotional weather.',
-      advice: 'Live the Venus chapter’s better habits (choose beauty and kindness on purpose) while the Moon subplot asks you to tend and belong — check food, water, and a soft landing before big talks.',
-    },
-    Mars: {
-      tone: 'Venus period with Mars subplot: the long arc centres bond, taste, pleasure, and harmony, while the near chapter modulates with courage, drive, and directed heat.',
-      advice: 'Live the Venus chapter’s better habits (choose beauty and kindness on purpose) while the Mars subplot asks you to assert and cut through — aim heat into one clean effort; skip audience fights.',
-    },
-    Mercury: {
-      tone: 'Venus period with Mercury subplot: the long arc centres bond, taste, pleasure, and harmony, while the near chapter modulates with thinking, talk, and skill traffic.',
-      advice: 'Live the Venus chapter’s better habits (choose beauty and kindness on purpose) while the Mercury subplot asks you to name and negotiate — write it down, then send the short clear version.',
-    },
-    Jupiter: {
-      tone: 'Venus period with Jupiter subplot: the long arc centres bond, taste, pleasure, and harmony, while the near chapter modulates with growth, meaning, and generous stretch.',
-      advice: 'Live the Venus chapter’s better habits (choose beauty and kindness on purpose) while the Jupiter subplot asks you to teach and widen — widen the frame with learning or generosity; avoid lecturing.',
-    },
-    Venus: {
-      tone: 'A pure Venus chapter: bond, taste, pleasure, and harmony are both heading and subplot — themes concentrate around how you bond and what you find beautiful.',
-      advice: 'In a double-Venus stretch, choose beauty and kindness on purpose. Practice the kinder form: harmony practiced, not assumed.',
-    },
-    Saturn: {
-      tone: 'Venus period with Saturn subplot: the long arc centres bond, taste, pleasure, and harmony, while the near chapter modulates with duration, structure, and sober accountability.',
-      advice: 'Live the Venus chapter’s better habits (choose beauty and kindness on purpose) while the Saturn subplot asks you to endure and build — one sober step beats a grand promise.',
-    },
-    Rahu: {
-      tone: 'Venus period with Rahu subplot: the long arc centres bond, taste, pleasure, and harmony, while the near chapter modulates with appetite for the unfamiliar and unconventional.',
-      advice: 'Live the Venus chapter’s better habits (choose beauty and kindness on purpose) while the Rahu subplot asks you to reach past the known — curiosity yes — obsession needs a timer and a reality check.',
-    },
-    Ketu: {
-      tone: 'Venus period with Ketu subplot: the long arc centres bond, taste, pleasure, and harmony, while the near chapter modulates with release, distill, and sideways knowing.',
-      advice: 'Live the Venus chapter’s better habits (choose beauty and kindness on purpose) while the Ketu subplot asks you to let go and refine — release one extra obligation and keep the distilled lesson.',
-    },
+  'Sun_Venus': {
+    tone: 'You’re in a Sun chapter with a Venus flavour right now. The long arc is about how you want to be seen and lead; the near weeks lean toward how you care about comfort, beauty, and how you bond.',
+    advice: 'Own one clear act of presence, then share the spotlight. In the near stretch, also choose kindness and one beautiful detail on purpose.',
   },
-  Saturn: {
-    Sun: {
-      tone: 'Saturn period with Sun subplot: the long arc centres duration, structure, and sober accountability, while the near chapter modulates with identity heat and vitality.',
-      advice: 'Live the Saturn chapter’s better habits (one sober step beats a grand promise) while the Sun subplot asks you to lead and be seen — own one clear act of presence, then share the airtime.',
-    },
-    Moon: {
-      tone: 'Saturn period with Moon subplot: the long arc centres duration, structure, and sober accountability, while the near chapter modulates with moods, needs, and emotional weather.',
-      advice: 'Live the Saturn chapter’s better habits (one sober step beats a grand promise) while the Moon subplot asks you to tend and belong — check food, water, and a soft landing before big talks.',
-    },
-    Mars: {
-      tone: 'Saturn period with Mars subplot: the long arc centres duration, structure, and sober accountability, while the near chapter modulates with courage, drive, and directed heat.',
-      advice: 'Live the Saturn chapter’s better habits (one sober step beats a grand promise) while the Mars subplot asks you to assert and cut through — aim heat into one clean effort; skip audience fights.',
-    },
-    Mercury: {
-      tone: 'Saturn period with Mercury subplot: the long arc centres duration, structure, and sober accountability, while the near chapter modulates with thinking, talk, and skill traffic.',
-      advice: 'Live the Saturn chapter’s better habits (one sober step beats a grand promise) while the Mercury subplot asks you to name and negotiate — write it down, then send the short clear version.',
-    },
-    Jupiter: {
-      tone: 'Saturn period with Jupiter subplot: the long arc centres duration, structure, and sober accountability, while the near chapter modulates with growth, meaning, and generous stretch.',
-      advice: 'Live the Saturn chapter’s better habits (one sober step beats a grand promise) while the Jupiter subplot asks you to teach and widen — widen the frame with learning or generosity; avoid lecturing.',
-    },
-    Venus: {
-      tone: 'Saturn period with Venus subplot: the long arc centres duration, structure, and sober accountability, while the near chapter modulates with bond, taste, pleasure, and harmony.',
-      advice: 'Live the Saturn chapter’s better habits (one sober step beats a grand promise) while the Venus subplot asks you to relate and delight — choose beauty and kindness on purpose.',
-    },
-    Saturn: {
-      tone: 'A pure Saturn chapter: duration, structure, and sober accountability are both heading and subplot — themes concentrate around where time is the teacher.',
-      advice: 'In a double-Saturn stretch, one sober step beats a grand promise. Practice the kinder form: discipline that leaves room to breathe.',
-    },
-    Rahu: {
-      tone: 'Saturn period with Rahu subplot: the long arc centres duration, structure, and sober accountability, while the near chapter modulates with appetite for the unfamiliar and unconventional.',
-      advice: 'Live the Saturn chapter’s better habits (one sober step beats a grand promise) while the Rahu subplot asks you to reach past the known — curiosity yes — obsession needs a timer and a reality check.',
-    },
-    Ketu: {
-      tone: 'Saturn period with Ketu subplot: the long arc centres duration, structure, and sober accountability, while the near chapter modulates with release, distill, and sideways knowing.',
-      advice: 'Live the Saturn chapter’s better habits (one sober step beats a grand promise) while the Ketu subplot asks you to let go and refine — release one extra obligation and keep the distilled lesson.',
-    },
+  'Sun_Saturn': {
+    tone: 'You’re in a Sun chapter with a Saturn flavour right now. The long arc is about how you want to be seen and lead; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    advice: 'Own one clear act of presence, then share the spotlight. In the near stretch, also take one sober step instead of a grand promise.',
   },
-  Rahu: {
-    Sun: {
-      tone: 'Rahu period with Sun subplot: the long arc centres appetite for the unfamiliar and unconventional, while the near chapter modulates with identity heat and vitality.',
-      advice: 'Live the Rahu chapter’s better habits (curiosity yes — obsession needs a timer and a reality check) while the Sun subplot asks you to lead and be seen — own one clear act of presence, then share the airtime.',
-    },
-    Moon: {
-      tone: 'Rahu period with Moon subplot: the long arc centres appetite for the unfamiliar and unconventional, while the near chapter modulates with moods, needs, and emotional weather.',
-      advice: 'Live the Rahu chapter’s better habits (curiosity yes — obsession needs a timer and a reality check) while the Moon subplot asks you to tend and belong — check food, water, and a soft landing before big talks.',
-    },
-    Mars: {
-      tone: 'Rahu period with Mars subplot: the long arc centres appetite for the unfamiliar and unconventional, while the near chapter modulates with courage, drive, and directed heat.',
-      advice: 'Live the Rahu chapter’s better habits (curiosity yes — obsession needs a timer and a reality check) while the Mars subplot asks you to assert and cut through — aim heat into one clean effort; skip audience fights.',
-    },
-    Mercury: {
-      tone: 'Rahu period with Mercury subplot: the long arc centres appetite for the unfamiliar and unconventional, while the near chapter modulates with thinking, talk, and skill traffic.',
-      advice: 'Live the Rahu chapter’s better habits (curiosity yes — obsession needs a timer and a reality check) while the Mercury subplot asks you to name and negotiate — write it down, then send the short clear version.',
-    },
-    Jupiter: {
-      tone: 'Rahu period with Jupiter subplot: the long arc centres appetite for the unfamiliar and unconventional, while the near chapter modulates with growth, meaning, and generous stretch.',
-      advice: 'Live the Rahu chapter’s better habits (curiosity yes — obsession needs a timer and a reality check) while the Jupiter subplot asks you to teach and widen — widen the frame with learning or generosity; avoid lecturing.',
-    },
-    Venus: {
-      tone: 'Rahu period with Venus subplot: the long arc centres appetite for the unfamiliar and unconventional, while the near chapter modulates with bond, taste, pleasure, and harmony.',
-      advice: 'Live the Rahu chapter’s better habits (curiosity yes — obsession needs a timer and a reality check) while the Venus subplot asks you to relate and delight — choose beauty and kindness on purpose.',
-    },
-    Saturn: {
-      tone: 'Rahu period with Saturn subplot: the long arc centres appetite for the unfamiliar and unconventional, while the near chapter modulates with duration, structure, and sober accountability.',
-      advice: 'Live the Rahu chapter’s better habits (curiosity yes — obsession needs a timer and a reality check) while the Saturn subplot asks you to endure and build — one sober step beats a grand promise.',
-    },
-    Rahu: {
-      tone: 'A pure Rahu chapter: appetite for the unfamiliar and unconventional are both heading and subplot — themes concentrate around where hunger for the new concentrates.',
-      advice: 'In a double-Rahu stretch, curiosity yes — obsession needs a timer and a reality check. Practice the kinder form: novel aim with feet still on ground.',
-    },
-    Ketu: {
-      tone: 'Rahu period with Ketu subplot: the long arc centres appetite for the unfamiliar and unconventional, while the near chapter modulates with release, distill, and sideways knowing.',
-      advice: 'Live the Rahu chapter’s better habits (curiosity yes — obsession needs a timer and a reality check) while the Ketu subplot asks you to let go and refine — release one extra obligation and keep the distilled lesson.',
-    },
+  'Sun_Rahu': {
+    tone: 'You’re in a Sun chapter with a Rahu flavour right now. The long arc is about how you want to be seen and lead; the near weeks lean toward how you hunger for the new and unfamiliar.',
+    advice: 'Own one clear act of presence, then share the spotlight. In the near stretch, also follow curiosity with a timer and a reality check.',
   },
-  Ketu: {
-    Sun: {
-      tone: 'Ketu period with Sun subplot: the long arc centres release, distill, and sideways knowing, while the near chapter modulates with identity heat and vitality.',
-      advice: 'Live the Ketu chapter’s better habits (release one extra obligation and keep the distilled lesson) while the Sun subplot asks you to lead and be seen — own one clear act of presence, then share the airtime.',
-    },
-    Moon: {
-      tone: 'Ketu period with Moon subplot: the long arc centres release, distill, and sideways knowing, while the near chapter modulates with moods, needs, and emotional weather.',
-      advice: 'Live the Ketu chapter’s better habits (release one extra obligation and keep the distilled lesson) while the Moon subplot asks you to tend and belong — check food, water, and a soft landing before big talks.',
-    },
-    Mars: {
-      tone: 'Ketu period with Mars subplot: the long arc centres release, distill, and sideways knowing, while the near chapter modulates with courage, drive, and directed heat.',
-      advice: 'Live the Ketu chapter’s better habits (release one extra obligation and keep the distilled lesson) while the Mars subplot asks you to assert and cut through — aim heat into one clean effort; skip audience fights.',
-    },
-    Mercury: {
-      tone: 'Ketu period with Mercury subplot: the long arc centres release, distill, and sideways knowing, while the near chapter modulates with thinking, talk, and skill traffic.',
-      advice: 'Live the Ketu chapter’s better habits (release one extra obligation and keep the distilled lesson) while the Mercury subplot asks you to name and negotiate — write it down, then send the short clear version.',
-    },
-    Jupiter: {
-      tone: 'Ketu period with Jupiter subplot: the long arc centres release, distill, and sideways knowing, while the near chapter modulates with growth, meaning, and generous stretch.',
-      advice: 'Live the Ketu chapter’s better habits (release one extra obligation and keep the distilled lesson) while the Jupiter subplot asks you to teach and widen — widen the frame with learning or generosity; avoid lecturing.',
-    },
-    Venus: {
-      tone: 'Ketu period with Venus subplot: the long arc centres release, distill, and sideways knowing, while the near chapter modulates with bond, taste, pleasure, and harmony.',
-      advice: 'Live the Ketu chapter’s better habits (release one extra obligation and keep the distilled lesson) while the Venus subplot asks you to relate and delight — choose beauty and kindness on purpose.',
-    },
-    Saturn: {
-      tone: 'Ketu period with Saturn subplot: the long arc centres release, distill, and sideways knowing, while the near chapter modulates with duration, structure, and sober accountability.',
-      advice: 'Live the Ketu chapter’s better habits (release one extra obligation and keep the distilled lesson) while the Saturn subplot asks you to endure and build — one sober step beats a grand promise.',
-    },
-    Rahu: {
-      tone: 'Ketu period with Rahu subplot: the long arc centres release, distill, and sideways knowing, while the near chapter modulates with appetite for the unfamiliar and unconventional.',
-      advice: 'Live the Ketu chapter’s better habits (release one extra obligation and keep the distilled lesson) while the Rahu subplot asks you to reach past the known — curiosity yes — obsession needs a timer and a reality check.',
-    },
-    Ketu: {
-      tone: 'A pure Ketu chapter: release, distill, and sideways knowing are both heading and subplot — themes concentrate around what you already know sideways and may over-release.',
-      advice: 'In a double-Ketu stretch, release one extra obligation and keep the distilled lesson. Practice the kinder form: insight without vanishing from the room.',
-    },
+  'Sun_Ketu': {
+    tone: 'You’re in a Sun chapter with a Ketu flavour right now. The long arc is about how you want to be seen and lead; the near weeks lean toward how you already know some things sideways and like to simplify.',
+    advice: 'Own one clear act of presence, then share the spotlight. In the near stretch, also drop one extra obligation and keep the lesson.',
+  },
+  'Moon_Sun': {
+    tone: 'You’re in a Moon chapter with a Sun flavour right now. The long arc is about how your moods and needs set the weather; the near weeks lean toward how you want to be seen and lead.',
+    advice: 'Eat, drink water, and find a soft landing before hard talks. In the near stretch, also own one clear act of presence, then share the spotlight.',
+  },
+  'Moon_Moon': {
+    tone: 'You’re in a strong Moon chapter — your moods and needs set the weather. Themes concentrate; keep perspective.',
+    advice: 'Eat, drink water, and find a soft landing before hard talks. Prefer ask for care instead of toughing it out alone.',
+  },
+  'Moon_Mars': {
+    tone: 'You’re in a Moon chapter with a Mars flavour right now. The long arc is about how your moods and needs set the weather; the near weeks lean toward how you push hard for what you want.',
+    advice: 'Eat, drink water, and find a soft landing before hard talks. In the near stretch, also put the heat into one clean effort, not a public fight.',
+  },
+  'Moon_Mercury': {
+    tone: 'You’re in a Moon chapter with a Mercury flavour right now. The long arc is about how your moods and needs set the weather; the near weeks lean toward how your mind wants to talk, learn, and sort details.',
+    advice: 'Eat, drink water, and find a soft landing before hard talks. In the near stretch, also write it down, then send the short clear version.',
+  },
+  'Moon_Jupiter': {
+    tone: 'You’re in a Moon chapter with a Jupiter flavour right now. The long arc is about how your moods and needs set the weather; the near weeks lean toward how you look for meaning, growth, and a wider frame.',
+    advice: 'Eat, drink water, and find a soft landing before hard talks. In the near stretch, also learn something or help someone — skip the lecture.',
+  },
+  'Moon_Venus': {
+    tone: 'You’re in a Moon chapter with a Venus flavour right now. The long arc is about how your moods and needs set the weather; the near weeks lean toward how you care about comfort, beauty, and how you bond.',
+    advice: 'Eat, drink water, and find a soft landing before hard talks. In the near stretch, also choose kindness and one beautiful detail on purpose.',
+  },
+  'Moon_Saturn': {
+    tone: 'You’re in a Moon chapter with a Saturn flavour right now. The long arc is about how your moods and needs set the weather; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    advice: 'Eat, drink water, and find a soft landing before hard talks. In the near stretch, also take one sober step instead of a grand promise.',
+  },
+  'Moon_Rahu': {
+    tone: 'You’re in a Moon chapter with a Rahu flavour right now. The long arc is about how your moods and needs set the weather; the near weeks lean toward how you hunger for the new and unfamiliar.',
+    advice: 'Eat, drink water, and find a soft landing before hard talks. In the near stretch, also follow curiosity with a timer and a reality check.',
+  },
+  'Moon_Ketu': {
+    tone: 'You’re in a Moon chapter with a Ketu flavour right now. The long arc is about how your moods and needs set the weather; the near weeks lean toward how you already know some things sideways and like to simplify.',
+    advice: 'Eat, drink water, and find a soft landing before hard talks. In the near stretch, also drop one extra obligation and keep the lesson.',
+  },
+  'Mars_Sun': {
+    tone: 'You’re in a Mars chapter with a Sun flavour right now. The long arc is about how you push hard for what you want; the near weeks lean toward how you want to be seen and lead.',
+    advice: 'Put the heat into one clean effort, not a public fight. In the near stretch, also own one clear act of presence, then share the spotlight.',
+  },
+  'Mars_Moon': {
+    tone: 'You’re in a Mars chapter with a Moon flavour right now. The long arc is about how you push hard for what you want; the near weeks lean toward how your moods and needs set the weather.',
+    advice: 'Put the heat into one clean effort, not a public fight. In the near stretch, also eat, drink water, and find a soft landing before hard talks.',
+  },
+  'Mars_Mars': {
+    tone: 'You’re in a strong Mars chapter — you push hard for what you want. Themes concentrate; keep perspective.',
+    advice: 'Put the heat into one clean effort, not a public fight. Prefer be brave without turning it into theatre.',
+  },
+  'Mars_Mercury': {
+    tone: 'You’re in a Mars chapter with a Mercury flavour right now. The long arc is about how you push hard for what you want; the near weeks lean toward how your mind wants to talk, learn, and sort details.',
+    advice: 'Put the heat into one clean effort, not a public fight. In the near stretch, also write it down, then send the short clear version.',
+  },
+  'Mars_Jupiter': {
+    tone: 'You’re in a Mars chapter with a Jupiter flavour right now. The long arc is about how you push hard for what you want; the near weeks lean toward how you look for meaning, growth, and a wider frame.',
+    advice: 'Put the heat into one clean effort, not a public fight. In the near stretch, also learn something or help someone — skip the lecture.',
+  },
+  'Mars_Venus': {
+    tone: 'You’re in a Mars chapter with a Venus flavour right now. The long arc is about how you push hard for what you want; the near weeks lean toward how you care about comfort, beauty, and how you bond.',
+    advice: 'Put the heat into one clean effort, not a public fight. In the near stretch, also choose kindness and one beautiful detail on purpose.',
+  },
+  'Mars_Saturn': {
+    tone: 'You’re in a Mars chapter with a Saturn flavour right now. The long arc is about how you push hard for what you want; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    advice: 'Put the heat into one clean effort, not a public fight. In the near stretch, also take one sober step instead of a grand promise.',
+  },
+  'Mars_Rahu': {
+    tone: 'You’re in a Mars chapter with a Rahu flavour right now. The long arc is about how you push hard for what you want; the near weeks lean toward how you hunger for the new and unfamiliar.',
+    advice: 'Put the heat into one clean effort, not a public fight. In the near stretch, also follow curiosity with a timer and a reality check.',
+  },
+  'Mars_Ketu': {
+    tone: 'You’re in a Mars chapter with a Ketu flavour right now. The long arc is about how you push hard for what you want; the near weeks lean toward how you already know some things sideways and like to simplify.',
+    advice: 'Put the heat into one clean effort, not a public fight. In the near stretch, also drop one extra obligation and keep the lesson.',
+  },
+  'Mercury_Sun': {
+    tone: 'You’re in a Mercury chapter with a Sun flavour right now. The long arc is about how your mind wants to talk, learn, and sort details; the near weeks lean toward how you want to be seen and lead.',
+    advice: 'Write it down, then send the short clear version. In the near stretch, also own one clear act of presence, then share the spotlight.',
+  },
+  'Mercury_Moon': {
+    tone: 'You’re in a Mercury chapter with a Moon flavour right now. The long arc is about how your mind wants to talk, learn, and sort details; the near weeks lean toward how your moods and needs set the weather.',
+    advice: 'Write it down, then send the short clear version. In the near stretch, also eat, drink water, and find a soft landing before hard talks.',
+  },
+  'Mercury_Mars': {
+    tone: 'You’re in a Mercury chapter with a Mars flavour right now. The long arc is about how your mind wants to talk, learn, and sort details; the near weeks lean toward how you push hard for what you want.',
+    advice: 'Write it down, then send the short clear version. In the near stretch, also put the heat into one clean effort, not a public fight.',
+  },
+  'Mercury_Mercury': {
+    tone: 'You’re in a strong Mercury chapter — your mind wants to talk, learn, and sort details. Themes concentrate; keep perspective.',
+    advice: 'Write it down, then send the short clear version. Prefer use wit to understand, not to win.',
+  },
+  'Mercury_Jupiter': {
+    tone: 'You’re in a Mercury chapter with a Jupiter flavour right now. The long arc is about how your mind wants to talk, learn, and sort details; the near weeks lean toward how you look for meaning, growth, and a wider frame.',
+    advice: 'Write it down, then send the short clear version. In the near stretch, also learn something or help someone — skip the lecture.',
+  },
+  'Mercury_Venus': {
+    tone: 'You’re in a Mercury chapter with a Venus flavour right now. The long arc is about how your mind wants to talk, learn, and sort details; the near weeks lean toward how you care about comfort, beauty, and how you bond.',
+    advice: 'Write it down, then send the short clear version. In the near stretch, also choose kindness and one beautiful detail on purpose.',
+  },
+  'Mercury_Saturn': {
+    tone: 'You’re in a Mercury chapter with a Saturn flavour right now. The long arc is about how your mind wants to talk, learn, and sort details; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    advice: 'Write it down, then send the short clear version. In the near stretch, also take one sober step instead of a grand promise.',
+  },
+  'Mercury_Rahu': {
+    tone: 'You’re in a Mercury chapter with a Rahu flavour right now. The long arc is about how your mind wants to talk, learn, and sort details; the near weeks lean toward how you hunger for the new and unfamiliar.',
+    advice: 'Write it down, then send the short clear version. In the near stretch, also follow curiosity with a timer and a reality check.',
+  },
+  'Mercury_Ketu': {
+    tone: 'You’re in a Mercury chapter with a Ketu flavour right now. The long arc is about how your mind wants to talk, learn, and sort details; the near weeks lean toward how you already know some things sideways and like to simplify.',
+    advice: 'Write it down, then send the short clear version. In the near stretch, also drop one extra obligation and keep the lesson.',
+  },
+  'Jupiter_Sun': {
+    tone: 'You’re in a Jupiter chapter with a Sun flavour right now. The long arc is about how you look for meaning, growth, and a wider frame; the near weeks lean toward how you want to be seen and lead.',
+    advice: 'Learn something or help someone — skip the lecture. In the near stretch, also own one clear act of presence, then share the spotlight.',
+  },
+  'Jupiter_Moon': {
+    tone: 'You’re in a Jupiter chapter with a Moon flavour right now. The long arc is about how you look for meaning, growth, and a wider frame; the near weeks lean toward how your moods and needs set the weather.',
+    advice: 'Learn something or help someone — skip the lecture. In the near stretch, also eat, drink water, and find a soft landing before hard talks.',
+  },
+  'Jupiter_Mars': {
+    tone: 'You’re in a Jupiter chapter with a Mars flavour right now. The long arc is about how you look for meaning, growth, and a wider frame; the near weeks lean toward how you push hard for what you want.',
+    advice: 'Learn something or help someone — skip the lecture. In the near stretch, also put the heat into one clean effort, not a public fight.',
+  },
+  'Jupiter_Mercury': {
+    tone: 'You’re in a Jupiter chapter with a Mercury flavour right now. The long arc is about how you look for meaning, growth, and a wider frame; the near weeks lean toward how your mind wants to talk, learn, and sort details.',
+    advice: 'Learn something or help someone — skip the lecture. In the near stretch, also write it down, then send the short clear version.',
+  },
+  'Jupiter_Jupiter': {
+    tone: 'You’re in a strong Jupiter chapter — you look for meaning, growth, and a wider frame. Themes concentrate; keep perspective.',
+    advice: 'Learn something or help someone — skip the lecture. Prefer keep faith curious, not preachy.',
+  },
+  'Jupiter_Venus': {
+    tone: 'You’re in a Jupiter chapter with a Venus flavour right now. The long arc is about how you look for meaning, growth, and a wider frame; the near weeks lean toward how you care about comfort, beauty, and how you bond.',
+    advice: 'Learn something or help someone — skip the lecture. In the near stretch, also choose kindness and one beautiful detail on purpose.',
+  },
+  'Jupiter_Saturn': {
+    tone: 'You’re in a Jupiter chapter with a Saturn flavour right now. The long arc is about how you look for meaning, growth, and a wider frame; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    advice: 'Learn something or help someone — skip the lecture. In the near stretch, also take one sober step instead of a grand promise.',
+  },
+  'Jupiter_Rahu': {
+    tone: 'You’re in a Jupiter chapter with a Rahu flavour right now. The long arc is about how you look for meaning, growth, and a wider frame; the near weeks lean toward how you hunger for the new and unfamiliar.',
+    advice: 'Learn something or help someone — skip the lecture. In the near stretch, also follow curiosity with a timer and a reality check.',
+  },
+  'Jupiter_Ketu': {
+    tone: 'You’re in a Jupiter chapter with a Ketu flavour right now. The long arc is about how you look for meaning, growth, and a wider frame; the near weeks lean toward how you already know some things sideways and like to simplify.',
+    advice: 'Learn something or help someone — skip the lecture. In the near stretch, also drop one extra obligation and keep the lesson.',
+  },
+  'Venus_Sun': {
+    tone: 'You’re in a Venus chapter with a Sun flavour right now. The long arc is about how you care about comfort, beauty, and how you bond; the near weeks lean toward how you want to be seen and lead.',
+    advice: 'Choose kindness and one beautiful detail on purpose. In the near stretch, also own one clear act of presence, then share the spotlight.',
+  },
+  'Venus_Moon': {
+    tone: 'You’re in a Venus chapter with a Moon flavour right now. The long arc is about how you care about comfort, beauty, and how you bond; the near weeks lean toward how your moods and needs set the weather.',
+    advice: 'Choose kindness and one beautiful detail on purpose. In the near stretch, also eat, drink water, and find a soft landing before hard talks.',
+  },
+  'Venus_Mars': {
+    tone: 'You’re in a Venus chapter with a Mars flavour right now. The long arc is about how you care about comfort, beauty, and how you bond; the near weeks lean toward how you push hard for what you want.',
+    advice: 'Choose kindness and one beautiful detail on purpose. In the near stretch, also put the heat into one clean effort, not a public fight.',
+  },
+  'Venus_Mercury': {
+    tone: 'You’re in a Venus chapter with a Mercury flavour right now. The long arc is about how you care about comfort, beauty, and how you bond; the near weeks lean toward how your mind wants to talk, learn, and sort details.',
+    advice: 'Choose kindness and one beautiful detail on purpose. In the near stretch, also write it down, then send the short clear version.',
+  },
+  'Venus_Jupiter': {
+    tone: 'You’re in a Venus chapter with a Jupiter flavour right now. The long arc is about how you care about comfort, beauty, and how you bond; the near weeks lean toward how you look for meaning, growth, and a wider frame.',
+    advice: 'Choose kindness and one beautiful detail on purpose. In the near stretch, also learn something or help someone — skip the lecture.',
+  },
+  'Venus_Venus': {
+    tone: 'You’re in a strong Venus chapter — you care about comfort, beauty, and how you bond. Themes concentrate; keep perspective.',
+    advice: 'Choose kindness and one beautiful detail on purpose. Prefer practise harmony — don’t just assume it.',
+  },
+  'Venus_Saturn': {
+    tone: 'You’re in a Venus chapter with a Saturn flavour right now. The long arc is about how you care about comfort, beauty, and how you bond; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    advice: 'Choose kindness and one beautiful detail on purpose. In the near stretch, also take one sober step instead of a grand promise.',
+  },
+  'Venus_Rahu': {
+    tone: 'You’re in a Venus chapter with a Rahu flavour right now. The long arc is about how you care about comfort, beauty, and how you bond; the near weeks lean toward how you hunger for the new and unfamiliar.',
+    advice: 'Choose kindness and one beautiful detail on purpose. In the near stretch, also follow curiosity with a timer and a reality check.',
+  },
+  'Venus_Ketu': {
+    tone: 'You’re in a Venus chapter with a Ketu flavour right now. The long arc is about how you care about comfort, beauty, and how you bond; the near weeks lean toward how you already know some things sideways and like to simplify.',
+    advice: 'Choose kindness and one beautiful detail on purpose. In the near stretch, also drop one extra obligation and keep the lesson.',
+  },
+  'Saturn_Sun': {
+    tone: 'You’re in a Saturn chapter with a Sun flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how you want to be seen and lead.',
+    advice: 'Take one sober step instead of a grand promise. In the near stretch, also own one clear act of presence, then share the spotlight.',
+  },
+  'Saturn_Moon': {
+    tone: 'You’re in a Saturn chapter with a Moon flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how your moods and needs set the weather.',
+    advice: 'Take one sober step instead of a grand promise. In the near stretch, also eat, drink water, and find a soft landing before hard talks.',
+  },
+  'Saturn_Mars': {
+    tone: 'You’re in a Saturn chapter with a Mars flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how you push hard for what you want.',
+    advice: 'Take one sober step instead of a grand promise. In the near stretch, also put the heat into one clean effort, not a public fight.',
+  },
+  'Saturn_Mercury': {
+    tone: 'You’re in a Saturn chapter with a Mercury flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how your mind wants to talk, learn, and sort details.',
+    advice: 'Take one sober step instead of a grand promise. In the near stretch, also write it down, then send the short clear version.',
+  },
+  'Saturn_Jupiter': {
+    tone: 'You’re in a Saturn chapter with a Jupiter flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how you look for meaning, growth, and a wider frame.',
+    advice: 'Take one sober step instead of a grand promise. In the near stretch, also learn something or help someone — skip the lecture.',
+  },
+  'Saturn_Venus': {
+    tone: 'You’re in a Saturn chapter with a Venus flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how you care about comfort, beauty, and how you bond.',
+    advice: 'Take one sober step instead of a grand promise. In the near stretch, also choose kindness and one beautiful detail on purpose.',
+  },
+  'Saturn_Saturn': {
+    tone: 'You’re in a strong Saturn chapter — you take the long road and notice what’s unfinished. Themes concentrate; keep perspective.',
+    advice: 'Take one sober step instead of a grand promise. Prefer stay disciplined but leave room to breathe.',
+  },
+  'Saturn_Rahu': {
+    tone: 'You’re in a Saturn chapter with a Rahu flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how you hunger for the new and unfamiliar.',
+    advice: 'Take one sober step instead of a grand promise. In the near stretch, also follow curiosity with a timer and a reality check.',
+  },
+  'Saturn_Ketu': {
+    tone: 'You’re in a Saturn chapter with a Ketu flavour right now. The long arc is about how you take the long road and notice what’s unfinished; the near weeks lean toward how you already know some things sideways and like to simplify.',
+    advice: 'Take one sober step instead of a grand promise. In the near stretch, also drop one extra obligation and keep the lesson.',
+  },
+  'Rahu_Sun': {
+    tone: 'You’re in a Rahu chapter with a Sun flavour right now. The long arc is about how you hunger for the new and unfamiliar; the near weeks lean toward how you want to be seen and lead.',
+    advice: 'Follow curiosity with a timer and a reality check. In the near stretch, also own one clear act of presence, then share the spotlight.',
+  },
+  'Rahu_Moon': {
+    tone: 'You’re in a Rahu chapter with a Moon flavour right now. The long arc is about how you hunger for the new and unfamiliar; the near weeks lean toward how your moods and needs set the weather.',
+    advice: 'Follow curiosity with a timer and a reality check. In the near stretch, also eat, drink water, and find a soft landing before hard talks.',
+  },
+  'Rahu_Mars': {
+    tone: 'You’re in a Rahu chapter with a Mars flavour right now. The long arc is about how you hunger for the new and unfamiliar; the near weeks lean toward how you push hard for what you want.',
+    advice: 'Follow curiosity with a timer and a reality check. In the near stretch, also put the heat into one clean effort, not a public fight.',
+  },
+  'Rahu_Mercury': {
+    tone: 'You’re in a Rahu chapter with a Mercury flavour right now. The long arc is about how you hunger for the new and unfamiliar; the near weeks lean toward how your mind wants to talk, learn, and sort details.',
+    advice: 'Follow curiosity with a timer and a reality check. In the near stretch, also write it down, then send the short clear version.',
+  },
+  'Rahu_Jupiter': {
+    tone: 'You’re in a Rahu chapter with a Jupiter flavour right now. The long arc is about how you hunger for the new and unfamiliar; the near weeks lean toward how you look for meaning, growth, and a wider frame.',
+    advice: 'Follow curiosity with a timer and a reality check. In the near stretch, also learn something or help someone — skip the lecture.',
+  },
+  'Rahu_Venus': {
+    tone: 'You’re in a Rahu chapter with a Venus flavour right now. The long arc is about how you hunger for the new and unfamiliar; the near weeks lean toward how you care about comfort, beauty, and how you bond.',
+    advice: 'Follow curiosity with a timer and a reality check. In the near stretch, also choose kindness and one beautiful detail on purpose.',
+  },
+  'Rahu_Saturn': {
+    tone: 'You’re in a Rahu chapter with a Saturn flavour right now. The long arc is about how you hunger for the new and unfamiliar; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    advice: 'Follow curiosity with a timer and a reality check. In the near stretch, also take one sober step instead of a grand promise.',
+  },
+  'Rahu_Rahu': {
+    tone: 'You’re in a strong Rahu chapter — you hunger for the new and unfamiliar. Themes concentrate; keep perspective.',
+    advice: 'Follow curiosity with a timer and a reality check. Prefer aim for novelty with both feet on the ground.',
+  },
+  'Rahu_Ketu': {
+    tone: 'You’re in a Rahu chapter with a Ketu flavour right now. The long arc is about how you hunger for the new and unfamiliar; the near weeks lean toward how you already know some things sideways and like to simplify.',
+    advice: 'Follow curiosity with a timer and a reality check. In the near stretch, also drop one extra obligation and keep the lesson.',
+  },
+  'Ketu_Sun': {
+    tone: 'You’re in a Ketu chapter with a Sun flavour right now. The long arc is about how you already know some things sideways and like to simplify; the near weeks lean toward how you want to be seen and lead.',
+    advice: 'Drop one extra obligation and keep the lesson. In the near stretch, also own one clear act of presence, then share the spotlight.',
+  },
+  'Ketu_Moon': {
+    tone: 'You’re in a Ketu chapter with a Moon flavour right now. The long arc is about how you already know some things sideways and like to simplify; the near weeks lean toward how your moods and needs set the weather.',
+    advice: 'Drop one extra obligation and keep the lesson. In the near stretch, also eat, drink water, and find a soft landing before hard talks.',
+  },
+  'Ketu_Mars': {
+    tone: 'You’re in a Ketu chapter with a Mars flavour right now. The long arc is about how you already know some things sideways and like to simplify; the near weeks lean toward how you push hard for what you want.',
+    advice: 'Drop one extra obligation and keep the lesson. In the near stretch, also put the heat into one clean effort, not a public fight.',
+  },
+  'Ketu_Mercury': {
+    tone: 'You’re in a Ketu chapter with a Mercury flavour right now. The long arc is about how you already know some things sideways and like to simplify; the near weeks lean toward how your mind wants to talk, learn, and sort details.',
+    advice: 'Drop one extra obligation and keep the lesson. In the near stretch, also write it down, then send the short clear version.',
+  },
+  'Ketu_Jupiter': {
+    tone: 'You’re in a Ketu chapter with a Jupiter flavour right now. The long arc is about how you already know some things sideways and like to simplify; the near weeks lean toward how you look for meaning, growth, and a wider frame.',
+    advice: 'Drop one extra obligation and keep the lesson. In the near stretch, also learn something or help someone — skip the lecture.',
+  },
+  'Ketu_Venus': {
+    tone: 'You’re in a Ketu chapter with a Venus flavour right now. The long arc is about how you already know some things sideways and like to simplify; the near weeks lean toward how you care about comfort, beauty, and how you bond.',
+    advice: 'Drop one extra obligation and keep the lesson. In the near stretch, also choose kindness and one beautiful detail on purpose.',
+  },
+  'Ketu_Saturn': {
+    tone: 'You’re in a Ketu chapter with a Saturn flavour right now. The long arc is about how you already know some things sideways and like to simplify; the near weeks lean toward how you take the long road and notice what’s unfinished.',
+    advice: 'Drop one extra obligation and keep the lesson. In the near stretch, also take one sober step instead of a grand promise.',
+  },
+  'Ketu_Rahu': {
+    tone: 'You’re in a Ketu chapter with a Rahu flavour right now. The long arc is about how you already know some things sideways and like to simplify; the near weeks lean toward how you hunger for the new and unfamiliar.',
+    advice: 'Drop one extra obligation and keep the lesson. In the near stretch, also follow curiosity with a timer and a reality check.',
+  },
+  'Ketu_Ketu': {
+    tone: 'You’re in a strong Ketu chapter — you already know some things sideways and like to simplify. Themes concentrate; keep perspective.',
+    advice: 'Drop one extra obligation and keep the lesson. Prefer share the insight without disappearing from the room.',
   },
 };
 
 export function dashaPairRule(maha: string, antar: string): DashaPairRule | null {
-  const m = maha as GrahaId;
-  const a = antar as GrahaId;
-  return DASHA_PAIR[m]?.[a] ?? null;
+  return DASHA_PAIR[`${maha}_${antar}`] ?? null;
 }

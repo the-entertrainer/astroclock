@@ -10,56 +10,54 @@ export interface AspectRule {
 export const ASPECT_RULES: Record<AspectLabel, AspectRule> = {
   conjunct: {
     softHard: 'mixed',
-    lifeMeaning: 'voices mix closely — themes blend and amplify',
-    advice: 'name whose voice is whose before you act on the blend',
-    natalTransitNote: 'when transit meets natal by conjunction, that natal theme gets a loud temporary spotlight',
+    lifeMeaning: 'Two voices are mixing closely — themes blend and get louder.',
+    advice: 'Name whose need is whose before you act on the mix.',
+    natalTransitNote: 'A personal theme is getting a temporary spotlight — tend it, don’t panic.',
   },
   sextile: {
     softHard: 'soft',
-    lifeMeaning: 'easier cooperation and opportunity with a little effort',
-    advice: 'reach out; soft links want a small ask or polish',
-    natalTransitNote: 'sextile to natal lights a workable growth edge — lean in lightly',
+    lifeMeaning: 'There’s easier cooperation available if you make a small move.',
+    advice: 'Reach out or polish something already warm.',
+    natalTransitNote: 'A growth edge is lightly lit — lean in without forcing.',
   },
   square: {
     softHard: 'hard',
-    lifeMeaning: 'productive friction that wants precision under pressure',
-    advice: 'pause before reacting; choose a precise response over drama',
-    natalTransitNote: 'square to natal presses a growth edge — technique over theatre',
+    lifeMeaning: 'There’s useful friction that wants precision under pressure.',
+    advice: 'Pause before reacting; choose a precise response over drama.',
+    natalTransitNote: 'A growth edge is pressed — technique over theatre.',
   },
   trine: {
     softHard: 'soft',
-    lifeMeaning: 'natural flow and support that can be underused if you coast',
-    advice: 'ship what is ready; collaborate while the glide lasts',
-    natalTransitNote: 'trine to natal opens an easier channel — use it, do not sleep on it',
+    lifeMeaning: 'Support is flowing more easily — you might underuse it if you coast.',
+    advice: 'Ship what’s ready and collaborate while the glide lasts.',
+    natalTransitNote: 'An easier channel is open — use it.',
   },
   oppose: {
     softHard: 'hard',
-    lifeMeaning: 'polar dialogue — mirroring, negotiation, and both/and tension',
-    advice: 'hear the other pole before deciding; both sides hold data',
-    natalTransitNote: 'opposition to natal sets up a temporary mirror — relate, do not declare war',
+    lifeMeaning: 'It can feel like a polar debate — both sides hold data.',
+    advice: 'Hear the other side before you dig in.',
+    natalTransitNote: 'A personal theme is mirrored back — relate, don’t declare war.',
   },
 };
 
-/** Graha-specific colour on aspect advice */
 export const ASPECT_GRAHA_FLAVOUR: Record<string, string> = {
-  Sun: 'When Sun is in the link, identity heat and vitality colour the exchange — favour authentic shine that lifts others.',
-  Moon: 'When Moon is in the link, moods, needs, and emotional weather colour the exchange — favour care that includes asking for harbour.',
-  Mars: 'When Mars is in the link, courage, drive, and directed heat colour the exchange — favour protective courage without theatre.',
-  Mercury: 'When Mercury is in the link, thinking, talk, and skill traffic colour the exchange — favour wit in service of understanding.',
-  Jupiter: 'When Jupiter is in the link, growth, meaning, and generous stretch colour the exchange — favour faith that stays curious.',
-  Venus: 'When Venus is in the link, bond, taste, pleasure, and harmony colour the exchange — favour harmony practiced, not assumed.',
-  Saturn: 'When Saturn is in the link, duration, structure, and sober accountability colour the exchange — favour discipline that leaves room to breathe.',
-  Rahu: 'When Rahu is in the link, appetite for the unfamiliar and unconventional colour the exchange — favour novel aim with feet still on ground.',
-  Ketu: 'When Ketu is in the link, release, distill, and sideways knowing colour the exchange — favour insight without vanishing from the room.',
+  Sun: 'Identity and vitality colour the exchange — show up warmly and leave room for others.',
+  Moon: 'Moods and needs colour the exchange — check care and harbour first.',
+  Mars: 'Drive and heat colour the exchange — be brave without theatre.',
+  Mercury: 'Talk and thinking colour the exchange — aim wit at understanding.',
+  Jupiter: 'Meaning and growth colour the exchange — stay curious, not preachy.',
+  Venus: 'Bond and harmony colour the exchange — practise kindness on purpose.',
+  Saturn: 'Time and accountability colour the exchange — one sober step beats a speech.',
+  Rahu: 'Appetite for the new colours the exchange — curiosity with a reality check.',
+  Ketu: 'Simplifying and sideways knowing colour the exchange — share insight without vanishing.',
 };
 
 export const ASPECT_BAND = {
-  soft: { lifeMeaning: 'Soft links favour cooperation, polish, and asking for help.', advice: 'Prefer alliance and finish what is already warm.' },
-  hard: { lifeMeaning: 'Hard links favour precision under pressure over drama.', advice: 'Tighten scope; pause before sharp turns in conversation.' },
-  mixed: { lifeMeaning: 'Mixed links ask you to alternate push and glide.', advice: 'Name friction honestly, then use any soft window to repair.' },
+  soft: { lifeMeaning: 'The sky favours cooperation and polish today.', advice: 'Prefer alliance and finish what’s already warm.' },
+  hard: { lifeMeaning: 'The sky favours precision under pressure over drama.', advice: 'Tighten scope; pause before sharp turns in conversation.' },
+  mixed: { lifeMeaning: 'The sky mixes push and glide — alternate honestly.', advice: 'Name friction, then use any soft window to repair.' },
 } as const;
 
 export function aspectRule(label: string): AspectRule | null {
-  const key = label as AspectLabel;
-  return ASPECT_RULES[key] ?? null;
+  return ASPECT_RULES[label as AspectLabel] ?? null;
 }

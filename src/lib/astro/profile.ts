@@ -31,7 +31,15 @@ import {
   grahaBhavaRule,
   dashaPairRule,
   lagnaMoonBlend,
+  detectYogas,
+  atmakarakaLite,
+  atmakarakaWording,
+  lagneshaInHouseText,
+  moonLordInHouseText,
+  lordOfRashi,
+  type Frag,
 } from './rules';
+import { lonMapFromPlanets } from './planets';
 
 const RASHI_LORDS: GrahaId[] = [
   'Mars',
@@ -229,6 +237,9 @@ function buildSummary(args: {
   lagLord: GrahaId;
   lagLordP: ProfilePlacement;
   dasha: { maha: string; antar: string };
+  dashaLordHouse?: number;
+  dashaLordRashi?: string;
+  extra?: Frag[];
 }): string {
   const frags = collectProfileFrags({
     lagna: args.lagRashi,
@@ -244,9 +255,11 @@ function buildSummary(args: {
     lagLordRetro: args.lagLordP.retrograde,
     dashaMaha: args.dasha.maha,
     dashaAntar: args.dasha.antar,
+    dashaLordHouse: args.dashaLordHouse,
+    dashaLordRashi: args.dashaLordRashi,
+    extra: args.extra,
   });
-  // Prefer opener + moon nak/pada + sun + house + lag lord (4–10 frags)
-  const stitched = stitchParagraphs(frags, { perPara: 2, maxFrags: 8 });
+  const stitched = stitchParagraphs(frags, { perPara: 3, maxFrags: 9, maxChars: 1200 });
   if (stitched) return stitched;
 
   // Fallback (should rarely hit)
@@ -380,6 +393,27 @@ export function computeNatalProfile(
     /* ignore */
   }
 
+  const lonMap = lonMapFromPlanets(planets);
+  const yogaHits = detectYogas(lonMap);
+  const ak = atmakarakaLite(grahas.map((g) => ({ id: g.id, degree: g.degree })));
+  const extraFrags: Frag[] = [];
+  for (const y of yogaHits) {
+    extraFrags.push({ text: y.body, specificity: 82, cite: y.id });
+  }
+  if (ak) {
+    const aw = atmakarakaWording(ak.id, ak.degree);
+    extraFrags.push({ text: aw.body, specificity: 81, cite: `AK ${ak.id}` });
+  }
+  const lagChain = lagneshaInHouseText(lagLord, lagLordP.house);
+  extraFrags.push({ text: lagChain.body, specificity: 79, cite: 'rising ruler' });
+  const mLord = lordOfRashi(moon.rashi);
+  const mLordP = byId[mLord];
+  if (mLordP) {
+    const ml = moonLordInHouseText(moon.rashi, mLordP.house, mLord);
+    extraFrags.push({ text: ml.body, specificity: 78, cite: 'moon lord' });
+  }
+  const dashaLordP = byId[dasha.maha as GrahaId];
+
   const summary = buildSummary({
     lagRashi,
     moon,
@@ -387,6 +421,9 @@ export function computeNatalProfile(
     lagLord,
     lagLordP,
     dasha,
+    dashaLordHouse: dashaLordP?.house,
+    dashaLordRashi: dashaLordP?.rashi,
+    extra: extraFrags,
   });
 
   const advice = buildProfileAdvice({
@@ -425,17 +462,17 @@ export function computeNatalProfile(
   const padaNote =
     moonNakRule?.padaNote ||
     (moon.pada === 1
-      ? 'This quarter of the star leans initiatory — first-foot energy.'
+      ? 'You’re in a beginning mood under this Moon — start before you polish.'
       : moon.pada === 2
-        ? 'This quarter of the star seeks stability and something keepable.'
+        ? 'You’re in a steadying mood — consolidate what already works.'
         : moon.pada === 3
-          ? 'This quarter of the star sharpens effort and skillful hustle.'
-          : 'This quarter of the star ripens toward completion and counsel.');
+          ? 'You’re in a craft mood — refine under a little pressure.'
+          : 'You’re in a finishing mood — close loops and advise rather than restart.');
 
   sections.push({
     id: 'mind',
     title: 'Mind & emotions',
-    body: `${moonSignRule?.temperament || MOON_SIGN[moon.rashi] || ''} ${moonHouseRule?.lifeArea || `In the house of ${HOUSE_LIFE[moon.house] || 'daily life'}, feelings show up first.`} ${moonNakRule?.temperament || `Star-texture ${moon.nakshatra}: ${NAK_MIND[moon.nakshatra] || 'a distinctive lunar habit.'}`} ${padaNote} Emotionally, themes linked to ${moonNakLord} often colour the stories your heart rehearses.`,
+    body: `${moonSignRule?.temperament || MOON_SIGN[moon.rashi] || ''} ${moonHouseRule?.lifeArea || `In the house of ${HOUSE_LIFE[moon.house] || 'daily life'}, feelings show up first.`} ${moonNakRule?.temperament || `${NAK_MIND[moon.nakshatra] || 'Your Moon has a distinctive habit.'}`} ${padaNote} Emotionally, stories your heart rehearses often lean toward ${moonNakLord}-flavoured themes.`,
     cites: [
       `Moon in ${signEn(moon.rashi)}, house ${moon.house}`,
       `${moon.nakshatra} (part ${moon.pada})`,
@@ -526,12 +563,21 @@ export function computeNatalProfile(
   });
 
   const pair = dashaPairRule(dasha.maha, dasha.antar);
+  if (yogaHits.length) {
+    sections.push({
+      id: 'yogas',
+      title: 'Notable patterns',
+      body: yogaHits.map((y) => `${y.body} ${y.advice}`).join(' '),
+      cites: yogaHits.map((y) => y.id),
+    });
+  }
+
   sections.push({
     id: 'dasha',
     title: 'This chapter of life',
     body: pair
       ? `${pair.tone} ${pair.advice} Think of it as a chapter heading across your chart — not a rewrite of who you are.`
-      : `You are in a ${dasha.maha} period with a ${dasha.antar} subplot. Think of it as a chapter heading across your chart — not a rewrite of who you are. Practice the period’s better habits rather than fearing its stereotype.`,
+      : `You’re in a ${dasha.maha} chapter with a ${dasha.antar} flavour. Think of it as a heading across your chart — not a rewrite of who you are. Practise the better habits of this chapter rather than fearing a stereotype.`,
     cites: [`Period ${dasha.maha}`, `Sub-period ${dasha.antar}`],
   });
 

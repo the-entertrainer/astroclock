@@ -7,40 +7,40 @@ export interface RetroRule {
 
 export const RETROGRADE_RULES: Record<GrahaId, RetroRule> = {
   Sun: {
-    temperament: 'When Sun is retrograde, identity heat and vitality turn more inward — review, redo, and rethink before pushing outward. The kinder form still holds: authentic shine that lifts others.',
-    advice: 'Sun retrograde: useful to revisit how you lead and be seen privately before showing the polished version. Own one clear act of presence, then share the airtime, with an extra beat of reflection.',
+    temperament: 'Identity themes turn inward — you may revisit how you want to be seen before pushing outward.',
+    advice: 'Rehearse presence privately first; then share the spotlight.',
   },
   Moon: {
-    temperament: 'When Moon is retrograde, moods, needs, and emotional weather turn more inward — review, redo, and rethink before pushing outward. The kinder form still holds: care that includes asking for harbour.',
-    advice: 'Moon retrograde: useful to revisit how you tend and belong privately before showing the polished version. Check food, water, and a soft landing before big talks, with an extra beat of reflection.',
+    temperament: 'Feelings loop and re-digest — moods want a second look before you decide.',
+    advice: 'Journal or talk it through once; don’t force a fresh emotional launch.',
   },
   Mars: {
-    temperament: 'When Mars is retrograde, courage, drive, and directed heat turn more inward — review, redo, and rethink before pushing outward. The kinder form still holds: protective courage without theatre.',
-    advice: 'Mars retrograde: useful to revisit how you assert and cut through privately before showing the polished version. Aim heat into one clean effort; skip audience fights, with an extra beat of reflection.',
+    temperament: 'Drive turns inward first — strategy before strike.',
+    advice: 'Plan the effort, then act once. Skip audience fights.',
   },
   Mercury: {
-    temperament: 'When Mercury is retrograde, thinking, talk, and skill traffic turn more inward — review, redo, and rethink before pushing outward. The kinder form still holds: wit in service of understanding.',
-    advice: 'Mercury retrograde: useful to revisit how you name and negotiate privately before showing the polished version. Write it down, then send the short clear version, with an extra beat of reflection.',
+    temperament: 'Thinking rewrites itself — messages want an edit pass.',
+    advice: 'Draft, wait a beat, then send the short clear version.',
   },
   Jupiter: {
-    temperament: 'When Jupiter is retrograde, growth, meaning, and generous stretch turn more inward — review, redo, and rethink before pushing outward. The kinder form still holds: faith that stays curious.',
-    advice: 'Jupiter retrograde: useful to revisit how you teach and widen privately before showing the polished version. Widen the frame with learning or generosity; avoid lecturing, with an extra beat of reflection.',
+    temperament: 'Faith and teachers get an inward review — beliefs want updating.',
+    advice: 'Question kindly; learn before you lecture.',
   },
   Venus: {
-    temperament: 'When Venus is retrograde, bond, taste, pleasure, and harmony turn more inward — review, redo, and rethink before pushing outward. The kinder form still holds: harmony practiced, not assumed.',
-    advice: 'Venus retrograde: useful to revisit how you relate and delight privately before showing the polished version. Choose beauty and kindness on purpose, with an extra beat of reflection.',
+    temperament: 'Bond and taste get re-evaluated — desire looks in the mirror.',
+    advice: 'Choose kindness on purpose; renegotiate harmony out loud.',
   },
   Saturn: {
-    temperament: 'When Saturn is retrograde, duration, structure, and sober accountability turn more inward — review, redo, and rethink before pushing outward. The kinder form still holds: discipline that leaves room to breathe.',
-    advice: 'Saturn retrograde: useful to revisit how you endure and build privately before showing the polished version. One sober step beats a grand promise, with an extra beat of reflection.',
+    temperament: 'Responsibility feels heavier and more internal — time asks for honesty.',
+    advice: 'One sober step beats a grand promise. Leave room to breathe.',
   },
   Rahu: {
-    temperament: 'When Rahu is retrograde, appetite for the unfamiliar and unconventional turn more inward — review, redo, and rethink before pushing outward. The kinder form still holds: novel aim with feet still on ground.',
-    advice: 'Rahu retrograde: useful to revisit how you reach past the known privately before showing the polished version. Curiosity yes — obsession needs a timer and a reality check, with an extra beat of reflection.',
+    temperament: 'Appetite for the new turns into a private research phase.',
+    advice: 'Follow curiosity with a timer; reality-check before you leap.',
   },
   Ketu: {
-    temperament: 'When Ketu is retrograde, release, distill, and sideways knowing turn more inward — review, redo, and rethink before pushing outward. The kinder form still holds: insight without vanishing from the room.',
-    advice: 'Ketu retrograde: useful to revisit how you let go and refine privately before showing the polished version. Release one extra obligation and keep the distilled lesson, with an extra beat of reflection.',
+    temperament: 'Release and simplify go quieter — insight arrives sideways.',
+    advice: 'Drop one extra obligation; keep the lesson and stay in the room.',
   },
 };
 

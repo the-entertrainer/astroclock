@@ -34,6 +34,7 @@ import { ConfigDrawer } from './ConfigDrawer';
 import { PlanetDrawer, type PlanetDetail } from './PlanetDrawer';
 import { TodayPanel } from './TodayPanel';
 import { ProfileDrawer } from './ProfileDrawer';
+import { WelcomeTour } from './WelcomeTour';
 
 const LERP_MS = 700;
 
@@ -454,6 +455,11 @@ export function AstroClockApp() {
         onReset={handleReset}
       />
 
+      <WelcomeTour
+        onOpenConfig={() => setConfigOpen(true)}
+        onGoToday={() => setView('today')}
+        onOpenProfile={() => setProfileOpen(true)}
+      />
       <ProfileDrawer
         open={profileOpen}
         profile={natalProfile}

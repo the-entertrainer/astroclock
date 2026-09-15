@@ -16,6 +16,7 @@ import {
   nakshatraInfo,
   rashiIndex,
   rashiName,
+  wholeSignHouse,
 } from './planets';
 import { vimshottari } from './dasha';
 import { signEn, type AdviceBlock } from './influence';
@@ -27,6 +28,18 @@ import {
   dashaPairRule,
   nakshatraRule,
   grahaRashiRule,
+  weekdayFromDate,
+  computeYoga,
+  computeKarana,
+  orbBand,
+  orbBandWording,
+  detectCombustion,
+  combustionWording,
+  moonSpeedNote,
+  dayVolumeFromAspectCount,
+  yogaWording,
+  karanaWording,
+  type Frag,
 } from './rules';
 
 const PERSONAL: GrahaId[] = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'];
@@ -144,6 +157,13 @@ export interface TodayInsights {
   dayAdvice: AdviceBlock;
   cards: InsightCard[];
   isDemoNatal: boolean;
+  panchanga?: {
+    weekday: string;
+    yoga: string;
+    karana: string;
+  };
+  dayVolume?: 'quiet' | 'balanced' | 'loud';
+  combustion?: { graha: GrahaId; combust: boolean; sep: number }[];
 }
 
 function hoursToBoundary(
@@ -304,6 +324,7 @@ function buildDaySummary(args: {
   natalHits: AspectHit[];
   transitAspects: AspectHit[];
   isDemo: boolean;
+  extraFrags?: Frag[];
 }): string {
   const topAsp = args.transitAspects[0];
   const natalHit = args.natalHits[0];
@@ -324,38 +345,53 @@ function buildDaySummary(args: {
     dashaAntar: args.dasha.antar,
     aspectLabel: topAsp?.label,
     aspectGraha: topAsp?.a,
-    natalAspectLabel: natalHit?.label,
+    aspectOther: topAsp?.b,
+    natalAspectPair: natalHit
+      ? { transit: natalHit.a, natal: natalHit.b, label: natalHit.label }
+      : undefined,
   });
 
   const lagEn = signEn(args.lagRashi);
   const lagBit = args.changedVs2h
-    ? `The rising sign recently shifted from ${signEn(args.prevRashi)} into ${lagEn}, so the “how you meet the next few hours” mask just changed costume.`
-    : `The rising sign is ${lagEn}, colouring how the next stretch of hours wants to be approached.`;
+    ? `How you meet the next few hours just shifted — from a ${signEn(args.prevRashi)} feel into ${lagEn}.`
+    : `How you meet the next stretch of hours has a ${lagEn} colour.`;
   frags.push({ text: lagBit, specificity: 38, cite: `Rising ${lagEn}` });
 
   let texture: string;
   if (args.climate === 'volatile') {
-    texture = `The day reads volatile: ${args.hard} hard links versus ${args.soft} soft ones, with harmonic resonance around ${args.hrs}. Friction is a tutor if you refuse to panic.`;
+    texture = 'The day feels volatile — a few sharp edges at once. Keep scope small and refuse to panic.';
   } else if (args.climate === 'quiet') {
-    texture = `The day reads quiet — few exact aspects and harmonic resonance near ${args.hrs}.`;
+    texture = 'The day feels quiet — good for deep work, weak for forced pivots.';
   } else if (args.climate === 'peak') {
-    texture = `The day has a peak-fluid feel (${args.soft} soft / ${args.hard} hard, HRS ${args.hrs}).`;
+    texture = 'The day has an easy peak feel — ship what’s ready and collaborate.';
   } else if (args.climate === 'tense') {
-    texture = `The day carries contested edges (${args.hard} hard / ${args.soft} soft, HRS ${args.hrs}).`;
+    texture = 'The day carries contested edges — precision under pressure beats drama.';
   } else {
-    texture = `The day is relatively fluid (${args.soft} soft / ${args.hard} hard, HRS ${args.hrs}).`;
+    texture = 'The day is relatively fluid — prefer alliance and polish over confrontation.';
   }
   frags.push({ text: texture, specificity: 36, cite: `HRS ${args.hrs}` });
 
   if (!args.isDemo && natalHit) {
+    const verb =
+      natalHit.label === 'oppose'
+        ? 'sitting across from'
+        : natalHit.label === 'conjunct'
+          ? 'meeting closely'
+          : natalHit.label === 'square'
+            ? 'pressing on'
+            : natalHit.label === 'trine'
+              ? 'flowing with'
+              : natalHit.label === 'sextile'
+                ? 'gently supporting'
+                : 'linking with';
     frags.push({
-      text: `Personal spotlight: transit ${natalHit.a} is ${natalHit.label} your natal ${natalHit.b} (${natalHit.orb.toFixed(1)}°, ${natalHit.motion}) — that natal theme is temporarily lit.`,
+      text: `${natalHit.a} is ${verb} your ${natalHit.b} — a personal theme is lit, so respond with care rather than drama.`,
       specificity: 67,
       cite: `t${natalHit.a}→n${natalHit.b}`,
     });
   } else if (args.isDemo) {
     frags.push({
-      text: 'Save birth data if you want these sky notes to name which of your natal themes are lit.',
+      text: 'Save your birth details if you want these notes to name which personal themes are lit.',
       specificity: 20,
       cite: 'demo',
     });
@@ -367,7 +403,9 @@ function buildDaySummary(args: {
     cite: 'agency',
   });
 
-  const stitched = stitchParagraphs(frags, { perPara: 2, maxFrags: 10 });
+  if (args.extraFrags?.length) frags.push(...args.extraFrags);
+
+  const stitched = stitchParagraphs(frags, { perPara: 2, maxFrags: 12, maxChars: 1600 });
   return stitched || `Emotional weather today sits in ${signEn(args.moonRashi)} (${args.moonNak}).`;
 }
 
@@ -390,6 +428,7 @@ function buildDayAdvice(args: {
   natalHits: AspectHit[];
   transitAspects: AspectHit[];
   isDemo: boolean;
+  extraFrags?: Frag[];
 }): AdviceBlock {
   const topAsp = args.transitAspects[0];
   const frags = collectDayAdviceFrags({
@@ -406,9 +445,12 @@ function buildDayAdvice(args: {
     dashaMaha: args.dasha.maha,
     dashaAntar: args.dasha.antar,
     aspectLabel: topAsp?.label,
+    aspectGraha: topAsp?.a,
+    aspectOther: topAsp?.b,
     natalHit: !args.isDemo && args.natalHits.length > 0,
+    extra: args.extraFrags,
   });
-  return adviceFromFrags('Advice for today', frags, 5);
+  return adviceFromFrags('Advice for today', frags, 6);
 }
 
 
@@ -614,6 +656,68 @@ export function computeTodayInsights(
   const hrs = harmonicScore(planets);
   const { climate, note } = climateFrom(hrs, soft, hard, exactHard);
 
+
+  const extraFrags: Frag[] = [];
+  const weekday = weekdayFromDate(simDate);
+  const yoga = computeYoga(planets.Sun.sidereal, planets.Moon.sidereal);
+  const karana = computeKarana(planets.Moon.sidereal, planets.Sun.sidereal);
+  extraFrags.push({
+    text: `It’s ${weekday}. ${yogaWording(yoga.name)}`,
+    specificity: 44,
+    cite: 'panchanga',
+  });
+
+  const vol = dayVolumeFromAspectCount(transitAspects.length);
+  extraFrags.push({ text: vol.life, specificity: 43, cite: 'day volume' });
+
+  const moonNote = moonSpeedNote(speeds.Moon);
+  if (moonNote) extraFrags.push({ text: moonNote, specificity: 47, cite: 'Moon speed' });
+
+  const combustHits = detectCombustion(planets.Sun.sidereal, {
+    Mercury: planets.Mercury.sidereal,
+    Venus: planets.Venus.sidereal,
+    Mars: planets.Mars.sidereal,
+  });
+  for (const h of combustHits.slice(0, 2)) {
+    const w = combustionWording(h);
+    extraFrags.push({ text: w.life, specificity: 69, cite: `${h.graha} beams` });
+  }
+
+  if (changedVs2h) {
+    extraFrags.push({
+      text: `How you meet the next stretch just shifted — from a ${signEn(prevRashi)} feel into ${signEn(lagRashi)}.`,
+      specificity: 64,
+      cite: 'hourly lagna',
+    });
+  }
+
+  for (const a of transitAspects.slice(0, 2)) {
+    const band = orbBand(a.orb);
+    const ow = orbBandWording(band);
+    extraFrags.push({
+      text: ow.life,
+      specificity: 61,
+      cite: `orb ${a.a}-${a.b}`,
+    });
+  }
+
+  let gocharaList: { graha: GrahaId; house: number }[] = [];
+  if (natalLons && !birth.isDemo) {
+    const birthDtG = new Date(Date.UTC(+birth.date.slice(0, 4), +birth.date.slice(5, 7) - 1, +birth.date.slice(8, 10), +birth.h, +birth.m, +birth.s));
+    const natalJd = julianDay(birthDtG);
+    const natalAsc = ascendant(lst(natalJd, lon), lat, natalJd);
+    for (const g of PERSONAL) {
+      gocharaList.push({ graha: g, house: wholeSignHouse(planets[g].sidereal, natalAsc.sidereal) });
+    }
+    for (const g of gocharaList.slice(0, 2)) {
+      extraFrags.push({
+        text: `${g.graha} is lighting house-${g.house} themes for a while — treat it as weather, not a verdict, and keep the next step small.`,
+        specificity: 71,
+        cite: `gochara ${g.graha}`,
+      });
+    }
+  }
+
   const daySummary = buildDaySummary({
     moonNak: nak.name,
     moonRashi,
@@ -634,6 +738,7 @@ export function computeTodayInsights(
     natalHits,
     transitAspects,
     isDemo: !!birth.isDemo,
+    extraFrags,
   });
 
   const dayAdvice = buildDayAdvice({
@@ -652,6 +757,7 @@ export function computeTodayInsights(
     natalHits,
     transitAspects,
     isDemo: !!birth.isDemo,
+    extraFrags,
   });
 
   const cards = buildCards({
@@ -692,6 +798,9 @@ export function computeTodayInsights(
     dayAdvice,
     cards,
     isDemoNatal: !!birth.isDemo,
+    panchanga: { weekday, yoga: yoga.name, karana: karana.name },
+    dayVolume: vol.volume,
+    combustion: combustHits.map((h) => ({ graha: h.graha, combust: h.combust, sep: h.sep })),
   };
 }
 

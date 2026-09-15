@@ -344,8 +344,9 @@ export function computeInfluence(input: InfluenceInput): InfluenceReading {
       const life = ar
         ? `${ar.lifeMeaning}${a.kind === 'natal' ? ' ' + ar.natalTransitNote : ''}`
         : aspectLife(a.label);
+      const whoPlain = a.kind === 'natal' ? `your ${a.other}` : `${a.other}`;
       changeBits.push(
-        `${graha} is ${life} with ${who} (${a.orb.toFixed(1)}°, ${motionLife(a.motion)}). ${flavour}`,
+        `${graha} is ${life} ${whoPlain}. ${flavour}`.replace(/\s+/g, ' ').trim(),
       );
     }
   }
@@ -354,7 +355,7 @@ export function computeInfluence(input: InfluenceInput): InfluenceReading {
     changeBits.push(
       dp
         ? `${dp.tone} ${dp.advice}`
-        : `${graha} is also a period lord right now (${dasha.maha} / ${dasha.antar}), so its themes get a louder chapter heading — practice its better habits rather than fearing the stereotype.`,
+        : `${graha} is also a period lord right now (${dasha.maha} / ${dasha.antar}), so its themes get a louder chapter heading — practise its better habits rather than fearing the stereotype.`,
     );
     cites.push(`Period: ${dasha.maha}/${dasha.antar}`);
   } else if (dasha && dasha.maha !== '—') {
@@ -362,7 +363,7 @@ export function computeInfluence(input: InfluenceInput): InfluenceReading {
     changeBits.push(
       dp
         ? `Background chapter: ${dp.tone}`
-        : `Background chapter: ${dasha.maha} period with ${dasha.antar} subplot — that colours the month even when ${graha} is not the headline.`,
+        : `Background chapter: a ${dasha.maha} stretch with a ${dasha.antar} flavour — that colours the month even when ${graha} is not the headline.`,
     );
   }
 

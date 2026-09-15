@@ -2,65 +2,61 @@
 
 Premium mobile Vedic sidereal clockwork — Next.js App Router + TypeScript + Tailwind.
 
+**Compass, not pathfinder.** Rule-based plain-English readings (no LLM APIs, no secrets).
+
 ## Stack
 
-- Next.js (App Router)
-- TypeScript (strict)
-- Tailwind CSS
-- lucide-react
-- next/font: Inter + JetBrains Mono
-- Canvas 2D (HiDPI / `devicePixelRatio`)
-- Pure TS astronomy math (no ephemeris libs, no API keys)
+- Next.js (App Router) · TypeScript · Tailwind · lucide-react
+- Canvas 2D clock dial · pure TS astronomy (mean-element; not Swiss Ephemeris)
 
-## Run locally
+## Run
 
 ```bash
 npm install
 npm run dev
-# open http://localhost:3000
+# http://localhost:3000
+
+npm test          # vitest — code + factual + design lanes
+npm run build
 ```
+
+## Phased rules
+
+Interpretive copy is built from combinatorial tables under `src/lib/astro/rules/` (P0–P3):
+
+| Phase | What |
+|-------|------|
+| **P0** | Graha×nakshatra, unique nakshatra padas, gochara→natal house, aspect pairs, dasha×house/sign |
+| **P1** | Panchanga-lite, orb bands, combustion, hourly Lagna chapter, quiet/loud day |
+| **P2** | Small yoga set, rising-ruler / Moon-lord chains, atmakaraka-lite, dusthana/upachaya, D9 lite mapping |
+| **P3** | Compose stitch, dedupe, length caps, voice pass |
+| **Polish** | First-time welcome + guided tour (`astroclock-onboarded-v1`) |
+
+Regenerate human-voice tables (optional):
 
 ```bash
-npm run build
-npm start
+node scripts/gen-human-rules.mjs
 ```
 
-## Deploy (Vercel)
+See `docs/TEST_GATES.md` and `docs/FACTCHECK.md`.
 
-1. Import `the-entertrainer/astroclock` in the Vercel dashboard.
-2. Framework preset: **Next.js** (auto-detected).
-3. Deploy — no env vars required.
+## Welcome tour
+
+On first visit, a glass welcome panel explains the project and walks: **setup details → dial → Today → Profile**. Skip or Done sets `localStorage` key `astroclock-onboarded-v1`. Clear that key to replay.
 
 ## Features
 
-- Live UTC + local clocks to milliseconds
-- Canvas rings: 12 Rashis (Devanagari + labels), 27 Nakshatras (+ padas), gear escapement, transit hands, natal markers, aspect beams (transit↔transit & natal↔transit), LST hub
-- Vimshottari Maha + Antardasha, Tithi, Lagna
-- Graha speed / retro chips, Harmonic Resonance Score
-- LIVE tick + ±3 day scrubber for simulation time
-- **Worldwide place search** — ConfigDrawer search (debounced ≥400ms) via Next.js route `GET /api/geocode` proxying OpenStreetMap Nominatim (server User-Agent; no browser CORS). Quick city chips kept as shortcuts. Place label persisted in `localStorage` with birth config.
-- **Today** tab — live changes (dasha tone, Moon rashi/nak/pada + boundaries, lagna flip vs ~2h, retrogrades, tight aspects applying/separating, HRS climate) plus rule-based interpretive cards and **Advice for today** from `src/lib/astro/insights.ts` (not LLM).
-- **Profile / Character** — after saving a non-demo birth, opens a delineation drawer from `src/lib/astro/profile.ts`: summary, **Advice for how to work with your nature**, Essence, Mind, Drive, Behaviour, Relational, Pressures, Dasha colour — each claim cites placements (e.g. Moon in Rohini, 4th).
-- **Tap-to-influence** — PlanetDrawer readings from `src/lib/astro/influence.ts` include means / influencing / changing plus an **Advice** block (work, home, money, bonds, energy) grounded in graha + house + aspects + retro.
-- Birth config → `localStorage` key `astroclock-v1` (includes `placeLabel`)
-- Natal chart lerp (~700ms) on save/reset
-- Visibility pause when tab hidden
-- Dial: **0° sidereal Mesha at top**
+- Live UTC + local clocks; sidereal dial (rashis, nakshatras, natal markers, aspects)
+- Vimshottari dasha, tithi, Lagna; Today + Profile + tap-to-influence advice (deterministic rules)
+- Worldwide place search via `/api/geocode` (Nominatim proxy; no API keys in client)
+- Birth config in `localStorage` (`astroclock-v1`)
 
-## Defaults
+## Defaults & limits
 
-Until you save a birth chart, a demo natal is used: **Delhi, 1990-01-01 12:00:00** (overwritable). Birth H:M:S is treated as UTC for offline determinism (no timezone database).
+Demo natal until you save: **Delhi, 1990-01-01 12:00:00 UTC**. Birth H:M:S treated as UTC (no TZ DB).
 
-## Approximation limits
+Mean-element longitudes — suitable for visualization and UX, **not** professional casting. Moon tighter than outer planets (see `docs/FACTCHECK.md`).
 
-Mean-element / truncated VSOP-lite longitudes (not full Swiss Ephemeris). Moon is better than planets but still approximate. Lahiri ayanamsha is a linear/quadratic fit (~24° in the 2020s). Speeds via 1-hour finite difference. Suitable for visualization and dasha/tithi UX — not for professional chart casting. Today/Profile copy is deterministic rule text from those placements — interpretive, not fate.
+## Deploy (Vercel)
 
-## Project layout
-
-```
-src/
-  app/           # App Router entry + /api/geocode (Nominatim proxy)
-  components/    # TopBar, ClockCanvas, HUD, TodayPanel, ProfileDrawer, drawers
-  lib/astro/     # julianDay, planets, dasha, insights, profile…
-  lib/storage.ts # localStorage birth config (+ placeLabel)
-```
+Import `the-entertrainer/astroclock` — Next.js preset, no env vars required.
