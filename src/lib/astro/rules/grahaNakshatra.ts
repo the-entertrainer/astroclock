@@ -101,7 +101,7 @@ export const GRAHA_NAKSHATRA: Record<GrahaId, Record<string, GrahaNakRule>> = {
     },
     Shatabhisha: {
       temperament: 'When Sun sits here, you want to be seen as capable and to lead. Odd, systems-level fixes appeal to you.',
-      advice: 'Own one clear act of presence, then share the spotlight. Also: Try the unusual remedy others skip — keep ethics.',
+      advice: 'Own one clear act of presence, then share the spotlight.',
     },
     'Purva Bhadrapada': {
       temperament: 'When Sun sits here, you want to be seen as capable and to lead. Ideals run hot — aim the fire.',
@@ -211,7 +211,7 @@ export const GRAHA_NAKSHATRA: Record<GrahaId, Record<string, GrahaNakRule>> = {
     },
     Shatabhisha: {
       temperament: 'When Moon sits here, your mood and need for care shape how the day feels. Odd, systems-level fixes appeal to you.',
-      advice: 'Eat, drink water, and find a soft landing before hard talks. Also: Try the unusual remedy others skip — keep ethics.',
+      advice: 'Eat, drink water, and find a soft landing before hard talks.',
     },
     'Purva Bhadrapada': {
       temperament: 'When Moon sits here, your mood and need for care shape how the day feels. Ideals run hot — aim the fire.',
@@ -321,7 +321,7 @@ export const GRAHA_NAKSHATRA: Record<GrahaId, Record<string, GrahaNakRule>> = {
     },
     Shatabhisha: {
       temperament: 'When Mars sits here, you push hard for what you want. Odd, systems-level fixes appeal to you.',
-      advice: 'Put the heat into one clean effort, not a public fight. Also: Try the unusual remedy others skip — keep ethics.',
+      advice: 'Put the heat into one clean effort, not a public fight.',
     },
     'Purva Bhadrapada': {
       temperament: 'When Mars sits here, you push hard for what you want. Ideals run hot — aim the fire.',
@@ -431,7 +431,7 @@ export const GRAHA_NAKSHATRA: Record<GrahaId, Record<string, GrahaNakRule>> = {
     },
     Shatabhisha: {
       temperament: 'When Mercury sits here, your mind wants to talk, learn, and sort details. Odd, systems-level fixes appeal to you.',
-      advice: 'Write it down, then send the short clear version. Also: Try the unusual remedy others skip — keep ethics.',
+      advice: 'Write it down, then send the short clear version.',
     },
     'Purva Bhadrapada': {
       temperament: 'When Mercury sits here, your mind wants to talk, learn, and sort details. Ideals run hot — aim the fire.',
@@ -541,7 +541,7 @@ export const GRAHA_NAKSHATRA: Record<GrahaId, Record<string, GrahaNakRule>> = {
     },
     Shatabhisha: {
       temperament: 'When Jupiter sits here, you look for meaning, growth, and a wider frame. Odd, systems-level fixes appeal to you.',
-      advice: 'Learn something or help someone — skip the lecture. Also: Try the unusual remedy others skip — keep ethics.',
+      advice: 'Learn something or help someone — skip the lecture.',
     },
     'Purva Bhadrapada': {
       temperament: 'When Jupiter sits here, you look for meaning, growth, and a wider frame. Ideals run hot — aim the fire.',
@@ -651,7 +651,7 @@ export const GRAHA_NAKSHATRA: Record<GrahaId, Record<string, GrahaNakRule>> = {
     },
     Shatabhisha: {
       temperament: 'When Venus sits here, you care about comfort, beauty, and how you bond. Odd, systems-level fixes appeal to you.',
-      advice: 'Choose kindness and one beautiful detail on purpose. Also: Try the unusual remedy others skip — keep ethics.',
+      advice: 'Choose kindness and one beautiful detail on purpose.',
     },
     'Purva Bhadrapada': {
       temperament: 'When Venus sits here, you care about comfort, beauty, and how you bond. Ideals run hot — aim the fire.',
@@ -761,7 +761,7 @@ export const GRAHA_NAKSHATRA: Record<GrahaId, Record<string, GrahaNakRule>> = {
     },
     Shatabhisha: {
       temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Odd, systems-level fixes appeal to you.',
-      advice: 'Take one sober step instead of a grand promise. Also: Try the unusual remedy others skip — keep ethics.',
+      advice: 'Take one sober step instead of a grand promise.',
     },
     'Purva Bhadrapada': {
       temperament: 'When Saturn sits here, you build patiently and finish what others abandon. Ideals run hot — aim the fire.',
@@ -871,7 +871,7 @@ export const GRAHA_NAKSHATRA: Record<GrahaId, Record<string, GrahaNakRule>> = {
     },
     Shatabhisha: {
       temperament: 'When Rahu sits here, you hunger for the new, unfamiliar, or slightly obsessive. Odd, systems-level fixes appeal to you.',
-      advice: 'Follow curiosity with a timer and a reality check. Also: Try the unusual remedy others skip — keep ethics.',
+      advice: 'Follow curiosity with a timer and a reality check.',
     },
     'Purva Bhadrapada': {
       temperament: 'When Rahu sits here, you hunger for the new, unfamiliar, or slightly obsessive. Ideals run hot — aim the fire.',
@@ -981,7 +981,7 @@ export const GRAHA_NAKSHATRA: Record<GrahaId, Record<string, GrahaNakRule>> = {
     },
     Shatabhisha: {
       temperament: 'When Ketu sits here, you prefer to simplify, cut clutter, and trust quiet gut clarity. Odd, systems-level fixes appeal to you.',
-      advice: 'Drop one extra obligation and keep the useful lesson. Also: Try the unusual remedy others skip — keep ethics.',
+      advice: 'Drop one extra obligation and keep the useful lesson.',
     },
     'Purva Bhadrapada': {
       temperament: 'When Ketu sits here, you prefer to simplify, cut clutter, and trust quiet gut clarity. Ideals run hot — aim the fire.',

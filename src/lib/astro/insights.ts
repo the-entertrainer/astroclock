@@ -385,7 +385,7 @@ function buildDaySummary(args: {
                 ? 'gently supporting'
                 : 'linking with';
     frags.push({
-      text: `${natalHit.a} is ${verb} your ${natalHit.b} story: expect sharper charge there today. Take one concrete step; don’t dramatize.`,
+      text: `${natalHit.a} is ${verb} themes tied to your ${natalHit.b}: expect sharper charge there today. Take one concrete step; don’t dramatize.`,
       specificity: 67,
       cite: `t${natalHit.a}→n${natalHit.b}`,
     });
@@ -524,7 +524,7 @@ function buildCards(args: {
         title: conj
           ? `Spotlight · ${hit.a} on your ${hit.b}`
           : `Hit · ${hit.a} ${hit.label} your ${hit.b}`,
-        body: `${hit.a} is activating your ${hit.b} story — expect sharper charge there today. Take one concrete step; don’t dramatize.`,
+        body: `${hit.a} is activating themes tied to your ${hit.b} — expect sharper charge there today. Take one concrete step; don’t dramatize.`,
         graha: hit.a,
       });
     }

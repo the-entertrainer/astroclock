@@ -258,7 +258,7 @@ export function collectGocharaFrags(args: {
     } else {
       const verb = aspectLifeVerb(args.aspectToNatal.label);
       frags.push({
-        text: `${args.transitGraha} is ${verb} your ${args.aspectToNatal.natal} story: expect that mix in mood, talk, and choices. Take one concrete step; don’t dramatize.`,
+        text: `${args.transitGraha} is ${verb} themes tied to your ${args.aspectToNatal.natal}: expect that mix in mood, talk, and choices. Take one concrete step; don’t dramatize.`,
         specificity: 66,
         cite: args.aspectToNatal.label,
         kind: 'life',
@@ -643,7 +643,7 @@ export function collectDayFrags(args: {
     } else {
       const verb = aspectLifeVerb(p.label);
       frags.push({
-        text: `${p.transit} is ${verb} your ${p.natal} story: expect sharper charge there today. Respond with one concrete step, not drama.`,
+        text: `${p.transit} is ${verb} themes tied to your ${p.natal}: expect sharper charge there today. Respond with one concrete step, not drama.`,
         specificity: 77,
         cite: `${p.transit}→${p.natal}`,
         kind: 'life',

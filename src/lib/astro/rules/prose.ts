@@ -14,6 +14,10 @@ const BANNED_PROFILE_SLANG =
 
 /** Banned patterns that must not appear in user-visible body copy */
 export const BANNED_PROSE_PATTERNS: RegExp[] = [
+  /unusual remedy/i,
+  /activating the same area as your/i,
+  /\byour\s+(Rahu|Ketu|Sun|Moon|Mars|Mercury|Jupiter|Venus|Saturn)\s+story\b/i,
+  
   BANNED_BODY,
   BANNED_PROFILE_SLANG,
   /\d+(\.\d+)?°/, // raw degrees in body

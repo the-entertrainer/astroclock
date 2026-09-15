@@ -238,11 +238,11 @@ export const NAKSHATRA_RULES: Record<string, NakshatraRule> = {
   },
   Shatabhisha: {
     temperament: 'Odd, systems-level fixes appeal to you.',
-    advice: 'Try the unusual remedy others skip — keep ethics.',
+    advice: 'Test one practical fix carefully, keep your ethics clean, and measure results before you scale it.',
     pada: [
       'Propose the weird fix that might work.',
       'Ground the experiment so it doesn’t float away.',
-      'Engineer the remedy carefully.',
+      'Build the fix carefully and check it works before you trust it.',
       'Share the healing pattern; don’t isolate in eccentricity.',
     ],
   },

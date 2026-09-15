@@ -333,7 +333,7 @@ export function computeInfluence(input: InfluenceInput): InfluenceReading {
   const top = aspects.slice(0, 3);
   if (top.length === 0) {
     changeBits.push(
-      `No tight contacts involving ${graha} right now — the story is quieter, more about its life area and sign than loud sky pressure.`,
+      `No tight contacts involving ${graha} right now — nothing loud is pressing this planet right now — focus on its life area and keep moves simple.`,
     );
   } else {
     for (const a of top) {
@@ -343,12 +343,14 @@ export function computeInfluence(input: InfluenceInput): InfluenceReading {
       const whoPlain = a.kind === 'natal' ? `your ${a.other}` : `${a.other}`;
       const natalNote =
         a.kind === 'natal' && ar?.natalTransitNote ? ` ${ar.natalTransitNote}` : '';
+      const otherTheme = GRAHA_PLAIN[a.other as GrahaId] || a.other;
+      const thisTheme = GRAHA_PLAIN[graha] || graha;
       const pairHint =
         a.kind === 'natal'
-          ? `${graha} is activating the same area as your ${a.other} story — ${verb}.`
-          : `${graha} is ${verb} with ${whoPlain}.`;
+          ? `${graha} (${thisTheme}) is ${verb} ${a.other} in your chart (${otherTheme}). Expect both to show up in mood and decisions — pick one concrete response, not a spiral.`
+          : `${graha} is ${verb} ${whoPlain} in the sky. That mix can colour talk and choices — keep the next move small and clear.`;
       changeBits.push(
-        `${pairHint}${natalNote} ${flavour}`.replace(/\s+/g, ' ').trim(),
+        `${pairHint}${natalNote}`.replace(/\s+/g, ' ').trim(),
       );
     }
   }
@@ -357,7 +359,7 @@ export function computeInfluence(input: InfluenceInput): InfluenceReading {
     changeBits.push(
       dp
         ? `${dp.tone} ${dp.advice}`
-        : `${graha} is also a period lord right now (${dasha.maha} / ${dasha.antar}), so its themes get louder — practise its better habits rather than fearing the stereotype.`,
+        : `${graha} is also a period lord right now (${dasha.maha} / ${dasha.antar}), so those themes run louder this period — practise the useful habit, skip the dramatic version.`,
     );
     cites.push(`Period: ${dasha.maha}/${dasha.antar}`);
   } else if (dasha && dasha.maha !== '—') {
