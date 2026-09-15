@@ -44,6 +44,7 @@ export function TodayPanel({ insights, onSelectGraha }: TodayPanelProps) {
     climate,
     climateNote,
     daySummary,
+    dayAdvice,
     cards,
   } = insights;
 
@@ -79,6 +80,32 @@ export function TodayPanel({ insights, onSelectGraha }: TodayPanelProps) {
             {para}
           </p>
         ))}
+      </article>
+
+      <article className="chip rounded-xl px-3 py-3 space-y-2 border border-jade/25">
+        <h3 className="text-[11px] font-semibold tracking-wide text-jade">
+          {dayAdvice.title}
+        </h3>
+        <ul className="space-y-2">
+          {dayAdvice.items.map((item, i) => (
+            <li
+              key={i}
+              className="text-[12px] text-mist/80 leading-[1.65] pl-3 relative before:content-['·'] before:absolute before:left-0 before:text-jade/70"
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+        <div className="flex flex-wrap gap-1 pt-0.5">
+          {dayAdvice.cites.map((c) => (
+            <span
+              key={c}
+              className="text-[8px] font-mono text-mist/35 border border-white/5 rounded px-1.5 py-0.5"
+            >
+              {c}
+            </span>
+          ))}
+        </div>
       </article>
 
       <section className="space-y-2">

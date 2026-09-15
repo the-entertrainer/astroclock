@@ -19,6 +19,7 @@ import {
   HOUSE_LIFE,
   PLANET_SIGN_PLAIN,
   signEn,
+  type AdviceBlock,
 } from './influence';
 
 const RASHI_LORDS: GrahaId[] = [
@@ -160,6 +161,8 @@ export interface NatalProfile {
   birthSummary: string;
   /** Plain-English character sketch (1–3 short paragraphs) */
   summary: string;
+  /** Practical habits / relational / work-style tips */
+  advice: AdviceBlock;
   lagna: { rashi: string; degree: number; lord: GrahaId };
   moon: { rashi: string; nakshatra: string; pada: number; house: number };
   sun: { rashi: string; nakshatra: string; pada: number; house: number };
@@ -235,6 +238,143 @@ function buildSummary(args: {
   const p3 = `${sunBit} The planet that rules your rising sign (${args.lagLord}) lives in the house of ${lordLife} — that is a practical stage where your style becomes biography. Together, rising + Moon + Sun sketch how you tend to think, feel, act, and relate when nobody is performing for an audience.`;
 
   return `${p1}\n\n${p2}\n\n${p3}`;
+}
+
+
+const LAGNA_ADVICE: Record<string, string> = {
+  Mesha:
+    'Useful to start before the committee finishes — then course-correct in motion rather than waiting for perfect clarity.',
+  Vrishabha:
+    'Build trust and routines slowly; once you commit, protect that steadiness from fashion-chasing pivots.',
+  Mithuna:
+    'Schedule curiosity on purpose — conversation and learning are fuel, but pick one channel to finish.',
+  Karka:
+    'Protect belonging and private harbour time; when the base feels safe, your generosity leads naturally.',
+  Simha:
+    'Give your work a clear signature and ask for recognition without apology — then share the spotlight.',
+  Kanya:
+    'Let competence be care, and soften critique with one kind sentence before the fix list.',
+  Tula:
+    'Practice naming your own preference before you negotiate; fairness includes you.',
+  Vrischika:
+    'Choose depth over half-open doors — trust and honesty wake you up more than surface charm.',
+  Dhanu:
+    'Keep a horizon (learning, travel, meaning) so petty loops do not shrink your kindness.',
+  Makara:
+    'Climb with structure, then schedule softness so the long game does not become a cage.',
+  Kumbha:
+    'Invest in odd, systems-minded friendships; belonging still matters, just on your terms.',
+  Meena:
+    'Choose company like climate, and keep one daily vessel (walk, craft, list) so empathy does not dissolve you.',
+};
+
+const MOON_ADVICE: Record<string, string> = {
+  Mesha: 'When mood ignites, aim the heat into one clean act instead of sitting on hot iron.',
+  Vrishabha: 'Secure comfort and sensory proof before big emotional pivots — slow attachment is a feature.',
+  Mithuna: 'Talk it through, then check whether you are flirting with ideas or with people.',
+  Karka: 'Caregiving cuts both ways — ask for harbour as often as you offer it.',
+  Simha: 'Warmth thrives with a witness; ask for appreciation without making it a test.',
+  Kanya: 'Usefulness is love — also leave room for messy feelings that will not fit a checklist.',
+  Tula: 'Notice when relational weather becomes your weather; step outside to reset.',
+  Vrischika: 'All-or-nothing feelings need clear trust gates; half-measures starve this Moon.',
+  Dhanu: 'Widen the emotional frame with humour, belief, or a literal change of scenery.',
+  Makara: 'Endurance is devotion — also let one feeling land out loud before it calcifies.',
+  Kumbha: 'Friendship-toned care is valid; name quirky needs early so intimacy does not feel odd.',
+  Meena: 'Beautiful empathy needs boundaries — choose sanctuary before you absorb the room.',
+};
+
+const SUN_ADVICE: Record<string, string> = {
+  Mesha: 'Vitality peaks in clean contests — pioneer something small each week.',
+  Vrishabha: 'Shine by building and keeping; body and craft steady the will.',
+  Mithuna: 'Dialogue fuels you — prune extra channels so the signal stays clear.',
+  Karka: 'Protect home base first, then lead; emotional weather powers the will.',
+  Simha: 'Creative centre-stage is fuel when it lifts others, not only ego.',
+  Kanya: 'Craft mastery keeps you lit — keep a personal signature even in humble service.',
+  Tula: 'Fair exchange feeds vitality; strengthen your own preferences alongside partnership.',
+  Vrischika: 'Renew through honest intimacy and motive integrity, not power theatre.',
+  Dhanu: 'Belief quests wake the will — keep dogma from freezing the quest.',
+  Makara: 'Achievement architecture sustains you; soften so the climb stays human.',
+  Kumbha: 'Innovators and future tribes light you up — still belong somewhere specific.',
+  Meena: 'Imagination immerses you; keep a daily vessel so you do not dissolve.',
+};
+
+const STRESS_HOUSE_ADVICE: Record<number, string> = {
+  6: 'With heat in the work/health house, go easy on rivals and keep routines small and doable.',
+  8: 'With charge in the reset/intimacy house, pace shared money and big life changes — honesty over secrecy.',
+  12: 'With emphasis on solitude and endings, schedule real recharge; withdrawal can be strategy, not failure.',
+};
+
+function buildProfileAdvice(args: {
+  lagRashi: string;
+  moon: ProfilePlacement;
+  sun: ProfilePlacement;
+  lagLord: GrahaId;
+  lagLordP: ProfilePlacement;
+  grahas: ProfilePlacement[];
+  topHouses: number[];
+}): AdviceBlock {
+  const items: string[] = [];
+  const cites: string[] = [
+    `Rising ${signEn(args.lagRashi)}`,
+    `Moon in ${signEn(args.moon.rashi)}, house ${args.moon.house}`,
+    `Sun in ${signEn(args.sun.rashi)}, house ${args.sun.house}`,
+  ];
+
+  items.push(
+    LAGNA_ADVICE[args.lagRashi] ||
+      `Work with your rising style in ${signEn(args.lagRashi)} as a habit, not a costume.`,
+  );
+  items.push(
+    MOON_ADVICE[args.moon.rashi] ||
+      `Tend emotional weather through the house of ${HOUSE_LIFE[args.moon.house] || 'daily life'}.`,
+  );
+  items.push(
+    SUN_ADVICE[args.sun.rashi] ||
+      `Aim vitality toward what renews a sense of self in the house of ${HOUSE_LIFE[args.sun.house] || 'focus'}.`,
+  );
+
+  // Stressed / dusthana emphasis
+  const stressOcc = args.grahas.filter((g) => [6, 8, 12].includes(g.house));
+  const stressHouses = [...new Set(stressOcc.map((g) => g.house))].sort();
+  if (stressHouses.length > 0) {
+    const h = stressHouses[0];
+    items.push(
+      STRESS_HOUSE_ADVICE[h] ||
+        `Notice pressure in house ${h} and meet it with pacing, not panic.`,
+    );
+    const who = stressOcc
+      .filter((g) => g.house === h)
+      .map((g) => g.id)
+      .slice(0, 3)
+      .join(', ');
+    cites.push(`House ${h}: ${who}`);
+  } else if (args.topHouses[0]) {
+    const h = args.topHouses[0];
+    items.push(
+      `Your loudest life area is house ${h} (${HOUSE_LIFE[h] || 'focus'}) — put habits and care there first.`,
+    );
+    cites.push(`Loud house ${h}`);
+  }
+
+  if (args.lagLordP.retrograde) {
+    items.push(
+      `Your rising ruler (${args.lagLord}) is retrograde — useful to revisit style privately before showing the polished version.`,
+    );
+    cites.push(`${args.lagLord} R in house ${args.lagLordP.house}`);
+  } else if (items.length < 5) {
+    items.push(
+      `Let ${args.lagLord} in the house of ${HOUSE_LIFE[args.lagLordP.house] || 'life focus'} be a weekly practice stage — small reps beat grand resolutions.`,
+    );
+    cites.push(
+      `${args.lagLord} in ${signEn(args.lagLordP.rashi)}, house ${args.lagLordP.house}`,
+    );
+  }
+
+  return {
+    title: 'Advice for how to work with your nature',
+    items: items.slice(0, 5),
+    cites: [...new Set(cites)].slice(0, 6),
+  };
 }
 
 export function computeNatalProfile(
@@ -318,6 +458,16 @@ export function computeNatalProfile(
     sun,
     lagLord,
     lagLordP,
+  });
+
+  const advice = buildProfileAdvice({
+    lagRashi,
+    moon,
+    sun,
+    lagLord,
+    lagLordP,
+    grahas,
+    topHouses,
   });
 
   const sections: ProfileSection[] = [];
@@ -461,6 +611,7 @@ export function computeNatalProfile(
     placeLabel: birth.placeLabel,
     birthSummary: `${birth.date} ${String(birth.h).padStart(2, '0')}:${String(birth.m).padStart(2, '0')}:${String(birth.s).padStart(2, '0')} UTC · ${place}`,
     summary,
+    advice,
     lagna: { rashi: lagRashi, degree: lagDeg, lord: lagLord },
     moon: {
       rashi: moon.rashi,

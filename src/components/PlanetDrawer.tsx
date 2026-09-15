@@ -127,6 +127,31 @@ export function PlanetDrawer({ open, detail, onClose }: PlanetDrawerProps) {
                 {inf.changing}
               </p>
             </article>
+            <article className="space-y-2 rounded-xl border border-jade/25 bg-black/20 px-3 py-2.5">
+              <h3 className="text-[10px] uppercase tracking-wider text-jade">
+                {inf.advice.title}
+              </h3>
+              <ul className="space-y-2">
+                {inf.advice.items.map((item, i) => (
+                  <li
+                    key={i}
+                    className="text-[11px] text-mist/75 leading-[1.65] pl-3 relative before:content-['·'] before:absolute before:left-0 before:text-jade/70"
+                  >
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <div className="flex flex-wrap gap-1 pt-0.5">
+                {inf.advice.cites.map((c) => (
+                  <span
+                    key={c}
+                    className="text-[8px] font-mono text-mist/35 border border-white/5 rounded px-1.5 py-0.5"
+                  >
+                    {c}
+                  </span>
+                ))}
+              </div>
+            </article>
             <div className="flex flex-wrap gap-1 pt-0.5">
               {inf.cites.map((c) => (
                 <span

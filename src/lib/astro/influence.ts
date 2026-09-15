@@ -101,6 +101,13 @@ export interface InfluenceAspect {
   kind: 'transit' | 'natal';
 }
 
+export interface AdviceBlock {
+  title: string;
+  /** 2–5 concrete, agency-oriented suggestions */
+  items: string[];
+  cites: string[];
+}
+
 export interface InfluenceInput {
   graha: GrahaId;
   rashi: string;
@@ -118,6 +125,7 @@ export interface InfluenceReading {
   meansForYou: string;
   influencingNow: string;
   changing: string;
+  advice: AdviceBlock;
   cites: string[];
 }
 
@@ -134,6 +142,104 @@ function aspectLife(label: string): string {
   if (label === 'square') return 'creating productive friction';
   if (label === 'oppose') return 'setting up a polar dialogue';
   return `linking (${label})`;
+}
+
+
+const HOUSE_ADVICE: Record<number, string> = {
+  1: 'Useful to check body-energy and first impressions before you overcommit.',
+  2: 'Go easy on impulse spends; speak a little slower than the urge to reply.',
+  3: 'Good day to take one short bold step — a message, a trip, a skill rep.',
+  4: 'Protect home and private mood; a tidy base steadies everything else.',
+  5: 'Lean into play, creative drafts, or warm attention to someone younger.',
+  6: 'Keep routines small and doable; solve one practical problem cleanly.',
+  7: 'Prefer fair one-to-one talks over guessing what the other person wants.',
+  8: 'Go gently with shared money, intimacy, and anything that feels like a reset.',
+  9: 'Make room for a bigger why — a teacher, a walk, a belief worth revisiting.',
+  10: 'Show up for reputation work in public; finish something visible.',
+  11: 'Reach a friend or network goal; ask for help without over-explaining.',
+  12: 'Schedule real rest or solitude; endings and recharge count as work too.',
+};
+
+const GRAHA_ADVICE: Record<GrahaId, string> = {
+  Sun: 'Useful to own one clear act of leadership — then let others have airtime.',
+  Moon: 'Tend the emotional weather early; food, water, and a soft landing help.',
+  Mars: 'Aim heat into one clean effort; skip fights that only want an audience.',
+  Mercury: 'Write it down, then send the short version — clarity over cleverness.',
+  Jupiter: 'Widen the frame with generosity or learning; avoid lecturing.',
+  Venus: 'Choose beauty and kindness on purpose; harmony is a practice, not luck.',
+  Saturn: 'One sober step beats a grand promise — keep the long game honest.',
+  Rahu: 'Curiosity is fine; obsession needs a timer and a reality check.',
+  Ketu: 'Useful to release one extra obligation and keep the distilled lesson.',
+};
+
+function buildInfluenceAdvice(input: InfluenceInput): AdviceBlock {
+  const { graha, rashi, house, speed, aspects, dasha, natal, isDemo } = input;
+  const sign = signEn(rashi);
+  const items: string[] = [];
+  const cites: string[] = [`${graha} in ${sign}`, `House ${house}`];
+
+  items.push(GRAHA_ADVICE[graha] || `Work with ${graha}'s themes gently and specifically.`);
+  items.push(HOUSE_ADVICE[house] || `Notice where attention keeps returning in daily life.`);
+
+  if (speed < -0.01) {
+    items.push(
+      `${graha} is retrograde — useful to review, redo, and rethink before you push outward.`,
+    );
+    cites.push('Retrograde');
+  } else {
+    items.push(
+      `${graha} is moving direct — good window to act or speak in the ${HOUSE_LIFE[house]?.split(',')[0] || 'highlighted'} arena.`,
+    );
+  }
+
+  const hard = aspects.filter(
+    (a) => a.label === 'square' || a.label === 'oppose',
+  );
+  const soft = aspects.filter(
+    (a) => a.label === 'trine' || a.label === 'sextile' || a.label === 'conjunct',
+  );
+  if (hard.length > 0) {
+    const h = hard[0];
+    const who = h.kind === 'natal' ? `natal ${h.other}` : h.other;
+    items.push(
+      `With ${graha} ${h.label} ${who}, go easy on drama — pause before reacting, then choose a precise response.`,
+    );
+    cites.push(`${graha} ${h.label} ${h.other}`);
+  } else if (soft.length > 0) {
+    const s = soft[0];
+    const who = s.kind === 'natal' ? `natal ${s.other}` : s.other;
+    items.push(
+      `${graha} linking softly with ${who} — good moment to collaborate, polish, or ask for a favour.`,
+    );
+    cites.push(`${graha} ${s.label} ${s.other}`);
+  }
+
+  const style = SIGN_STYLE[rashi];
+  if (style && items.length < 5) {
+    items.push(
+      `In ${sign}, this planet tends to act ${style} — lean into the kinder version of that style today.`,
+    );
+  }
+
+  if (dasha && (dasha.maha === graha || dasha.antar === graha) && items.length < 5) {
+    items.push(
+      `${graha} is a period lord right now — practice its better habits rather than fearing the stereotype.`,
+    );
+    cites.push(`Period ${dasha.maha}/${dasha.antar}`);
+  }
+
+  if (!isDemo && natal && items.length < 5) {
+    items.push(
+      `Your natal ${graha} lives in house ${natal.house} — keep that long-term theme in view while the sky colours it.`,
+    );
+    cites.push(`Natal house ${natal.house}`);
+  }
+
+  return {
+    title: 'Advice',
+    items: items.slice(0, 5),
+    cites: [...new Set(cites)].slice(0, 6),
+  };
 }
 
 export function computeInfluence(input: InfluenceInput): InfluenceReading {
@@ -196,10 +302,13 @@ export function computeInfluence(input: InfluenceInput): InfluenceReading {
     );
   }
 
+  const advice = buildInfluenceAdvice(input);
+
   return {
     meansForYou,
     influencingNow,
     changing: changeBits.join(' '),
+    advice,
     cites,
   };
 }

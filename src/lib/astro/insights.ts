@@ -18,7 +18,7 @@ import {
   rashiName,
 } from './planets';
 import { vimshottari } from './dasha';
-import { signEn } from './influence';
+import { signEn, type AdviceBlock } from './influence';
 
 const PERSONAL: GrahaId[] = ['Sun', 'Moon', 'Mercury', 'Venus', 'Mars'];
 
@@ -131,6 +131,8 @@ export interface TodayInsights {
   climateNote: string;
   /** Multi-paragraph plain-English day write-up */
   daySummary: string;
+  /** Practical suggestions for this sim moment */
+  dayAdvice: AdviceBlock;
   cards: InsightCard[];
   isDemoNatal: boolean;
 }
@@ -350,6 +352,138 @@ function buildDaySummary(args: {
   return `${p1}\n\n${p2}\n\n${p3}`;
 }
 
+
+const NAK_ADVICE: Record<string, string> = {
+  Ashwini: 'Good day to start something small and fix-it on the move.',
+  Bharani: 'Hold creative pressure until one real deliverable can land.',
+  Krittika: 'Cut fog with one sharp decision — aim the heat, do not scorch.',
+  Rohini: 'Grow and attract around one chosen target; skip scatter.',
+  Mrigashira: 'Seek and scan, then pick a trail before nightfall.',
+  Ardra: 'Tear-down before rebuild is allowed — clear one mess honestly.',
+  Punarvasu: 'Useful to take a second chance; renew without shame.',
+  Pushya: 'Steady care and right timing beat heroic last-minute pushes.',
+  Ashlesha: 'Read undercurrents carefully; keep ethics tight in intimacy.',
+  Magha: 'Stand in rightful presence; legacy mood wants dignity, not theatre.',
+  'Purva Phalguni': 'Lean into play and creative ease — finish one delight.',
+  'Uttara Phalguni': 'Ally and help in ways that stick; contracts over vibes.',
+  Hasta: 'Hands-on craft wins — fix something tangible today.',
+  Chitra: 'Design beauty into form; close one unfinished ugly loop.',
+  Swati: 'Keep room to move; freedom keeps the mind kind.',
+  Vishakha: 'Pick which summit gets the heat — dual goals dilute you.',
+  Anuradha: 'Loyal orbit around people and causes regulates the day.',
+  Jyeshtha: 'Protect earned skill; quiet rank beats loud proving.',
+  Mula: 'Dig to the root; honesty before polish.',
+  'Purva Ashadha': 'Bold early push — declare, then prove with one step.',
+  'Uttara Ashadha': 'Build a win that lasts through structure and allies.',
+  Shravana: 'Listen deeply before speaking; information first.',
+  Dhanishta: 'Sync with rhythm and teams; timed bursts land better alone.',
+  Shatabhisha: 'Try an odd, systems-level fix others would skip.',
+  'Purva Bhadrapada': 'Aim fierce idealism; do not burn the room.',
+  'Uttara Bhadrapada': 'Patient depth — bring one insight to the surface.',
+  Revati: 'Shepherd the last stretch gently; finish with care.',
+};
+
+const CLIMATE_ADVICE: Record<ClimateLabel, string[]> = {
+  volatile: [
+    'Keep scope small and technique high — skip theatre and overcommitment.',
+    'Useful to name one hard edge out loud, then choose a precise response.',
+  ],
+  tense: [
+    'Precision under pressure beats drama; tighten one deadline, not five.',
+    'Go easy on sharp turns in conversation until the friction softens.',
+  ],
+  peak: [
+    'Ship what is ready and collaborate — soft links want company.',
+    'Good day for alliance, polish, and asking for a favour.',
+  ],
+  quiet: [
+    'Deep work yes, forced pivots no — protect a sparse-sky focus block.',
+    'Useful to rest the nervous system rather than invent urgency.',
+  ],
+  fluid: [
+    'Prefer alliance and polish over confrontation.',
+    'Good day to glide through errands and relational repair.',
+  ],
+};
+
+function buildDayAdvice(args: {
+  moonNak: string;
+  moonRashi: string;
+  waxing: boolean;
+  climate: ClimateLabel;
+  retrogrades: GrahaId[];
+  dasha: { maha: string; antar: string };
+  hrs: number;
+  soft: number;
+  hard: number;
+  natalHits: AspectHit[];
+  transitAspects: AspectHit[];
+  isDemo: boolean;
+}): AdviceBlock {
+  const items: string[] = [];
+  const cites: string[] = [
+    `Moon ${signEn(args.moonRashi)} · ${args.moonNak}`,
+    `Climate ${args.climate}`,
+    `HRS ${args.hrs}`,
+  ];
+
+  const climateBits = CLIMATE_ADVICE[args.climate] || CLIMATE_ADVICE.fluid;
+  items.push(climateBits[0]);
+
+  items.push(
+    NAK_ADVICE[args.moonNak] ||
+      `Work with today’s lunar texture (${args.moonNak}) in small, specific ways.`,
+  );
+
+  if (args.waxing) {
+    items.push(
+      'Moon is waxing — lean into visibility, appetite, and starts more than hard cuts.',
+    );
+    cites.push('Waxing');
+  } else {
+    items.push(
+      'Moon is waning — editing, releasing, and finishing often feel smarter than launching.',
+    );
+    cites.push('Waning');
+  }
+
+  if (args.retrogrades.length > 0) {
+    const r = args.retrogrades.slice(0, 3).join(', ');
+    items.push(
+      `${r} ${args.retrogrades.length === 1 ? 'is' : 'are'} retrograde — useful to review and redo those themes before pushing outward.`,
+    );
+    cites.push(`R: ${r}`);
+  } else if (climateBits[1] && items.length < 5) {
+    items.push(climateBits[1]);
+  }
+
+  if (args.dasha.maha !== '—' && items.length < 5) {
+    const tone = DASHA_TONE[args.dasha.maha] || 'period themes';
+    items.push(
+      `Background chapter is ${args.dasha.maha} (${tone}) — practice that period’s better habits in one concrete way today.`,
+    );
+    cites.push(`Period ${args.dasha.maha}/${args.dasha.antar}`);
+  }
+
+  if (!args.isDemo && args.natalHits[0] && items.length < 5) {
+    const h = args.natalHits[0];
+    items.push(
+      `Transit ${h.a} is lighting natal ${h.b} — tend that personal theme with care, not fatalism.`,
+    );
+    cites.push(`t${h.a} ${h.label} n${h.b}`);
+  } else if (args.hard > args.soft && items.length < 5) {
+    items.push(
+      'Hard links outnumber soft ones — postpone fragile conversations if you can; keep technical work precise.',
+    );
+  }
+
+  return {
+    title: 'Advice for today',
+    items: items.slice(0, 5),
+    cites: [...new Set(cites)].slice(0, 6),
+  };
+}
+
 function buildCards(args: {
   moonNak: string;
   moonRashi: string;
@@ -566,6 +700,21 @@ export function computeTodayInsights(
     isDemo: !!birth.isDemo,
   });
 
+  const dayAdvice = buildDayAdvice({
+    moonNak: nak.name,
+    moonRashi,
+    waxing,
+    climate,
+    retrogrades,
+    dasha,
+    hrs,
+    soft,
+    hard,
+    natalHits,
+    transitAspects,
+    isDemo: !!birth.isDemo,
+  });
+
   const cards = buildCards({
     moonNak: nak.name,
     moonRashi,
@@ -601,9 +750,9 @@ export function computeTodayInsights(
     climate,
     climateNote: note,
     daySummary,
+    dayAdvice,
     cards,
     isDemoNatal: !!birth.isDemo,
   };
 }
 
-// keep HOUSE_LIFE import used for future / lint
